@@ -17,4 +17,19 @@ insert into instructor (name, surname, email, address, city, state, phone_num) v
 insert into instructor (name, surname, email, address, city, state, phone_num) values ('Leticia', 'Gorch', 'lgorch3@cnn.com', '7 Cambridge Lane', 'Ternovka', 'Russia', '340-956-7178');
 insert into instructor (name, surname, email, address, city, state, phone_num) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868');
 
+INSERT INTO roles(name) VALUES('FISHERMAN');
+INSERT INTO roles(name) VALUES('SYS_ADMIN');
 
+
+
+insert into users (user_id,username, password, enabled) values (1,'erumbold0@usa.gov', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
+insert into users (user_id,username, password, enabled) values (2,'cboniface1@about.me', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
+insert into users (user_id,username, password, enabled) values (3,'bhellin2@gravatar.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
+insert into users (user_id,username, password, enabled) values (4,'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
+
+
+
+insert into USER_ROLES(user_id, role_id) values(1, 1);
+insert into USER_ROLES(user_id, role_id) values(2, 1);
+insert into USER_ROLES(user_id, role_id) values(3, 1);
+insert into USER_ROLES(user_id, role_id) values(4, 2);

@@ -1,11 +1,18 @@
 package com.fishNdream.backend.entity.users;
 
+
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fishNdream.backend.util.FieldMatch;
+
 @MappedSuperclass
+@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class UserInfo {
 		
 		@Id
@@ -30,6 +37,28 @@ public class UserInfo {
 		@NotBlank(message = "Phone number is mandatory")
 		
 		private String phoneNum;
+		@Transient
+		@JsonInclude(JsonInclude.Include.NON_NULL)
+		private String password;
+		@Transient
+		@JsonInclude(JsonInclude.Include.NON_NULL)
+		private String confirmPassword;
+		
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getConfirmPassword() {
+			return confirmPassword;
+		}
+
+		public void setConfirmPassword(String confirmPassword) {
+			this.confirmPassword = confirmPassword;
+		}
 
 		public UserInfo() {}
 		
@@ -43,6 +72,17 @@ public class UserInfo {
 			this.city = city;
 			this.state = state;
 			this.phoneNum = phoneNum;
+		}
+		
+		public UserInfo(UserInfo user) {
+			super();
+			this.email = user.email;
+			this.name = user.name;
+			this.surname = user.surname;
+			this.address = user.address;
+			this.city = user.city;
+			this.state = user.state;
+			this.phoneNum = user.phoneNum;
 		}
 
 		public String getEmail() {
