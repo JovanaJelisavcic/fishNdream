@@ -2,6 +2,7 @@ package com.fishNdream.backend.security;
 
 
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -16,7 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.FishermanRepository;
+import com.fishNdream.backend.repository.SignUpRequestRepository;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -27,9 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
-     
 	@Autowired
-	private FishermanRepository fisherman;
+	FishermanRepository fishermanRepo;
+	@Autowired
+	private SignUpRequestRepository requestRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
      
@@ -79,7 +84,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	    helper.setTo(toAddress);
 	    helper.setSubject(subject);
 	     
-	    content = content.replace("[[name]]", fisherman.findById(user.getUsername()).get().getSurname());
+	    content = content.replace("[[name]]", requestRepo.findById(user.getUsername()).get().getSurname());
 	    String verifyURL = siteURL + "/register/verify?code=" + user.getVerificationCode();
 	     
 	    content = content.replace("[[URL]]", verifyURL);
@@ -98,7 +103,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	        user.setVerificationCode(null);
 	        user.setEnabled(true);
 	        userRepository.save(user);
-	         
+	        //ovde cu ja to 
+	        Optional<SignUpRequest> request = requestRepo.findById(user.getUsername());
+	        Fisherman fisherman = new Fisherman(request.get());
+	        fishermanRepo.save(fisherman);
+	        requestRepo.deleteById(user.getUsername());
 	        return true;
 	    }
 	     
@@ -124,6 +133,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		    user.setVerificationCode(null);
 		    user.setEnabled(true);		     
 		    userRepository.save(user);
+	}
+
+	public void registerOwner(User user, String siteURL)
+	        throws UnsupportedEncodingException, MessagingException {
+	
+	    String encodedPassword = passwordEncoder.encode(user.getPassword());
+	    user.setPassword(encodedPassword);
+	    user.setEnabled(false);
+	     
+	    userRepository.save(user);
+	     
+	    sendVerificationEmail(user, siteURL);
 	}
 
 

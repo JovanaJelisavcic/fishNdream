@@ -16,6 +16,7 @@ public class BoatOwner extends UserInfo {
             cascade = CascadeType.ALL, targetEntity = Boat.class)
 	private List<Boat> boats;
 
+
 	public List<Boat> getBoats() {
 		return boats;
 	}

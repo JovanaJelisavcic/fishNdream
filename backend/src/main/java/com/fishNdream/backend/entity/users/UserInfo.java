@@ -44,6 +44,10 @@ public class UserInfo {
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		private String confirmPassword;
 		
+		
+		
+		
+		
 		public String getPassword() {
 			return password;
 		}

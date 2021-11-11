@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fishNdream.backend.entity.users.Fisherman;
-import com.fishNdream.backend.entity.users.UserInfo;
+import com.fishNdream.backend.entity.SignUpRequest;
 import com.fishNdream.backend.repository.FishermanRepository;
+import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.ERole;
 import com.fishNdream.backend.security.JwtResponse;
 import com.fishNdream.backend.security.JwtUtils;
@@ -61,6 +61,9 @@ public class RegisterController {
 
 	@Autowired
 	RoleRepository roleRepository;
+	@Autowired
+	SignUpRequestRepository requestRepository;
+	
 	@Autowired
 	UserRepository userRepository;
 
@@ -109,16 +112,18 @@ public class RegisterController {
 		return "Admin";
 	}
 
+	
+	
 	@PostMapping("/signup")
-	public ResponseEntity<String> registerUser(@Valid @RequestBody UserInfo signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+	public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 		if (userRepository.existsByUsername(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest().build();
 		}
-		Fisherman tosave = new Fisherman(signUpRequest);
-		Fisherman otherCheck =  fishermanRepo.save(tosave);
+		signUpRequest.setExplanation("");
+		signUpRequest.setRegType(ERole.FISHERMAN);
+		SignUpRequest otherCheck =  requestRepository.save(signUpRequest);
 		if(otherCheck!=null) {
-			logger.info(signUpRequest.getPassword());
 			User user = new User(signUpRequest.getEmail(), 
 					 signUpRequest.getPassword());
 				Set<Role> userRole = new HashSet<>();
@@ -130,12 +135,32 @@ public class RegisterController {
 			
 	}
 	
+	@PostMapping("/registerOwner")
+	public ResponseEntity<String> registerOwner(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+		if (userRepository.existsByUsername(signUpRequest.getEmail()) || signUpRequest.getExplanation().isBlank() || signUpRequest.getRegType()==null ) {
+			return ResponseEntity
+					.badRequest().build();
+		}
+		SignUpRequest otherCheck =  requestRepository.save(signUpRequest);
+		if(otherCheck!=null) {
+			User user = new User(signUpRequest.getEmail(), 
+					 signUpRequest.getPassword());
+				Set<Role> userRole = new HashSet<>();
+					userRole.add(roleRepository.findByName(signUpRequest.getRegType()));
+					user.setRoles(userRole);
+			service.registerOwner(user, getSiteURL(request));
+			return ResponseEntity.ok().build();
+		}else return ResponseEntity.badRequest().build();
+			
+	}
+	
+	
 	 private String getSiteURL(HttpServletRequest request) {
 	        String siteURL = request.getRequestURL().toString();
 	        return siteURL.replace(request.getServletPath(), "");
 	    }  
 	 
-	 @GetMapping("/verify")
+	 @GetMapping("/verify")      
 	 public String verifyUser(@Param("code") String code) {
 	     if (service.verify(code)) {
 	         return "verify_success";
@@ -144,4 +169,16 @@ public class RegisterController {
 	     }
 	 }
 	 
+	 @GetMapping("/requests")   
+	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
+	 public ResponseEntity<List<SignUpRequest>> getRequests() {
+		 	List<SignUpRequest> requests = requestRepository.findByRegTypeNotLike("FISHERMAN");
+			if(requests.isEmpty() || requests==null) {
+					return ResponseEntity.notFound().build();
+				}
+				return new ResponseEntity<List<SignUpRequest>>(requests, HttpStatus.OK);
+			}
+	 
+
 }
+	 
