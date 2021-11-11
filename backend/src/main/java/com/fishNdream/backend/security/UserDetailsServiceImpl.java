@@ -5,11 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,9 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.users.BoatOwner;
+import com.fishNdream.backend.entity.users.CottageOwner;
 import com.fishNdream.backend.entity.users.Fisherman;
+import com.fishNdream.backend.entity.users.Instructor;
+import com.fishNdream.backend.repository.BoatOwnerRepository;
+import com.fishNdream.backend.repository.CottageOwnerRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
+import com.fishNdream.backend.repository.InstructorReposiotry;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
+import com.fishNdream.backend.util.MailUtil;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -35,12 +39,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	FishermanRepository fishermanRepo;
 	@Autowired
 	private SignUpRequestRepository requestRepo;
+	@Autowired
+	private CottageOwnerRepository cottageOwnerRepo;
+	@Autowired
+	private InstructorReposiotry instructorRepo;
+	@Autowired
+	private BoatOwnerRepository boatOwnerRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
-     
     @Autowired
-    private JavaMailSender mailSender;
-
+    private MailUtil mailUtil;
+     
+    
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -67,31 +77,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	     
 	private void sendVerificationEmail(User user, String siteURL)
 	        throws MessagingException, UnsupportedEncodingException {
-	    String toAddress = user.getUsername();
-	    String fromAddress = "jelisavcicjovana@gmail.com";
-	    String senderName = "fishNdream";
-	    String subject = "Please verify your registration";
-	    String content = "Dear [[name]],<br>"
-	            + "Please click the link below to verify your registration:<br>"
-	            + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-	            + "Thank you,<br>"
-	            + "Farmacia.";
-	     
-	    MimeMessage message = mailSender.createMimeMessage();
-	    MimeMessageHelper helper = new MimeMessageHelper(message);
-	     
-	    helper.setFrom(fromAddress, senderName);
-	    helper.setTo(toAddress);
-	    helper.setSubject(subject);
-	     
-	    content = content.replace("[[name]]", requestRepo.findById(user.getUsername()).get().getSurname());
-	    String verifyURL = siteURL + "/register/verify?code=" + user.getVerificationCode();
-	     
-	    content = content.replace("[[URL]]", verifyURL);
-	     
-	    helper.setText(content, true);
-	     
-	    mailSender.send(message);
+		
+	   
+	    mailUtil.sendVerificationEmail(user,siteURL);
+	   
 	     
 	}
 	public boolean verify(String verificationCode) {
@@ -103,7 +92,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	        user.setVerificationCode(null);
 	        user.setEnabled(true);
 	        userRepository.save(user);
-	        //ovde cu ja to 
 	        Optional<SignUpRequest> request = requestRepo.findById(user.getUsername());
 	        Fisherman fisherman = new Fisherman(request.get());
 	        fishermanRepo.save(fisherman);
@@ -145,6 +133,54 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	    userRepository.save(user);
 	     
 	    sendVerificationEmail(user, siteURL);
+	}
+
+	public boolean allowOwner(SignUpRequest request) {
+		Optional<User> user = userRepository.findByUsername(request.getEmail());
+	     
+	    if (user.get() == null || user.get().isEnabled()) {
+	        return false;
+	    } else {
+	        user.get().setEnabled(true);
+	        userRepository.save(user.get());
+	       switch(request.getRegType()) {
+	       case COTTAGE_OWNER:
+	    	    CottageOwner owner = new CottageOwner(request);
+		        cottageOwnerRepo.save(owner);
+		        requestRepo.deleteById(request.getEmail());
+		        mailUtil.sendAllowRegistrationMail(request);
+		        return true;
+	       case BOAT_OWNER:
+	    	    BoatOwner bowner = new BoatOwner(request);
+		        boatOwnerRepo.save(bowner);
+		        requestRepo.deleteById(request.getEmail());
+		        mailUtil.sendAllowRegistrationMail(request);
+		        return true;
+	       case INSTRUCTOR: 
+	    	    Instructor instr = new Instructor(request);
+		        instructorRepo.save(instr);
+		        requestRepo.deleteById(request.getEmail());
+		        mailUtil.sendAllowRegistrationMail(request);
+		        return true;
+	       default:
+	    	   return false;
+	       }
+	       
+	    }
+		
+	}
+
+	public boolean refuseOwner(SignUpRequest request, String reason) throws UnsupportedEncodingException, MessagingException {
+		Optional<User> user = userRepository.findByUsername(request.getEmail());
+	     
+	    if (user.get() == null || user.get().isEnabled()) {
+	        return false;
+	    } else {
+	    	requestRepo.deleteById(request.getEmail());
+	        userRepository.delete(user.get());
+		    mailUtil.sendRefuseRegistrationMail(request, reason);
+		    return true;   
+	    }
 	}
 
 

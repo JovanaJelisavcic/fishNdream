@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fishNdream.backend.entity.SignUpRequest;
 import com.fishNdream.backend.entity.basic.Cottage;
 
 
@@ -16,6 +17,14 @@ public class CottageOwner extends UserInfo {
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Cottage.class)
 	private List<Cottage> cottages;
+
+	public CottageOwner(SignUpRequest request) {
+		
+		super(request.getEmail(), request.getName(),request.getSurname(), request.getAdress(), request.getCity(), request.getState(),
+				request.getPhoneNum());
+	}
+	
+	public CottageOwner() {}
 
 	public List<Cottage> getCottages() {
 		return cottages;

@@ -23,9 +23,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fishNdream.backend.entity.SignUpRequest;
@@ -172,13 +174,35 @@ public class RegisterController {
 	 @GetMapping("/requests")   
 	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
 	 public ResponseEntity<List<SignUpRequest>> getRequests() {
-		 	List<SignUpRequest> requests = requestRepository.findByRegTypeNotLike("FISHERMAN");
+		 	List<SignUpRequest> requests = requestRepository.findByRegTypeNotLike(ERole.FISHERMAN);
 			if(requests.isEmpty() || requests==null) {
 					return ResponseEntity.notFound().build();
 				}
 				return new ResponseEntity<List<SignUpRequest>>(requests, HttpStatus.OK);
 			}
 	 
+	 
+	 @PostMapping("/allow/{email}")
+	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
+		public ResponseEntity<String> allow(@PathVariable String email) {
+			SignUpRequest otherCheck =  requestRepository.getById(email);
+			if (otherCheck==null) return ResponseEntity.notFound().build();
+			if(service.allowOwner(otherCheck))
+			return ResponseEntity.ok().build();
+			else return ResponseEntity.badRequest().build();
+				
+		}
+	 
+	 @PostMapping("/refuse")
+	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
+		public ResponseEntity<String> refuse(@RequestParam("email") String email, @RequestParam("reason") String reason ) throws UnsupportedEncodingException, MessagingException {
+			SignUpRequest otherCheck =  requestRepository.getById(email);
+			if (otherCheck==null) return ResponseEntity.notFound().build();
+			if(service.refuseOwner(otherCheck, reason))
+			return ResponseEntity.ok().build();
+			else return ResponseEntity.badRequest().build();
+				
+		}
 
 }
 	 
