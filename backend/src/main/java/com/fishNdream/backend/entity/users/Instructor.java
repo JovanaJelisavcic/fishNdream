@@ -7,15 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.SignUpRequest;
 import com.fishNdream.backend.entity.basic.Adventure;
+import com.fishNdream.backend.entity.basic.Views;
 
 @Entity
 public class Instructor extends UserInfo {
 
+	@JsonView(Views.UnauthoInstuctors.class)
 	private String shortBio;
 	@OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Adventure.class)
+	@JsonView(Views.UnauthoInstuctors.class)
 	private List<Adventure> adventures; 
 	
 	

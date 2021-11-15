@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.users.CottageOwner;
 
 @Entity
@@ -19,9 +20,13 @@ public class Cottage {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@JsonView(Views.UnauthoCottages.class)
 	private int cottageId;
+	@JsonView(Views.UnauthoCottages.class)
 	private String name;
+	@JsonView(Views.UnauthoCottages.class)
 	private String address;
+	@JsonView(Views.UnauthoCottages.class)
 	private String description;
 	private int roomNum;
 	private String behaviourRules;

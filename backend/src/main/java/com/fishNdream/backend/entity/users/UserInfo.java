@@ -9,6 +9,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.util.FieldMatch;
 
 @MappedSuperclass
@@ -18,24 +20,25 @@ public class UserInfo {
 		@Id
 		@Column(nullable=false, unique =true,
 		        updatable=false)
+		@JsonView(Views.UserInfo.class)
 		private String email;
 		@NotBlank(message = "Name is mandatory")
-		
+		@JsonView(Views.UserInfo.class)
 		private String name;
 		@NotBlank(message = "Surname is mandatory")
-		
+		@JsonView(Views.UserInfo.class)
 		private String surname;
 		@NotBlank(message = "Adress is mandatory")
-		
+		@JsonView(Views.UserInfo.class)
 		private String address;
 		@NotBlank(message = "City is mandatory")
-		
+		@JsonView(Views.UserInfo.class)
 		private String city;
 		@NotBlank(message = "State is mandatory")
-	
+		@JsonView(Views.UserInfo.class)
 		private String state;
 		@NotBlank(message = "Phone number is mandatory")
-		
+		@JsonView(Views.UserInfo.class)
 		private String phoneNum;
 		@Transient
 		@JsonInclude(JsonInclude.Include.NON_NULL)

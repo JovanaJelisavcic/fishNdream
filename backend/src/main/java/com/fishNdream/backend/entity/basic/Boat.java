@@ -12,20 +12,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.users.BoatOwner;
 
 @Entity
 public class Boat {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@JsonView(Views.UnauthoBoats.class)
 	private int boatId;
+	@JsonView(Views.UnauthoBoats.class)
 	private String name;
-	private String type;
+	private String boatType;
 	private float length;
 	private String engineNum;
 	private float enginePower;
 	private int maxSpeed;
+	@JsonView(Views.UnauthoBoats.class)
 	private String description;
+	@JsonView(Views.UnauthoBoats.class)
 	private String address;
 	private int capacity;
 	private String behaviourRules;
@@ -44,7 +49,7 @@ public class Boat {
 		super();
 		this.boatId = boatId;
 		this.name = name;
-		this.type = type;
+		this.boatType = type;
 		this.length = length;
 		this.engineNum = engineNum;
 		this.enginePower = enginePower;
@@ -69,10 +74,10 @@ public class Boat {
 		this.name = name;
 	}
 	public String getType() {
-		return type;
+		return boatType;
 	}
 	public void setType(String type) {
-		this.type = type;
+		this.boatType = type;
 	}
 	public float getLength() {
 		return length;

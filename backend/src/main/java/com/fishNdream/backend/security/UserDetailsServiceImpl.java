@@ -22,7 +22,7 @@ import com.fishNdream.backend.entity.users.Instructor;
 import com.fishNdream.backend.repository.BoatOwnerRepository;
 import com.fishNdream.backend.repository.CottageOwnerRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
-import com.fishNdream.backend.repository.InstructorReposiotry;
+import com.fishNdream.backend.repository.InstructorRepository;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.util.MailUtil;
 
@@ -42,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private CottageOwnerRepository cottageOwnerRepo;
 	@Autowired
-	private InstructorReposiotry instructorRepo;
+	private InstructorRepository instructorRepo;
 	@Autowired
 	private BoatOwnerRepository boatOwnerRepo;
     @Autowired
@@ -118,7 +118,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public void registerAdmin(User user) {
 		 String encodedPassword = passwordEncoder.encode(user.getPassword());
 		    user.setPassword(encodedPassword);
-		    user.setVerificationCode(null);
+		    user.setVerificationCode("initial");
 		    user.setEnabled(true);		     
 		    userRepository.save(user);
 	}

@@ -6,15 +6,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.users.Instructor;
 
 @Entity
 public class Adventure {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@JsonView(Views.UnauthoInstuctors.class)
 	private int adventureId;
+	@JsonView(Views.UnauthoInstuctors.class)
 	private String name;
+	@JsonView(Views.UnauthoInstuctors.class)
 	private String address;
+	@JsonView(Views.UnauthoInstuctors.class)
 	private String description;
 	private int maxParticipants;
 	private String behaviourRules;

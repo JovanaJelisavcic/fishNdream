@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.fishNdream.backend.entity.users.Instructor;
 
 @Repository
-public interface InstructorReposiotry extends JpaRepository<Instructor, String> {
+public interface InstructorRepository extends JpaRepository<Instructor, String> {
 
 	
 	

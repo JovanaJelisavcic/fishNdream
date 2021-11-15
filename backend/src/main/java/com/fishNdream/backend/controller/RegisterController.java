@@ -14,6 +14,7 @@ import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,6 +58,8 @@ public class RegisterController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
+	@Value("${app.superadmin}")
+	private String superAdmin;
 	 @Autowired
 	 private UserDetailsServiceImpl service;
 	@Autowired
@@ -116,7 +120,7 @@ public class RegisterController {
 
 	
 	
-	@PostMapping("/signup")
+	@PostMapping("/user")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 		if (userRepository.existsByUsername(signUpRequest.getEmail())) {
 			return ResponseEntity
@@ -137,7 +141,7 @@ public class RegisterController {
 			
 	}
 	
-	@PostMapping("/registerOwner")
+	@PostMapping("/owner")
 	public ResponseEntity<String> registerOwner(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 		if (userRepository.existsByUsername(signUpRequest.getEmail()) || signUpRequest.getExplanation().isBlank() || signUpRequest.getRegType()==null ) {
 			return ResponseEntity
@@ -201,6 +205,34 @@ public class RegisterController {
 			if(service.refuseOwner(otherCheck, reason))
 			return ResponseEntity.ok().build();
 			else return ResponseEntity.badRequest().build();
+				
+		}
+	 
+
+			
+	 
+	 @PostMapping("/admin")
+	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
+		public ResponseEntity<String> registerAdmin(@Valid @RequestBody SignUpRequest signUpRequest,@RequestHeader("Authorization") String token ) throws UnsupportedEncodingException, MessagingException {
+		 	String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		 	if(username!=superAdmin) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		 
+		 if (userRepository.existsByUsername(signUpRequest.getEmail())) {
+				return ResponseEntity
+						.badRequest().build();
+			}
+		    signUpRequest.setPassword("initial");
+		    signUpRequest.setConfirmPassword("initial");
+			SignUpRequest otherCheck =  requestRepository.save(signUpRequest);
+			if(otherCheck!=null) {
+				User user = new User(signUpRequest.getEmail(), 
+						 signUpRequest.getPassword());
+					Set<Role> userRole = new HashSet<>();
+						userRole.add(roleRepository.findByName(ERole.SYS_ADMIN));
+						user.setRoles(userRole);
+				service.registerAdmin(user);
+				return ResponseEntity.ok().build();
+			}else return ResponseEntity.badRequest().build();
 				
 		}
 
