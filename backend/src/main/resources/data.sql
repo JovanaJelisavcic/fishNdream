@@ -51,7 +51,9 @@ insert into users (user_id,username, password, enabled) values (2,'cboniface1@ab
 insert into users (user_id,username, password, enabled) values (3,'bhellin2@gravatar.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
 insert into users (user_id,username, password, enabled) values (4,'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true);
 
-
+insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME) values ('erumbold0@usa.gov', 'Lenin 145', 'Moskow', 'Russia', 'Erum', '556-885-999', 'Boldov');
+insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME) values ('cboniface1@about.me', 'Picaso Street 85', 'Bilbao', 'Spain', 'Clara', '551-815-989', 'Bonifaces');
+insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME) values ('bhellin2@gravatar.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin');
 
 insert into USER_ROLES(user_id, role_id) values(1, 1);
 insert into USER_ROLES(user_id, role_id) values(2, 1);
