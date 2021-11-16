@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.security.ERole;
 
 @Repository

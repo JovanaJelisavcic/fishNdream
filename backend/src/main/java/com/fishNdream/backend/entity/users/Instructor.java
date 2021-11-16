@@ -8,9 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fishNdream.backend.entity.SignUpRequest;
 import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Views;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 
 @Entity
 public class Instructor extends UserInfo {

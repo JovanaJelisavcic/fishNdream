@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.ERole;

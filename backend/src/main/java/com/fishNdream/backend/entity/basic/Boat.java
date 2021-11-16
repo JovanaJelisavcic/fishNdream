@@ -1,8 +1,10 @@
 package com.fishNdream.backend.entity.basic;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,8 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
+import com.fishNdream.backend.entity.helper.AvailabilityPeriodBoats;
+import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.BoatOwner;
 
 @Entity
@@ -25,7 +31,7 @@ public class Boat {
 	private String name;
 	private String boatType;
 	private float length;
-	private String engineNum;
+	private int engineNum;
 	private float enginePower;
 	private int maxSpeed;
 	@JsonView(Views.UnauthoBoats.class)
@@ -40,10 +46,62 @@ public class Boat {
 	private boolean cancelPolicy; // 0-besplatno 
 	@ManyToOne
 	private BoatOwner owner;
+	@OneToMany(
+	        mappedBy = "boat",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AvailabilityPeriodBoats> availablePeriods;	
+	@OneToMany(
+	        mappedBy = "boat",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AdditionalServicesBoat> additionalServices;
 	
+	
+
+	@OneToMany(
+	        mappedBy = "boat",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ReservationBoat> reservations;
+	
+	public List<AdditionalServicesBoat> getAdditionalServices() {
+		return additionalServices;
+	}
+
+	public void setAdditionalServices(List<AdditionalServicesBoat> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+	public String getBoatType() {
+		return boatType;
+	}
+
+	public void setBoatType(String boatType) {
+		this.boatType = boatType;
+	}
+
+	public List<AvailabilityPeriodBoats> getAvailablePeriods() {
+		return availablePeriods;
+	}
+
+	public void setAvailablePeriods(List<AvailabilityPeriodBoats> availablePeriods) {
+		this.availablePeriods = availablePeriods;
+	}
+
+	public List<ReservationBoat> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<ReservationBoat> reservations) {
+		this.reservations = reservations;
+	}
+
 	public Boat() {}
 	
-	public Boat(int boatId, String name, String type, float length, String engineNum, float enginePower, int maxSpeed,
+	public Boat(int boatId, String name, String type, float length, int engineNum, float enginePower, int maxSpeed,
 			String description, String address, int capacity, String behaviourRules, Set<String> boatPics,
 			boolean cancelPolicy) {
 		super();
@@ -85,10 +143,10 @@ public class Boat {
 	public void setLength(float length) {
 		this.length = length;
 	}
-	public String getEngineNum() {
+	public int getEngineNum() {
 		return engineNum;
 	}
-	public void setEngineNum(String engineNum) {
+	public void setEngineNum(int engineNum) {
 		this.engineNum = engineNum;
 	}
 	public float getEnginePower() {

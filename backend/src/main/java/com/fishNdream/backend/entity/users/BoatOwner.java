@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
-import com.fishNdream.backend.entity.SignUpRequest;
 import com.fishNdream.backend.entity.basic.Boat;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 
 @Entity
 public class BoatOwner extends UserInfo {

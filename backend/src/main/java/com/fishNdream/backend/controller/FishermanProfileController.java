@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fishNdream.backend.entity.ChangeInfoDTO;
 import com.fishNdream.backend.entity.basic.Views;
+import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.security.JwtUtils;

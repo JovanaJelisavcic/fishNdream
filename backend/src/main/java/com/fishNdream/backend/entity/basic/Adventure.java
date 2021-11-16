@@ -1,12 +1,19 @@
 package com.fishNdream.backend.entity.basic;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.helper.AdditionalServicesAdventure;
+import com.fishNdream.backend.entity.helper.AvailabilityPeriodAdventures;
+import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.users.Instructor;
 
 @Entity
@@ -26,7 +33,50 @@ public class Adventure {
 	private boolean cancelPolicy; // 0-free
 	@ManyToOne
 	private Instructor instructor;
+	@OneToMany(
+	        mappedBy = "adventure",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AvailabilityPeriodAdventures> availablePeriods;
+	@OneToMany(
+	        mappedBy = "adventure",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ReservationAdventure> reservations;
 	
+	@OneToMany(
+	        mappedBy = "adventure",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AdditionalServicesAdventure> additionalServices;
+	
+	public List<ReservationAdventure> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<ReservationAdventure> reservations) {
+		this.reservations = reservations;
+	}
+
+	public List<AdditionalServicesAdventure> getAdditionalServices() {
+		return additionalServices;
+	}
+
+	public void setAdditionalServices(List<AdditionalServicesAdventure> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+	public List<AvailabilityPeriodAdventures> getAvailablePeriods() {
+		return availablePeriods;
+	}
+
+	public void setAvailablePeriods(List<AvailabilityPeriodAdventures> availablePeriods) {
+		this.availablePeriods = availablePeriods;
+	}
+
 	public Adventure() {}
 	
 	public Adventure(int adventureId, String name, String address, String description, int maxParticipants,

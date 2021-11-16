@@ -1,8 +1,10 @@
 package com.fishNdream.backend.entity.basic;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,8 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.helper.AdditionalServicesCottage;
+import com.fishNdream.backend.entity.helper.AvailabilityPeriodCottages;
+import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.entity.users.CottageOwner;
 
 @Entity
@@ -35,10 +41,49 @@ public class Cottage {
 	private Set<String> cottagePics = new HashSet<>();
 	@ManyToOne
 	private CottageOwner owner;
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AvailabilityPeriodCottages> availablePeriods;
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<AdditionalServicesCottage> additionalServices;
+	
+	public List<AdditionalServicesCottage> getAdditionalServices() {
+		return additionalServices;
+	}
+
+
+	public void setAdditionalServices(List<AdditionalServicesCottage> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ReservationCottage> reservations;
 	
 	public Cottage() {}
 	
 	
+	public List<ReservationCottage> getReservations() {
+		return reservations;
+	}
+
+
+	public void setReservations(List<ReservationCottage> reservations) {
+		this.reservations = reservations;
+	}
+
+
 	public Cottage(int cottageId, String name, String address, String description, int roomNum, String behaviourRules,
 			Set<String> cottagePics) {
 		super();
@@ -101,6 +146,16 @@ public class Cottage {
 
 	public void setOwner(CottageOwner owner) {
 		this.owner = owner;
+	}
+
+
+	public List<AvailabilityPeriodCottages> getAvailablePeriods() {
+		return availablePeriods;
+	}
+
+
+	public void setAvailablePeriods(List<AvailabilityPeriodCottages> availablePeriods) {
+		this.availablePeriods = availablePeriods;
 	}
 	
 	

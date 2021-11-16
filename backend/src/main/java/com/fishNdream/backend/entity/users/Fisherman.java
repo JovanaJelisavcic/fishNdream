@@ -3,11 +3,11 @@ package com.fishNdream.backend.entity.users;
 import javax.persistence.Entity;
 import javax.validation.Valid;
 
-import com.fishNdream.backend.entity.ChangeInfoDTO;
+import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
 
 @Entity
 public class Fisherman extends UserInfo{
-
+	
 	public Fisherman(UserInfo user) {
 		super(user);
 	}
@@ -35,4 +35,5 @@ public class Fisherman extends UserInfo{
 		
 		
 	}
+	
 }

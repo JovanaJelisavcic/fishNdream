@@ -1,4 +1,4 @@
-package com.fishNdream.backend.entity;
+package com.fishNdream.backend.entity.helper;
 
 
 public class ChangeInfoDTO {

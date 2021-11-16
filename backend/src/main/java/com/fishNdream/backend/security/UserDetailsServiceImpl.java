@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.users.BoatOwner;
 import com.fishNdream.backend.entity.users.CottageOwner;
 import com.fishNdream.backend.entity.users.Fisherman;

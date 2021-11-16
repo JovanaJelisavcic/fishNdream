@@ -12,7 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import com.fishNdream.backend.entity.SignUpRequest;
+import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.User;
 
