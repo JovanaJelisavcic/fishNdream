@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.basic;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import com.fishNdream.backend.entity.users.CottageOwner;
 
 @Entity
 public class Cottage {
+	//private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -35,6 +37,7 @@ public class Cottage {
 	@JsonView(Views.UnauthoCottages.class)
 	private String description;
 	private int roomNum;
+	private int guestsNum;
 	private String behaviourRules;
 	@ElementCollection
 	@CollectionTable(name = "cottage_pics", joinColumns = @JoinColumn(name = "cottage_id"))
@@ -53,6 +56,12 @@ public class Cottage {
 	        orphanRemoval = true
 	    )
 	private List<AdditionalServicesCottage> additionalServices;
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ReservationCottage> reservations;
 	
 	public List<AdditionalServicesCottage> getAdditionalServices() {
 		return additionalServices;
@@ -64,12 +73,7 @@ public class Cottage {
 	}
 
 
-	@OneToMany(
-	        mappedBy = "cottage",
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
-	private List<ReservationCottage> reservations;
+	
 	
 	public Cottage() {}
 	
@@ -157,8 +161,41 @@ public class Cottage {
 	public void setAvailablePeriods(List<AvailabilityPeriodCottages> availablePeriods) {
 		this.availablePeriods = availablePeriods;
 	}
+
+	public int getGuestsNum() {
+		return guestsNum;
+	}
+
+
+	public void setGuestsNum(int guestsNum) {
+		this.guestsNum = guestsNum;
+	}
 	
 	
-	
-	
+
+	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
+		boolean available =false;
+		for(AvailabilityPeriodCottages period : availablePeriods) {
+			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate())) {
+				available=true;			
+			}
+		}
+		if(!available) return false;
+		for(ReservationCottage reservation : reservations) {
+			
+			if(!(      (from.toLocalDate().isBefore(reservation.getBeginning().toLocalDate()) && to.toLocalDate().isBefore(reservation.getBeginning().toLocalDate()))    ||     (from.toLocalDate().isAfter(reservation.getEnding().toLocalDate()) && to.toLocalDate().isAfter(reservation.getEnding().toLocalDate()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
+					{
+					
+					return false;
+					}
+				}
+			return true;
+			}
+			
+		
+
 }
+
+
+	
+

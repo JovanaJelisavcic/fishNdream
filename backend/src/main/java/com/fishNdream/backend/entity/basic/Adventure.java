@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.basic;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -139,6 +140,25 @@ public class Adventure {
 
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
+	}
+
+	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
+		//ldate timeee, i instruktor mora biti tu braleeee
+		boolean available =false;
+		for(AvailabilityPeriodAdventures period : availablePeriods) {
+			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate()))
+				available=true;			
+		}
+		if(!available) return false;
+		else {
+			for(Adventure adventure : instructor.getAdventures()) {
+				for(ReservationAdventure reservation : adventure.getReservations()) {
+					if(!(      (from.isBefore(reservation.getBeginning()) && to.isBefore(reservation.getBeginning()))    ||     (from.isAfter(reservation.getEnding()) && to.isAfter(reservation.getEnding()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
+						return false;
+				}
+			}
+			return true;
+		}
 	}
 	
 	

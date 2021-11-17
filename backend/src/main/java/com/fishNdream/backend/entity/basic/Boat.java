@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.basic;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -204,6 +205,24 @@ public class Boat {
 
 	public void setOwner(BoatOwner owner) {
 		this.owner = owner;
+	}
+
+	
+
+	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
+		boolean available =false;
+		for(AvailabilityPeriodBoats period : availablePeriods) {
+			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate()))
+				available=true;			
+		}
+		if(!available) return false;
+		else {
+			for(ReservationBoat reservation : reservations) {
+				if(!(      (from.isBefore(reservation.getBeginning()) && to.isBefore(reservation.getBeginning()))    ||     (from.isAfter(reservation.getEnding()) && to.isAfter(reservation.getEnding()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
+					return false;
+			}
+			return true;
+		}
 	}
 	
 	
