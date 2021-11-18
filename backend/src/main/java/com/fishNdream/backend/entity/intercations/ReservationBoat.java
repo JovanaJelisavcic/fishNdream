@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.intercations;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -53,6 +54,14 @@ public class ReservationBoat extends ReservationInfo {
 	public ReservationBoat(Boat boat) {
 		super();
 		this.boat = boat;
+	}
+
+	public boolean isCaptainBusy(LocalDateTime beginning, LocalDateTime ending) {
+		for(AdditionalServicesBoat service : additionalServices) {
+			if(service.getName().toUpperCase().contains("Capetain".toUpperCase()))
+				return true;
+		}
+		return false;
 	}
 	
 	

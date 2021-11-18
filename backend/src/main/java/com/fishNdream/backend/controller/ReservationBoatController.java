@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fishNdream.backend.entity.basic.Cottage;
+import com.fishNdream.backend.entity.basic.Boat;
 import com.fishNdream.backend.entity.basic.Views;
-import com.fishNdream.backend.entity.helper.AdditionalServicesCottage;
+import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.ReservationDTO;
-import com.fishNdream.backend.entity.intercations.ReservationCottage;
+import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.Fisherman;
-import com.fishNdream.backend.repository.CottageRepository;
+import com.fishNdream.backend.repository.BoatRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.security.JwtUtils;
 import com.fishNdream.backend.util.MailUtil;
@@ -36,11 +36,12 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
 @RestController
-@RequestMapping("/reservationCottage")
-public class ReservationCottageController {
+@RequestMapping("/reservationBoat")
+public class ReservationBoatController {
+	
 
 	@Autowired
-	CottageRepository cottagesRepo;
+	BoatRepository boatRepo;
 	@Autowired
 	FishermanRepository fishermanRepo;
 	@Autowired
@@ -50,23 +51,23 @@ public class ReservationCottageController {
 	MailUtil mailUtil;
 
 	@JsonView(Views.AdditionalServices.class)
-	@GetMapping("/services/{cottageId}")
+	@GetMapping("/services")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> servicesCottage(@PathVariable int cottageId)  {	
-		Optional<Cottage> cottage =  cottagesRepo.findById(cottageId);
-		if(cottage.isEmpty()) return ResponseEntity.notFound().build();
-		List<AdditionalServicesCottage> services = cottage.get().getAdditionalServices();
+	public ResponseEntity<?> servicesBoat(@RequestBody ReservationDTO reservation )  {
+		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
+		if(boat.isEmpty()) return ResponseEntity.notFound().build();
+		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());		
 		if(services.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(services, HttpStatus.OK);
 	}
 	
 	@JsonView(Views.AdditionalServices.class)
-	@GetMapping("/services/{cottageId}/{criteria}")
+	@GetMapping("/services/{criteria}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> searchServices(@PathVariable int cottageId, @PathVariable String criteria )  {	
-		Optional<Cottage> cottage =  cottagesRepo.findById(cottageId);
-		if(cottage.isEmpty()) return ResponseEntity.notFound().build();
-		List<AdditionalServicesCottage> services = cottage.get().getAdditionalServices();
+	public ResponseEntity<?> searchServices(@RequestBody ReservationDTO reservation, @PathVariable String criteria )  {	
+		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
+		if(boat.isEmpty()) return ResponseEntity.notFound().build();
+		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());
 		services.removeIf(p -> !p.getName().toUpperCase().contains(criteria.toUpperCase()));
 		if(services.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(services, HttpStatus.OK);
@@ -74,13 +75,13 @@ public class ReservationCottageController {
 	
 	@PostMapping("/confirm")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> confirmCottage(@RequestHeader("Authorization") String token,@RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
-		Optional<Cottage> cottage =  cottagesRepo.findById(reservation.getEntityId());
-		if(cottage.isEmpty()) return ResponseEntity
+	public ResponseEntity<?> confirmBoat(@RequestHeader("Authorization") String token,@RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
+		if(boat.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
-	            .body("Cottage not found");
+	            .body("Boat not found");
 		if(reservation.getParticipantsNum()==0) reservation.setParticipantsNum(1);
-		if(!cottage.get().isAvailableAndFree(reservation.getBeginning(), reservation.getEnding()) || cottage.get().getGuestsNum()<reservation.getParticipantsNum())
+		if(!boat.get().isAvailableAndFree(reservation.getBeginning(), reservation.getEnding()) || boat.get().getCapacity()<reservation.getParticipantsNum())
 			return ResponseEntity
             .status(HttpStatus.FORBIDDEN)
             .body("Not free at these conditions");
@@ -88,16 +89,16 @@ public class ReservationCottageController {
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
-		if(fisherman.get().alreadyReservedCottage(reservation.getEntityId(), reservation.getBeginning(),reservation.getEnding())) return ResponseEntity
+		if(fisherman.get().alreadyReservedBoat(reservation.getEntityId(), reservation.getBeginning(),reservation.getEnding())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
 		
 		
-		ReservationCottage newReservation = new ReservationCottage();
-		List<AdditionalServicesCottage> services = new ArrayList<>();
+		ReservationBoat newReservation = new ReservationBoat();
+		List<AdditionalServicesBoat> services = new ArrayList<>();
 		for(int serviceId : reservation.getServicesIds()) {
 			boolean found = false;
-			for(AdditionalServicesCottage service : cottage.get().getAdditionalServices()) {
+			for(AdditionalServicesBoat service : boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding())) {
 				if(service.getServiceId()==serviceId) {
 					services.add(service);
 					found=true;
@@ -114,23 +115,20 @@ public class ReservationCottageController {
 		newReservation.setActionStartTime(null);
 		newReservation.setBeginning(reservation.getBeginning());
 		newReservation.setCanceled(false);
-		newReservation.setCottage(cottage.get());
+		newReservation.setBoat(boat.get());
 		newReservation.setEnding(reservation.getEnding());
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
 		newReservation.setPrice(0);
-		
-		fisherman.get().addReservationCottage(newReservation);
-		cottage.get().addReservation(newReservation);
+		fisherman.get().addReservationBoat(newReservation);
+		boat.get().addReservation(newReservation);
 		
 		fishermanRepo.save(fisherman.get());
-		cottagesRepo.save(cottage.get());
-		
-		mailUtil.sendReservationCottageConfirmation(fisherman.get().getEmail(), newReservation);
+		boatRepo.save(boat.get());
+
+		mailUtil.sendReservationBoatConfirmation(fisherman.get().getEmail(), newReservation);
 		return ResponseEntity.ok().build();
 	}
 	
-	
-	
-	
+
 }

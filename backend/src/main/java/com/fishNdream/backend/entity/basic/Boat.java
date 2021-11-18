@@ -1,6 +1,7 @@
 package com.fishNdream.backend.entity.basic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -224,6 +225,22 @@ public class Boat {
 			return true;
 		}
 	}
+
+	public void addReservation(ReservationBoat newReservation) {
+		reservations.add(newReservation);
+		
+	}
+
+	public List<AdditionalServicesBoat> getAdditionalServicesForTime(LocalDateTime beginning, LocalDateTime ending) {
+		List<AdditionalServicesBoat> res = new ArrayList<>();
+		for(AdditionalServicesBoat service : additionalServices) {
+			if(service.getName().toUpperCase().contains("Capetain".toUpperCase())) {
+				if(owner.checkIfAvailableForService(beginning,ending)) res.add(service);
+			}else res.add(service);
+		}
+		return res;
+	}
+
 	
 	
 	
