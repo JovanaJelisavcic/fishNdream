@@ -191,6 +191,12 @@ public class Cottage {
 				}
 			return true;
 			}
+
+
+	public void addReservation(ReservationCottage newReservation) {
+		reservations.add(newReservation);
+		
+	}
 			
 		
 

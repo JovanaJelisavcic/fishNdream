@@ -2,6 +2,7 @@ package com.fishNdream.backend.util;
 
 
 import java.io.UnsupportedEncodingException;
+import java.time.format.DateTimeFormatter;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -13,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.User;
 
@@ -93,37 +95,40 @@ public class MailUtil {
 			     
 			    javaMailSender.send(message);
 			
+		}
+
+		public void sendReservationCottageConfirmation(String email, ReservationCottage newReservation) throws MessagingException, UnsupportedEncodingException {
+			 String toAddress = newReservation.getFisherman().getEmail();
+			    String subject = "Cottage Reservation Confirmation";
+			    String content = "Dear [[name]],<br>"
+			            + "You successfully reserved the cottage with following information :<br>"
+			            + "cottage name : [[cottageName]] <br>"
+			            + "Check In Date : [[beginning]] <br>"
+			            + "Check Out Date : [[ending]] <br>"
+			            + "<br>for [[guestNum]] people <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", newReservation.getFisherman().getSurname());
+			    content = content.replace("[[cottageName]]", newReservation.getCottage().getName());
+			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			
 		}    
 	    
 	
-/*
-	public void sendDenyVacation(VacationPharmacist vacationPharmacist) throws MessagingException, UnsupportedEncodingException {
-		  String toAddress = vacationPharmacist.getPharmacist().getEmail();
-		    String senderName = "Farmacia";
-		    String subject = "Answer to your vacation request";
-		    String content = "Dear [[name]],<br>"
-		            + "I am sorry to inform you that your vacation request has been denied for next reason:<br>"
-		            + "[[reason]]"
-		            + "<br>Thank you for understanding,<br>"
-		            + "Farmacia.";
-		     
-		    MimeMessage message = javaMailSender.createMimeMessage();
-		    MimeMessageHelper helper = new MimeMessageHelper(message);
-		     
-		    helper.setFrom(fromAddress, senderName);
-		    helper.setTo(toAddress);
-		    helper.setSubject(subject);
-		     
-		    content = content.replace("[[name]]", vacationPharmacist.getPharmacist().getSurname());
-		   
-		     
-		    content = content.replace("[[reason]]", vacationPharmacist.getExplanation());
-		     
-		    helper.setText(content, true);
-		     
-		    javaMailSender.send(message);
-		
-	}*/
+
 	
 	
 	

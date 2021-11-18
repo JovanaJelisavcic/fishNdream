@@ -1,12 +1,20 @@
 package com.fishNdream.backend.entity.users;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.intercations.ReservationCottage;
 
 @Entity
 public class Fisherman extends UserInfo{
+	
+	@OneToMany(mappedBy="fisherman")
+	private List<ReservationCottage> reservationCottages;
 	
 	public Fisherman(UserInfo user) {
 		super(user);
@@ -33,6 +41,17 @@ public class Fisherman extends UserInfo{
 				super.setSurname(user.getSurname());
 		
 		
+		
+	}
+	public boolean alreadyReservedCottage(int entityId, LocalDateTime beginning, LocalDateTime ending) {
+		for(ReservationCottage r : reservationCottages) {
+			if(r.getCottage().getCottageId()==entityId && r.getBeginning().toLocalDate().equals(beginning.toLocalDate()) && r.getEnding().toLocalDate().equals(ending.toLocalDate()))
+					return true;
+		}
+		return false;
+	}
+	public void addReservationCottage(ReservationCottage newReservation) {
+		reservationCottages.add(newReservation);
 		
 	}
 	

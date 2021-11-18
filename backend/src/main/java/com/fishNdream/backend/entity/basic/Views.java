@@ -14,5 +14,7 @@ public class Views {
 	public interface UnauthoInstuctors extends UserInfo {
     }
 	
+	public interface AdditionalServices {}
+	
 	
 }
