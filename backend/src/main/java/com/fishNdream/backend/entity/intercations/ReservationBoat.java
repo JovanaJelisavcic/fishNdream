@@ -14,6 +14,7 @@ import com.fishNdream.backend.entity.users.Fisherman;
 
 @Entity
 public class ReservationBoat extends ReservationInfo {
+	//private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ReservationBoat.class);
 	
 	@ManyToOne
     @JoinColumn(name="boat_id", nullable=false)
@@ -57,6 +58,7 @@ public class ReservationBoat extends ReservationInfo {
 	}
 
 	public boolean isCaptainBusy(LocalDateTime beginning, LocalDateTime ending) {
+		
 		for(AdditionalServicesBoat service : additionalServices) {
 			if(service.getName().toUpperCase().contains("Capetain".toUpperCase()))
 				return true;

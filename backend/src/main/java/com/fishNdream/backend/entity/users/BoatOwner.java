@@ -14,6 +14,7 @@ import com.fishNdream.backend.entity.intercations.ReservationBoat;
 
 @Entity
 public class BoatOwner extends UserInfo {
+//	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(BoatOwner.class);
 	
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Boat.class)
@@ -39,9 +40,13 @@ public class BoatOwner extends UserInfo {
 
 
 	public boolean checkIfAvailableForService(LocalDateTime beginning, LocalDateTime ending) {
+	
 		for(Boat boat : boats) {
-			if(!boat.isAvailableAndFree(beginning, ending)) {
+			
+			
+				if(boat.getReservations()==null) return true;
 				for(ReservationBoat reserv: boat.getReservations()) {
+			
 					if(!(      (beginning.isBefore(reserv.getBeginning()) && ending.isBefore(reserv.getBeginning()))    || 
 							(beginning.isAfter(reserv.getEnding()) && ending.isAfter(reserv.getEnding()))  )
 							&& !reserv.isCanceled() && reserv.getFisherman()!=null) {
@@ -49,7 +54,6 @@ public class BoatOwner extends UserInfo {
 					}
 					
 				}
-			}
 		}
 		return true;
 	} 

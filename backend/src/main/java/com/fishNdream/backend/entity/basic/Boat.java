@@ -25,6 +25,8 @@ import com.fishNdream.backend.entity.users.BoatOwner;
 
 @Entity
 public class Boat {
+	
+	//private static final org.slf4j.Logger logger = LoggerFactory.getLogger(Boat.class);
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonView(Views.UnauthoBoats.class)
@@ -212,12 +214,14 @@ public class Boat {
 
 	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
 		boolean available =false;
+		
 		for(AvailabilityPeriodBoats period : availablePeriods) {
 			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate()))
 				available=true;			
 		}
 		if(!available) return false;
 		else {
+			
 			for(ReservationBoat reservation : reservations) {
 				if(!(      (from.isBefore(reservation.getBeginning()) && to.isBefore(reservation.getBeginning()))    ||     (from.isAfter(reservation.getEnding()) && to.isAfter(reservation.getEnding()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
 					return false;
@@ -232,9 +236,12 @@ public class Boat {
 	}
 
 	public List<AdditionalServicesBoat> getAdditionalServicesForTime(LocalDateTime beginning, LocalDateTime ending) {
+	
 		List<AdditionalServicesBoat> res = new ArrayList<>();
 		for(AdditionalServicesBoat service : additionalServices) {
+		
 			if(service.getName().toUpperCase().contains("Capetain".toUpperCase())) {
+				
 				if(owner.checkIfAvailableForService(beginning,ending)) res.add(service);
 			}else res.add(service);
 		}

@@ -38,6 +38,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @RestController
 @RequestMapping("/reservationBoat")
 public class ReservationBoatController {
+	//private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ReservationBoatController.class);
 	
 
 	@Autowired
