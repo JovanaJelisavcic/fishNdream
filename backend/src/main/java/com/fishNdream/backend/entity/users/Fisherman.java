@@ -8,6 +8,7 @@ import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
 
@@ -18,6 +19,8 @@ public class Fisherman extends UserInfo{
 	private List<ReservationCottage> reservationCottages;
 	@OneToMany(mappedBy="fisherman")
 	private List<ReservationBoat> reservationBoats;
+	@OneToMany(mappedBy="fisherman")
+	private List<ReservationAdventure> reservationAdventures;
 	
 	public Fisherman(UserInfo user) {
 		super(user);
@@ -66,6 +69,17 @@ public class Fisherman extends UserInfo{
 	}
 	public void addReservationBoat(ReservationBoat newReservation) {
 		reservationBoats.add(newReservation);
+		
+	}
+	public boolean alreadyReservedAdventure(int entityId, LocalDateTime beginning, LocalDateTime ending) {
+		for(ReservationAdventure r : reservationAdventures) {
+			if(r.getAdventure().getAdventureId()==entityId && r.getBeginning().equals(beginning) && r.getEnding().equals(ending))
+					return true;
+		}
+		return false;
+	}
+	public void addReservationAdventure(ReservationAdventure newReservation) {
+		reservationAdventures.add(newReservation);
 		
 	}
 }

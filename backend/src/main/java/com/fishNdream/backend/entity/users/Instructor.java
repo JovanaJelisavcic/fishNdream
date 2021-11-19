@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.users;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 
 @Entity
 public class Instructor extends UserInfo {
@@ -44,5 +46,16 @@ public class Instructor extends UserInfo {
 	public void setShortBio(String shortBio) {
 		this.shortBio = shortBio;
 	}
+	public boolean isInstructorFree(LocalDateTime from, LocalDateTime to) {
+		//znaci ja proveravam da li za njega samo postoji neka rezervacija u to vreme 
+		for(Adventure adventure : adventures) {
+			for(ReservationAdventure reservation : adventure.getReservations()) {
+				if(!(      (from.isBefore(reservation.getBeginning()) && to.isBefore(reservation.getBeginning()))    ||     (from.isAfter(reservation.getEnding()) && to.isAfter(reservation.getEnding()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
+					return false;
+			}
+		}
+		return true;
+	}
+	
 	
 }

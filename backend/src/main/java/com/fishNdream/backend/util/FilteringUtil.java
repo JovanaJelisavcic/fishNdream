@@ -81,7 +81,7 @@ public class FilteringUtil {
 	public List<Adventure> getAvaiableAdventures(List<Adventure> adventures, LocalDateTime from, LocalDateTime to) {
 		List<Adventure> result = new ArrayList<>();
 		for(Adventure a : adventures) {
-			if(a.isAvailableAndFree(from,to)) result.add(a);
+			if(a.isAvailableAndFreeWithInstructor(from,to)) result.add(a);
 			}
 
 		return result;

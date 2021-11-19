@@ -7,15 +7,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Adventure;
+import com.fishNdream.backend.entity.basic.Views;
 
 @Entity
 public class AdditionalServicesAdventure{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.AdditionalServices.class)
 	private int serviceId; 
+	@JsonView(Views.AdditionalServices.class)
 	private String name;
+	@JsonView(Views.AdditionalServices.class)
 	private float price;
 	@ManyToOne
     @JoinColumn(name="adventure_id", nullable=false)

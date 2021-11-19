@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
@@ -134,9 +135,9 @@ public class MailUtil {
 			    String content = "Dear [[name]],<br>"
 			            + "You successfully reserved the boat with following information :<br>"
 			            + "boat name : [[boatName]] <br>"
-			            + "Check In Date : [[beginning]] <br>"
-			            + "Check Out Date : [[ending]] <br>"
-			            + "<br>for [[guestNum]] people <br>"
+			            + "Check In Date And Time : [[beginning]] <br>"
+			            + "Check Out Date And Time : [[ending]] <br>"
+			            + "<br>for [[guestNum]] people. <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -149,13 +150,43 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", newReservation.getFisherman().getSurname());
 			    content = content.replace("[[boatName]]", newReservation.getBoat().getName());
-			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
+			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
 			
+		}
+
+		public void sendReservationAdventureConfirmation(String email, ReservationAdventure newReservation) throws UnsupportedEncodingException, MessagingException {
+			
+			 String toAddress = newReservation.getFisherman().getEmail();
+			    String subject = "Adventure Reservation Confirmation";
+			    String content = "Dear [[name]],<br>"
+			            + "You successfully reserved the adventure with following information :<br>"
+			            + "Adventure name : [[adventureName]] <br>"
+			            + "Check In Date And Time : [[beginning]] <br>"
+			            + "Check Out Date And Time : [[ending]] <br>"
+			            + "<br>for [[guestNum]] people <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", newReservation.getFisherman().getSurname());
+			    content = content.replace("[[adventureName]]", newReservation.getAdventure().getName());
+			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
+			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
+			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
 		}    
 	    
 	

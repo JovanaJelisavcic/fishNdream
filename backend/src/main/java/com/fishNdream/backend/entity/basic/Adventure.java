@@ -141,6 +141,13 @@ public class Adventure {
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
+	
+	public boolean isAvailableAndFreeWithInstructor(LocalDateTime from, LocalDateTime to) {
+		if(!instructor.isInstructorFree(from,to)) return false;
+		if(!isAvailableAndFree(from, to)) return false;
+		return true;
+		
+	}
 
 	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
 		//ldate timeee, i instruktor mora biti tu braleeee
@@ -159,6 +166,11 @@ public class Adventure {
 			}
 			return true;
 		}
+	}
+
+	public void addReservation(ReservationAdventure newReservation) {
+		reservations.add(newReservation);
+		
 	}
 	
 	
