@@ -1,6 +1,7 @@
 package com.fishNdream.backend.entity.basic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,7 @@ import com.fishNdream.backend.entity.helper.AdditionalServicesCottage;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodCottages;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.entity.users.CottageOwner;
+import com.fishNdream.backend.entity.users.Fisherman;
 
 @Entity
 public class Cottage {
@@ -202,6 +204,25 @@ public class Cottage {
 	public boolean removeAction(LocalDateTime from, LocalDateTime to) {
 		boolean res = reservations.removeIf(r -> (!(      (from.toLocalDate().isBefore(r.getBeginning().toLocalDate()) && to.toLocalDate().isBefore(r.getBeginning().toLocalDate()))    ||     (from.toLocalDate().isAfter(r.getEnding().toLocalDate()) && to.toLocalDate().isAfter(r.getEnding().toLocalDate()))  ) && r.isActionRes() && r.getFisherman()==null ));
 		return res;
+	}
+
+
+	public List<ReservationCottage> getActiveActions() {
+		List<ReservationCottage> res = new ArrayList<>();
+		for(ReservationCottage reservation : reservations) {
+				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()==null)
+					res.add(reservation);
+		}
+		return res;
+	}
+
+
+	public void changeActionRes(int reservationId, Fisherman fisherman) {
+		for(ReservationCottage reservation : reservations) {
+			if(reservation.getReservationId()== reservationId )
+				reservation.setFisherman(fisherman);
+	}		
+		
 	}
 			
 		

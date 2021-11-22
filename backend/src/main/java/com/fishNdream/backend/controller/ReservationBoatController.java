@@ -94,23 +94,13 @@ public class ReservationBoatController {
 		Optional<ReservationBoat> action =  reservBoatRepo.findById(actionId);
 		if(action.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
-	            .body("Action not found");
-		//da li ovo i proveravam
-		if(!action.get().getBoat().isAvailableAndFree(action.get().getBeginning(), action.get().getEnding()))
-			return ResponseEntity
-            .status(HttpStatus.FORBIDDEN)
-            .body("Not free at these conditions");
-		
+	            .body("Action not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
-		//da li ovo i proveravam
 		if(fisherman.get().alreadyReservedActionBoat(action.get().getReservationId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
-		
-		
-	
 		
 	
 		fisherman.get().addReservationBoat(action.get());

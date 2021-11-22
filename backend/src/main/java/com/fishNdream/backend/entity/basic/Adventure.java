@@ -1,6 +1,7 @@
 package com.fishNdream.backend.entity.basic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesAdventure;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodAdventures;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
+import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.entity.users.Instructor;
 
 @Entity
@@ -174,6 +176,23 @@ public class Adventure {
 
 	public Adventure removeAction(LocalDateTime from, LocalDateTime to) {
 		return instructor.removeAction( from,  to);				
+	}
+
+	public List<ReservationAdventure> getActiveActions() {
+		List<ReservationAdventure> res = new ArrayList<>();
+		for(ReservationAdventure reservation : reservations) {
+				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()==null)
+					res.add(reservation);
+		}
+		return res;
+	}
+
+	public void changeActionRes(int reservationId, Fisherman fisherman) {
+		for(ReservationAdventure reservation : reservations) {
+			if(reservation.getReservationId()== reservationId )
+				reservation.setFisherman(fisherman);
+	}		
+		
 	}
 	
 	

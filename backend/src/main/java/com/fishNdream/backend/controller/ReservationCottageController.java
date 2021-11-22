@@ -28,6 +28,7 @@ import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.CottageRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
+import com.fishNdream.backend.repository.ReservationCottageRepository;
 import com.fishNdream.backend.security.JwtUtils;
 import com.fishNdream.backend.util.MailUtil;
 
@@ -41,6 +42,8 @@ public class ReservationCottageController {
 
 	@Autowired
 	CottageRepository cottagesRepo;
+	@Autowired
+	ReservationCottageRepository reservCottagesRepo;
 	@Autowired
 	FishermanRepository fishermanRepo;
 	@Autowired
@@ -70,6 +73,43 @@ public class ReservationCottageController {
 		services.removeIf(p -> !p.getName().toUpperCase().contains(criteria.toUpperCase()));
 		if(services.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(services, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/actions/{cottageId}")
+	@JsonView(Views.ActionInfo.class)
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> actionsCottage(@PathVariable int cottageId )  {
+		Optional<Cottage> cottage =  cottagesRepo.findById(cottageId);
+		if(cottage.isEmpty()) return ResponseEntity.notFound().build();
+		List<ReservationCottage> actions = cottage.get().getActiveActions();		
+		if(actions.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(actions, HttpStatus.OK);
+	}
+	
+	@PostMapping("/actions/reserve/{actionId}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> confirmAction(@RequestHeader("Authorization") String token, @PathVariable int actionId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+		Optional<ReservationCottage> action =  reservCottagesRepo.findById(actionId);
+		if(action.isEmpty()) return ResponseEntity
+	            .status(HttpStatus.NOT_FOUND)
+	            .body("Action not found");		
+		
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		if(fisherman.get().alreadyReservedActionCottage(action.get().getReservationId())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("Entity already had been reserved by this user for this period");
+		
+	
+		fisherman.get().addReservationCottage(action.get());
+		action.get().getCottage().changeActionRes(action.get().getReservationId(), fisherman.get());
+		
+		fishermanRepo.save(fisherman.get());
+		cottagesRepo.save(action.get().getCottage());
+
+		mailUtil.sendReservationCottageConfirmation(fisherman.get().getEmail(), action.get());
+		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/confirm")

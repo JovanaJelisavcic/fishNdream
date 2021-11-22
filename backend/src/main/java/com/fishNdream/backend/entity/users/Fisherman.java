@@ -125,5 +125,25 @@ public class Fisherman extends UserInfo{
 		}
 		return false;
 	}
+
+
+
+	public boolean alreadyReservedActionCottage(int reservationId) {
+		for(ReservationCottage r : reservationCottages) {
+			if(r.getReservationId()==reservationId)
+					return true;
+		}
+		return false;
+	}
+
+
+
+	public boolean alreadyReservedActionAdventure(int reservationId) {
+		for(ReservationAdventure r : reservationAdventures) {
+			if(r.getReservationId()==reservationId)
+					return true;
+		}
+		return false;
+	}
 	
 }

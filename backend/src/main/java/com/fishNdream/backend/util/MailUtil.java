@@ -108,6 +108,7 @@ public class MailUtil {
 			            + "Check In Date : [[beginning]] <br>"
 			            + "Check Out Date : [[ending]] <br>"
 			            + "<br>for [[guestNum]] people <br>"
+			            + "<br> It was [[action]] done over action <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -123,6 +124,7 @@ public class MailUtil {
 			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
+			    content = content.replace("[[action]]", newReservation.isActionRes()?"":"not");
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -138,6 +140,7 @@ public class MailUtil {
 			            + "Check In Date And Time : [[beginning]] <br>"
 			            + "Check Out Date And Time : [[ending]] <br>"
 			            + "<br>for [[guestNum]] people. <br>"
+			            + "<br> It was [[action]] done over action <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -153,6 +156,7 @@ public class MailUtil {
 			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
+			    content = content.replace("[[action]]", newReservation.isActionRes()?"":"not");
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -169,6 +173,7 @@ public class MailUtil {
 			            + "Check In Date And Time : [[beginning]] <br>"
 			            + "Check Out Date And Time : [[ending]] <br>"
 			            + "<br>for [[guestNum]] people <br>"
+			            + "<br> It was [[action]] done over action <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -184,6 +189,7 @@ public class MailUtil {
 			    content = content.replace("[[beginning]]", newReservation.getBeginning().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
+			    content = content.replace("[[action]]", newReservation.isActionRes()?"":"not");
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
