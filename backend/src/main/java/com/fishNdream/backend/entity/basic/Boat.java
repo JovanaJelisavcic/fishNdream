@@ -22,6 +22,7 @@ import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodBoats;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.BoatOwner;
+import com.fishNdream.backend.entity.users.Fisherman;
 
 @Entity
 public class Boat {
@@ -246,6 +247,34 @@ public class Boat {
 			}else res.add(service);
 		}
 		return res;
+	}
+
+	public List<ReservationBoat> getActiveActions() {
+		List<ReservationBoat> res = new ArrayList<>();
+		for(ReservationBoat reservation : reservations) {
+				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()!=null)
+					res.add(reservation);
+		}
+		return res;
+	}
+
+	public void changeActionRes(int reservationId, Fisherman fisherman) {
+		for(ReservationBoat reservation : reservations) {
+				if(reservation.getReservationId()== reservationId )
+					reservation.setFisherman(fisherman);
+		}		
+	}
+
+
+	public Boat removeAction(LocalDateTime from, LocalDateTime to, boolean containsCaptain) {
+		reservations.removeIf(r -> ( !(      (from.isBefore(r.getBeginning()) && to.isBefore(r.getBeginning()))    ||     (from.isAfter(r.getEnding()) && to.isAfter(r.getEnding()))  ) && r.isActionRes() && r.getFisherman()==null ));
+		if(containsCaptain)		return owner.removeAction(from,to);
+		return null;
+	}
+
+	public void removeReservation(ReservationBoat r) {
+		reservations.remove(r);
+		
 	}
 
 	

@@ -150,7 +150,6 @@ public class Adventure {
 	}
 
 	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
-		//ldate timeee, i instruktor mora biti tu braleeee
 		boolean available =false;
 		for(AvailabilityPeriodAdventures period : availablePeriods) {
 			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate()))
@@ -171,6 +170,10 @@ public class Adventure {
 	public void addReservation(ReservationAdventure newReservation) {
 		reservations.add(newReservation);
 		
+	}
+
+	public Adventure removeAction(LocalDateTime from, LocalDateTime to) {
+		return instructor.removeAction( from,  to);				
 	}
 	
 	

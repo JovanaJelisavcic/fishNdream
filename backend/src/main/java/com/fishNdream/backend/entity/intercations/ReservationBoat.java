@@ -8,7 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Boat;
+import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.users.Fisherman;
 
@@ -18,6 +20,7 @@ public class ReservationBoat extends ReservationInfo {
 	
 	@ManyToOne
     @JoinColumn(name="boat_id", nullable=false)
+	@JsonView(Views.UnauthoBoats.class)
 	private Boat boat;
 	@ManyToOne
 	 @JoinColumn(name="email")

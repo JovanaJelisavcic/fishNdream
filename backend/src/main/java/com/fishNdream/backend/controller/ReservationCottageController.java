@@ -124,8 +124,8 @@ public class ReservationCottageController {
 		cottage.get().addReservation(newReservation);
 		
 		fishermanRepo.save(fisherman.get());
+		cottage.get().removeAction(newReservation.getBeginning(),newReservation.getEnding());
 		cottagesRepo.save(cottage.get());
-		
 		mailUtil.sendReservationCottageConfirmation(fisherman.get().getEmail(), newReservation);
 		return ResponseEntity.ok().build();
 	}

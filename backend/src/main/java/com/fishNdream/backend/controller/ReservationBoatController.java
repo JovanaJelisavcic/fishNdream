@@ -28,6 +28,7 @@ import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.BoatRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
+import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.security.JwtUtils;
 import com.fishNdream.backend.util.MailUtil;
 
@@ -43,6 +44,8 @@ public class ReservationBoatController {
 
 	@Autowired
 	BoatRepository boatRepo;
+	@Autowired
+	ReservationBoatRepository reservBoatRepo;
 	@Autowired
 	FishermanRepository fishermanRepo;
 	@Autowired
@@ -74,6 +77,52 @@ public class ReservationBoatController {
 		 return new ResponseEntity<>(services, HttpStatus.OK);
 	}
 	
+	@GetMapping("/actions/{boatId}")
+	@JsonView(Views.ActionInfo.class)
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> actionsBoat(@PathVariable int boatId )  {
+		Optional<Boat> boat =  boatRepo.findById(boatId);
+		if(boat.isEmpty()) return ResponseEntity.notFound().build();
+		List<ReservationBoat> actions = boat.get().getActiveActions();		
+		if(actions.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(actions, HttpStatus.OK);
+	}
+	
+	@PostMapping("/actions/reserve/{actionId}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> confirmAction(@RequestHeader("Authorization") String token, @PathVariable int actionId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+		Optional<ReservationBoat> action =  reservBoatRepo.findById(actionId);
+		if(action.isEmpty()) return ResponseEntity
+	            .status(HttpStatus.NOT_FOUND)
+	            .body("Action not found");
+		//da li ovo i proveravam
+		if(!action.get().getBoat().isAvailableAndFree(action.get().getBeginning(), action.get().getEnding()))
+			return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body("Not free at these conditions");
+		
+		
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		//da li ovo i proveravam
+		if(fisherman.get().alreadyReservedActionBoat(action.get().getReservationId())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("Entity already had been reserved by this user for this period");
+		
+		
+	
+		
+	
+		fisherman.get().addReservationBoat(action.get());
+		action.get().getBoat().changeActionRes(action.get().getReservationId(), fisherman.get());
+		
+		fishermanRepo.save(fisherman.get());
+		boatRepo.save(action.get().getBoat());
+
+		mailUtil.sendReservationBoatConfirmation(fisherman.get().getEmail(), action.get());
+		return ResponseEntity.ok().build();
+	}
+	
 	@PostMapping("/confirm")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> confirmBoat(@RequestHeader("Authorization") String token,@RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
@@ -97,10 +146,12 @@ public class ReservationBoatController {
 		
 		ReservationBoat newReservation = new ReservationBoat();
 		List<AdditionalServicesBoat> services = new ArrayList<>();
+		boolean containsCaptain=false;
 		for(int serviceId : reservation.getServicesIds()) {
 			boolean found = false;
 			for(AdditionalServicesBoat service : boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding())) {
 				if(service.getServiceId()==serviceId) {
+					if(service.getName().toUpperCase().contains("Capetain".toUpperCase())) containsCaptain=true;
 					services.add(service);
 					found=true;
 					break;
@@ -123,6 +174,8 @@ public class ReservationBoatController {
 		newReservation.setPrice(0);
 		fisherman.get().addReservationBoat(newReservation);
 		boat.get().addReservation(newReservation);
+		Boat toSaveBoatAction = boat.get().removeAction(newReservation.getBeginning(),newReservation.getEnding(), containsCaptain );
+		if(toSaveBoatAction!=null && toSaveBoatAction.getBoatId()!=boat.get().getBoatId())  boatRepo.save(toSaveBoatAction);
 		
 		fishermanRepo.save(fisherman.get());
 		boatRepo.save(boat.get());

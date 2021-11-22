@@ -21,10 +21,46 @@ public class Fisherman extends UserInfo{
 	private List<ReservationBoat> reservationBoats;
 	@OneToMany(mappedBy="fisherman")
 	private List<ReservationAdventure> reservationAdventures;
+
 	
 	public Fisherman(UserInfo user) {
 		super(user);
 	}
+	
+
+
+	public List<ReservationCottage> getReservationCottages() {
+		return reservationCottages;
+	}
+
+
+	public void setReservationCottages(List<ReservationCottage> reservationCottages) {
+		this.reservationCottages = reservationCottages;
+	}
+
+
+	public List<ReservationBoat> getReservationBoats() {
+		return reservationBoats;
+	}
+
+
+	public void setReservationBoats(List<ReservationBoat> reservationBoats) {
+		this.reservationBoats = reservationBoats;
+	}
+
+
+	public List<ReservationAdventure> getReservationAdventures() {
+		return reservationAdventures;
+	}
+
+
+	public void setReservationAdventures(List<ReservationAdventure> reservationAdventures) {
+		this.reservationAdventures = reservationAdventures;
+	}
+
+
+
+
 	public Fisherman() {}
 	public void changeUserInfo(@Valid ChangeInfoDTO user) {
 		if(user.getAddress()!=null)
@@ -82,4 +118,12 @@ public class Fisherman extends UserInfo{
 		reservationAdventures.add(newReservation);
 		
 	}
+	public boolean alreadyReservedActionBoat(int reservationId) {
+		for(ReservationBoat r : reservationBoats) {
+			if(r.getReservationId()==reservationId)
+					return true;
+		}
+		return false;
+	}
+	
 }

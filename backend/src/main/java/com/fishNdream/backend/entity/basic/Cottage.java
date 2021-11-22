@@ -197,6 +197,12 @@ public class Cottage {
 		reservations.add(newReservation);
 		
 	}
+
+
+	public boolean removeAction(LocalDateTime from, LocalDateTime to) {
+		boolean res = reservations.removeIf(r -> (!(      (from.toLocalDate().isBefore(r.getBeginning().toLocalDate()) && to.toLocalDate().isBefore(r.getBeginning().toLocalDate()))    ||     (from.toLocalDate().isAfter(r.getEnding().toLocalDate()) && to.toLocalDate().isAfter(r.getEnding().toLocalDate()))  ) && r.isActionRes() && r.getFisherman()==null ));
+		return res;
+	}
 			
 		
 

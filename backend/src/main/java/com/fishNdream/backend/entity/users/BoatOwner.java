@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import com.fishNdream.backend.entity.basic.Boat;
+import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 
@@ -56,6 +57,27 @@ public class BoatOwner extends UserInfo {
 				}
 		}
 		return true;
+	}
+	//return reservations.removeIf(r -> ( !(      (from.isBefore(r.getBeginning()) && to.isBefore(r.getBeginning()))    ||     (from.isAfter(r.getEnding()) && to.isAfter(r.getEnding()))  ) && r.isActionRes() && r.getFisherman()==null ));
+	
+	public Boat removeAction(LocalDateTime from, LocalDateTime to) {
+		for(Boat b : boats) {
+			boolean removed = false;
+			for(ReservationBoat r : b.getReservations()) {
+				if(!(      (from.isBefore(r.getBeginning()) && to.isBefore(r.getBeginning()))    ||     (from.isAfter(r.getEnding()) && to.isAfter(r.getEnding()))  ) && r.isActionRes() && r.getFisherman()==null ) {
+					for(AdditionalServicesBoat a: r.getAdditionalServices()) {
+						if(a.getName().toUpperCase().contains("Capetain".toUpperCase())) {
+							b.removeReservation(r);
+							removed=true;
+						}
+						
+					}
+
+				}
+			}
+			if(removed) return b;
+		}
+		return null;
 	} 
 	
 	

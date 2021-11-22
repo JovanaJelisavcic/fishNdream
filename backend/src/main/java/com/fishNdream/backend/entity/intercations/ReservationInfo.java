@@ -10,22 +10,31 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.basic.Views;
+
 @MappedSuperclass
 public class ReservationInfo {
 	@Id
 	@Column(nullable=false, unique =true,
 	        updatable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ActionInfo.class)
 	private int reservationId;
+	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime beginning; 
+	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime ending;
 	@Transient
 	private Duration duration;
+	@JsonView(Views.ActionInfo.class)
 	private int participantsNum;
 	private float price;
 	private boolean canceled;
 	private boolean actionRes;
+	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime actionStartTime;
+	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime actionEndTime;
 
 

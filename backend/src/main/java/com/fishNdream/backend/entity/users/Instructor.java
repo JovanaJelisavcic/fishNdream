@@ -47,7 +47,6 @@ public class Instructor extends UserInfo {
 		this.shortBio = shortBio;
 	}
 	public boolean isInstructorFree(LocalDateTime from, LocalDateTime to) {
-		//znaci ja proveravam da li za njega samo postoji neka rezervacija u to vreme 
 		for(Adventure adventure : adventures) {
 			for(ReservationAdventure reservation : adventure.getReservations()) {
 				if(!(      (from.isBefore(reservation.getBeginning()) && to.isBefore(reservation.getBeginning()))    ||     (from.isAfter(reservation.getEnding()) && to.isAfter(reservation.getEnding()))  ) && !reservation.isCanceled() && reservation.getFisherman()!=null)
@@ -55,6 +54,13 @@ public class Instructor extends UserInfo {
 			}
 		}
 		return true;
+	}
+	public Adventure removeAction(LocalDateTime from, LocalDateTime to) {
+		for(Adventure a : adventures) {
+			boolean removed = a.getReservations().removeIf(r -> ( !(      (from.isBefore(r.getBeginning()) && to.isBefore(r.getBeginning()))    ||     (from.isAfter(r.getEnding()) && to.isAfter(r.getEnding()))  ) && r.isActionRes() && r.getFisherman()==null ));
+		    if(removed) return a;
+		}
+		return null;
 	}
 	
 	

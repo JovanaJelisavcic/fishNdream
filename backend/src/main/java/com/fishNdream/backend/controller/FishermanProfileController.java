@@ -56,5 +56,7 @@ public class FishermanProfileController {
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
+	
+	
 
 }
