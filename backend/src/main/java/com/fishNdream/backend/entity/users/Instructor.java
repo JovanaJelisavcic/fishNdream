@@ -13,6 +13,7 @@ import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
+import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 
 @Entity
 public class Instructor extends UserInfo {
@@ -22,7 +23,13 @@ public class Instructor extends UserInfo {
 	@OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Adventure.class)
 	@JsonView(Views.UnauthoInstuctors.class)
-	private List<Adventure> adventures; 
+	private List<Adventure> adventures;
+	@OneToMany(
+	        mappedBy = "instructor",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<SubscriptionInstructor> subscriptions; 
 	
 	
 	public Instructor(SignUpRequest request) {
@@ -35,6 +42,12 @@ public class Instructor extends UserInfo {
 		return adventures;
 	}
 
+	public List<SubscriptionInstructor> getSubscriptions() {
+		return subscriptions;
+	}
+	public void setSubscriptions(List<SubscriptionInstructor> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
 	public void setAdventures(List<Adventure> adventures) {
 		this.adventures = adventures;
 	}
@@ -61,6 +74,13 @@ public class Instructor extends UserInfo {
 		    if(removed) return a;
 		}
 		return null;
+	}
+	public void addNewSubscription(SubscriptionInstructor newOne) {
+		subscriptions.add(newOne);
+	}
+	public void removeSubscription(String email) {
+		subscriptions.removeIf(s-> s.getFisherman().getEmail().equals(email));
+		
 	}
 	
 	

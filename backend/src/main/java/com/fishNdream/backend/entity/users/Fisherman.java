@@ -11,6 +11,9 @@ import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
+import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
+import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
+import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 
 @Entity
 public class Fisherman extends UserInfo{
@@ -21,12 +24,60 @@ public class Fisherman extends UserInfo{
 	private List<ReservationBoat> reservationBoats;
 	@OneToMany(mappedBy="fisherman")
 	private List<ReservationAdventure> reservationAdventures;
+	@OneToMany(
+	        mappedBy = "fisherman"
+	    )
+	private List<SubscriptionCottage> subscriptionCotagges;
+	@OneToMany(
+	        mappedBy = "fisherman"
+	    )
+	private List<SubscriptionBoat> subsriptionsBoats;
+	@OneToMany(
+	        mappedBy = "fisherman"
+	    )
+	private List<SubscriptionInstructor> subscriptionInstructors;
 
 	
 	public Fisherman(UserInfo user) {
 		super(user);
 	}
 	
+
+
+	public List<SubscriptionInstructor> getSubscriptionInstructors() {
+		return subscriptionInstructors;
+	}
+
+
+
+	public void setSubscriptionInstructors(List<SubscriptionInstructor> subscriptionInstructors) {
+		this.subscriptionInstructors = subscriptionInstructors;
+	}
+
+
+
+	public List<SubscriptionCottage> getSubscriptionCotagges() {
+		return subscriptionCotagges;
+	}
+
+
+
+	public void setSubscriptionCotagges(List<SubscriptionCottage> subscriptionCotagges) {
+		this.subscriptionCotagges = subscriptionCotagges;
+	}
+
+
+
+	public List<SubscriptionBoat> getSubsriptionsBoats() {
+		return subsriptionsBoats;
+	}
+
+
+
+	public void setSubsriptionsBoats(List<SubscriptionBoat> subsriptionsBoats) {
+		this.subsriptionsBoats = subsriptionsBoats;
+	}
+
 
 
 	public List<ReservationCottage> getReservationCottages() {
@@ -144,6 +195,78 @@ public class Fisherman extends UserInfo{
 					return true;
 		}
 		return false;
+	}
+
+
+
+	public boolean alreadySubscribedCottage(int cottageId) {
+		for(SubscriptionCottage s: subscriptionCotagges) {
+			if(s.getCottage().getCottageId()==cottageId)
+				return true;
+		}
+		return false;
+	}
+
+
+
+	public void addSubscriptionCottage(SubscriptionCottage newOne) {
+		subscriptionCotagges.add(newOne);
+		
+	}
+
+
+
+	public void removeSubscriptionCottage(int cottageId) {
+		subscriptionCotagges.removeIf(s-> s.getCottage().getCottageId()==cottageId);
+		
+	}
+
+
+
+	public boolean alreadySubscribedBoat(int boatId) {
+		for(SubscriptionBoat s: subsriptionsBoats) {
+			if(s.getBoat().getBoatId()==boatId)
+				return true;
+		}
+		return false;
+	}
+
+
+
+	public void addSubscriptionBoat(SubscriptionBoat newOne) {
+		subsriptionsBoats.add(newOne);
+		
+	}
+
+
+
+	public void removeSubscriptionBoat(int boatId) {
+		subsriptionsBoats.removeIf(s-> s.getBoat().getBoatId()==boatId);
+		
+	}
+
+
+
+	public boolean alreadySubscribedInstructor(String email) {
+		for(SubscriptionInstructor s: subscriptionInstructors) {
+			if(s.getInstructor().getEmail()==email)
+				return true;
+		}
+		return false;
+	}
+
+
+
+	public void addSubscriptionInstructor(SubscriptionInstructor newOne) {
+		subscriptionInstructors.add(newOne);
+		
+	}
+
+
+
+	public void removeSubscriptionInstructor(String email) {
+		subscriptionInstructors.removeIf(s-> s.getInstructor().getEmail().equals(email));
+		
 	}
 	
 }

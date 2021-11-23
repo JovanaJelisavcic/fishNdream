@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodBoats;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
+import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
 import com.fishNdream.backend.entity.users.BoatOwner;
 import com.fishNdream.backend.entity.users.Fisherman;
 
@@ -72,9 +73,23 @@ public class Boat {
 	        orphanRemoval = true
 	    )
 	private List<ReservationBoat> reservations;
+	@OneToMany(
+	        mappedBy = "boat",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<SubscriptionBoat> subscrpitions;
 	
 	public List<AdditionalServicesBoat> getAdditionalServices() {
 		return additionalServices;
+	}
+
+	public List<SubscriptionBoat> getSubscrpitions() {
+		return subscrpitions;
+	}
+
+	public void setSubscrpitions(List<SubscriptionBoat> subscrpitions) {
+		this.subscrpitions = subscrpitions;
 	}
 
 	public void setAdditionalServices(List<AdditionalServicesBoat> additionalServices) {
@@ -274,6 +289,16 @@ public class Boat {
 
 	public void removeReservation(ReservationBoat r) {
 		reservations.remove(r);
+		
+	}
+
+	public void addNewSubscription(SubscriptionBoat newOne) {
+		subscrpitions.add(newOne);
+		
+	}
+
+	public void removeSubscription(String email) {
+	subscrpitions.removeIf(s-> s.getFisherman().getEmail().equals(email));
 		
 	}
 

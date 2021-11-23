@@ -1,6 +1,7 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
+import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
+import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.security.JwtUtils;
@@ -55,6 +59,36 @@ public class FishermanProfileController {
 		fishermanRepo.save(newOne);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
+	}
+	
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/myCottageSubscriptions")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<SubscriptionCottage>> mysubscriptions(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<SubscriptionCottage> subscrs=fishermanRepo.findById(username).get().getSubscriptionCotagges();
+		if(subscrs.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(subscrs, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.UnauthoBoats.class)
+	@GetMapping("/myBoatSubscriptions")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<SubscriptionBoat>> mysubscriptionsBoat(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<SubscriptionBoat> subscrs=fishermanRepo.findById(username).get().getSubsriptionsBoats();
+		if(subscrs.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(subscrs, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.UnauthoInstuctors.class)
+	@GetMapping("/myInstructorSubscriptions")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<SubscriptionInstructor>> mysubscriptionsInstr(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<SubscriptionInstructor> subscrs=fishermanRepo.findById(username).get().getSubscriptionInstructors();
+		if(subscrs.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(subscrs, HttpStatus.OK);
 	}
 	
 	

@@ -17,4 +17,5 @@ public class Views {
 	public interface AdditionalServices {}
 	
 	public interface ActionInfo extends UnauthoBoats {}
+	
 }

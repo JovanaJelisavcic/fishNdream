@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesCottage;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodCottages;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
+import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
 import com.fishNdream.backend.entity.users.CottageOwner;
 import com.fishNdream.backend.entity.users.Fisherman;
 
@@ -65,6 +66,13 @@ public class Cottage {
 	    )
 	private List<ReservationCottage> reservations;
 	
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<SubscriptionCottage> subscriptions;
+	
 	public List<AdditionalServicesCottage> getAdditionalServices() {
 		return additionalServices;
 	}
@@ -82,6 +90,16 @@ public class Cottage {
 	
 	public List<ReservationCottage> getReservations() {
 		return reservations;
+	}
+
+
+	public List<SubscriptionCottage> getSubscriptions() {
+		return subscriptions;
+	}
+
+
+	public void setSubscriptions(List<SubscriptionCottage> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 
@@ -222,6 +240,18 @@ public class Cottage {
 			if(reservation.getReservationId()== reservationId )
 				reservation.setFisherman(fisherman);
 	}		
+		
+	}
+
+
+	public void addNewSubscription(SubscriptionCottage newOne) {
+		subscriptions.add(newOne);
+		
+	}
+
+
+	public void removeSubscription(String email) {
+		subscriptions.removeIf(s-> s.getFisherman().getEmail().equals(email));
 		
 	}
 			
