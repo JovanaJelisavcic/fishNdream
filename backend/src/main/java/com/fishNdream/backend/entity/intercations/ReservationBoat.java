@@ -35,6 +35,7 @@ public class ReservationBoat extends ReservationInfo {
 	}
 
 	@ManyToMany
+	@JsonView(Views.AdditionalServices.class)
 	private List<AdditionalServicesBoat> additionalServices;
 	
 	public List<AdditionalServicesBoat> getAdditionalServices() {

@@ -15,7 +15,10 @@ public class Views {
     }
 	
 	public interface AdditionalServices {}
+	public interface ReservationView extends UnauthoBoats, UnauthoCottages, UnauthoInstuctors, AdditionalServices{}
 	
-	public interface ActionInfo extends UnauthoBoats {}
+	public interface ActionInfo extends  ReservationView {}
+	
+	
 	
 }

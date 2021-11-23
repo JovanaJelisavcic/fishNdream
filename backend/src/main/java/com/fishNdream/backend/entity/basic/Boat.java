@@ -302,6 +302,14 @@ public class Boat {
 		
 	}
 
+	public void cancelReservation(int reservationId) {
+		for(ReservationBoat s: reservations) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
+
 	
 	
 	

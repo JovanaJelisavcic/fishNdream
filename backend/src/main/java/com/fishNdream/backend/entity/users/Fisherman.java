@@ -268,5 +268,35 @@ public class Fisherman extends UserInfo{
 		subscriptionInstructors.removeIf(s-> s.getInstructor().getEmail().equals(email));
 		
 	}
+
+
+
+	public void cancelReservationCottage(int reservationId) {
+		for(ReservationCottage s: reservationCottages) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
+
+
+
+	public void cancelReservationBoat(int reservationId) {
+		for(ReservationBoat s: reservationBoats) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
+
+
+
+	public void cancelReservationAdventure(int reservationId) {
+		for(ReservationAdventure s: reservationAdventures) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
 	
 }

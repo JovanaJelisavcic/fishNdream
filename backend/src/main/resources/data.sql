@@ -47,7 +47,7 @@ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_
 (2, '2022-02-26', '2022-08-26', 1);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-11-26T12:00:00', false, '2021-11-28T14:00:00', 5, 150, 1, null, true, '2021-11-20T14:00:00','2021-11-26T14:00:00' );
+values (1, '2021-11-27T12:00:00', false, '2021-11-29T14:00:00', 5, 150, 1,'cboniface1@about.me' , true, '2021-11-20T14:00:00','2021-11-26T14:00:00' );
 
 insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM) values
  (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6);

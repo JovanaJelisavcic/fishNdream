@@ -194,6 +194,14 @@ public class Adventure {
 	}		
 		
 	}
+
+	public void cancelReservation(int reservationId) {
+		for(ReservationAdventure s: reservations) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
 	
 	
 }

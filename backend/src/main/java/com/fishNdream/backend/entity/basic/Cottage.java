@@ -254,6 +254,15 @@ public class Cottage {
 		subscriptions.removeIf(s-> s.getFisherman().getEmail().equals(email));
 		
 	}
+
+
+	public void cancelReservation(int reservationId) {
+		for(ReservationCottage s: reservations) {
+			if(s.getReservationId()==reservationId)
+				s.setCanceled(true);
+		}
+		
+	}
 			
 		
 

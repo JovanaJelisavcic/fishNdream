@@ -1,6 +1,8 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.intercations.ReservationAdventure;
+import com.fishNdream.backend.entity.intercations.ReservationBoat;
+import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
 import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
 import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
@@ -91,6 +96,36 @@ public class FishermanProfileController {
 		return  new ResponseEntity<>(subscrs, HttpStatus.OK);
 	}
 	
+	@JsonView(Views.ReservationView.class)
+	@GetMapping("/reservations/cottage/future")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<ReservationCottage>> cottageFuture(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<ReservationCottage> reservations=fishermanRepo.findById(username).get().getReservationCottages();
+		reservations.removeIf(r-> r.isCanceled() || r.getBeginning().toLocalDate().isBefore(LocalDate.now()));
+		if(reservations.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
 	
+	@JsonView(Views.ReservationView.class)
+	@GetMapping("/reservations/boat/future")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<ReservationBoat>> boatFuture(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<ReservationBoat> reservations=fishermanRepo.findById(username).get().getReservationBoats();
+		reservations.removeIf(r-> r.isCanceled() || r.getBeginning().isBefore(LocalDateTime.now()));
+		if(reservations.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
 
+	@JsonView(Views.ReservationView.class)
+	@GetMapping("/reservations/adventure/future")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<List<ReservationAdventure>> adventureFuture(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<ReservationAdventure> reservations=fishermanRepo.findById(username).get().getReservationAdventures();
+		reservations.removeIf(r-> r.isCanceled() || r.getBeginning().isBefore(LocalDateTime.now()));
+		if(reservations.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return  new ResponseEntity<>(reservations, HttpStatus.OK);
+	}
 }

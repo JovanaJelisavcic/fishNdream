@@ -19,15 +19,15 @@ public class ReservationInfo {
 	@Column(nullable=false, unique =true,
 	        updatable=false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(Views.ActionInfo.class)
+	@JsonView(Views.ReservationView.class)
 	private int reservationId;
-	@JsonView(Views.ActionInfo.class)
+	@JsonView(Views.ReservationView.class)
 	private LocalDateTime beginning; 
-	@JsonView(Views.ActionInfo.class)
+	@JsonView(Views.ReservationView.class)
 	private LocalDateTime ending;
 	@Transient
 	private Duration duration;
-	@JsonView(Views.ActionInfo.class)
+	@JsonView(Views.ReservationView.class)
 	private int participantsNum;
 	private float price;
 	private boolean canceled;

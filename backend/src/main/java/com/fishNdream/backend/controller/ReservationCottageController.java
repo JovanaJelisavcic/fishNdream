@@ -1,6 +1,7 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -170,7 +171,29 @@ public class ReservationCottageController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
+	@PostMapping("/cancel/{reservationId}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> cancelRes(@RequestHeader("Authorization") String token, @PathVariable int reservationId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+		Optional<ReservationCottage> reservation =  reservCottagesRepo.findById(reservationId);
+		if(reservation.isEmpty()) return ResponseEntity
+	            .status(HttpStatus.NOT_FOUND)
+	            .body("Reservations not found");		
+		if(LocalDate.now().isAfter(reservation.get().getBeginning().toLocalDate().minusDays(3))) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("You can't cancel less than 3 days before beginning");
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		if(!username.equals(reservation.get().getFisherman().getEmail())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("This reservation isn't yours");
+		fisherman.get().cancelReservationCottage(reservation.get().getReservationId());
+		reservation.get().getCottage().cancelReservation(reservation.get().getReservationId());
+		
+		fishermanRepo.save(fisherman.get());
+		cottagesRepo.save(reservation.get().getCottage());
+
+		return ResponseEntity.ok().build();
+	}
 	
 	
 }
