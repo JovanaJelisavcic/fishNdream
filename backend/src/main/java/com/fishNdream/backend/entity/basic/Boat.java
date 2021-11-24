@@ -35,22 +35,32 @@ public class Boat {
 	private int boatId;
 	@JsonView(Views.UnauthoBoats.class)
 	private String name;
+	@JsonView(Views.BoatProfile.class)
 	private String boatType;
+	@JsonView(Views.BoatProfile.class)
 	private float length;
+	@JsonView(Views.BoatProfile.class)
 	private int engineNum;
+	@JsonView(Views.BoatProfile.class)
 	private float enginePower;
+	@JsonView(Views.BoatProfile.class)
 	private int maxSpeed;
 	@JsonView(Views.UnauthoBoats.class)
 	private String description;
 	@JsonView(Views.UnauthoBoats.class)
 	private String address;
+	@JsonView(Views.BoatProfile.class)
 	private int capacity;
+	@JsonView(Views.BoatProfile.class)
 	private String behaviourRules;
 	@ElementCollection
 	@CollectionTable(name = "boat_pics", joinColumns = @JoinColumn(name = "boat_id"))
+	@JsonView(Views.BoatProfile.class)
 	private Set<String> boatPics = new HashSet<>();
+	@JsonView(Views.BoatProfile.class)
 	private boolean cancelPolicy; // 0-besplatno 
 	@ManyToOne
+	@JsonView(Views.UserInfo.class)
 	private BoatOwner owner;
 	@OneToMany(
 	        mappedBy = "boat",

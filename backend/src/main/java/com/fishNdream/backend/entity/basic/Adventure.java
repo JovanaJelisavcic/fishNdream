@@ -31,8 +31,11 @@ public class Adventure {
 	private String address;
 	@JsonView(Views.UnauthoInstuctors.class)
 	private String description;
+	@JsonView(Views.AdventureInfo.class)
 	private int maxParticipants;
+	@JsonView(Views.AdventureInfo.class)
 	private String behaviourRules;
+	@JsonView(Views.AdventureInfo.class)
 	private boolean cancelPolicy; // 0-free
 	@ManyToOne
 	private Instructor instructor;

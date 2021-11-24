@@ -39,13 +39,18 @@ public class Cottage {
 	private String address;
 	@JsonView(Views.UnauthoCottages.class)
 	private String description;
+	@JsonView(Views.CottageProfile.class)
 	private int roomNum;
+	@JsonView(Views.CottageProfile.class)
 	private int guestsNum;
+	@JsonView(Views.CottageProfile.class)
 	private String behaviourRules;
 	@ElementCollection
 	@CollectionTable(name = "cottage_pics", joinColumns = @JoinColumn(name = "cottage_id"))
+	@JsonView(Views.CottageProfile.class)
 	private Set<String> cottagePics = new HashSet<>();
 	@ManyToOne
+	@JsonView(Views.UserInfo.class)
 	private CottageOwner owner;
 	@OneToMany(
 	        mappedBy = "cottage",
