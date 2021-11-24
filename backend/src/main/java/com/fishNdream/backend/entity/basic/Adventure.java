@@ -202,6 +202,14 @@ public class Adventure {
 		}
 		
 	}
+
+	public void cancelActionRes(int reservationId) {
+		for(ReservationAdventure s: reservations) {
+			if(s.getReservationId()==reservationId)
+				s.setFisherman(null);
+		}
+		
+	}
 	
 	
 }

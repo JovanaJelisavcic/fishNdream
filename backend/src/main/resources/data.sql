@@ -14,7 +14,7 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (2, '2022-02-26', '2022-08-26', 1);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (1, '2021-11-26T12:00:00', false, '2021-11-26T14:00:00', 10, 250, 1, null, true, '2021-11-20T14:00:00', '2021-11-24T14:00:00');
+values (1, '2021-11-28T12:00:00', false, '2021-11-28T14:00:00', 10, 250, 1, null, true, '2021-11-20T14:00:00', '2021-11-24T15:00:00');
 --insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,3);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
@@ -71,7 +71,7 @@ insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DE
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (2, '2022-02-26', '2022-08-26', 3);
 insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-11-25T12:00:00', false, '2021-11-26T14:00:00', 3, 200, 3, null, true, '2021-11-20T14:00:00', '2021-11-24T14:00:00');
+values (1, '2021-11-28T12:00:00', false, '2021-11-29T14:00:00', 3, 200, 3, null, true, '2021-11-20T14:00:00', '2021-11-25T14:00:00');
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL) values
 (2, 'Zaovine', 'Carry bear protection', false, 'Fishing only for catfish', 2, 'BearsInTrap', 'lgorch3@cnn.com');
  insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values

@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Boat;
 import com.fishNdream.backend.entity.basic.Views;
+import com.fishNdream.backend.entity.helper.ActionType;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
+import com.fishNdream.backend.entity.helper.CanceledAction;
 import com.fishNdream.backend.entity.helper.ReservationDTO;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.repository.BoatRepository;
+import com.fishNdream.backend.repository.CanceledActionRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.security.JwtUtils;
@@ -51,6 +54,8 @@ public class ReservationBoatController {
 	FishermanRepository fishermanRepo;
 	@Autowired
 	JwtUtils jwtUtils;
+	@Autowired
+	CanceledActionRepository canceledRepo;
 	
 	@Autowired
 	MailUtil mailUtil;
@@ -92,7 +97,7 @@ public class ReservationBoatController {
 	@PostMapping("/actions/reserve/{actionId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> confirmAction(@RequestHeader("Authorization") String token, @PathVariable int actionId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
-		Optional<ReservationBoat> action =  reservBoatRepo.findById(actionId);
+		Optional<ReservationBoat> action =  reservBoatRepo.findByReservationIdAndActionRes(actionId, true);
 		if(action.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Action not found");		
@@ -179,7 +184,7 @@ public class ReservationBoatController {
 	@PostMapping("/cancel/{reservationId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> cancelRes(@RequestHeader("Authorization") String token, @PathVariable int reservationId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
-		Optional<ReservationBoat> reservation =  reservBoatRepo.findById(reservationId);
+		Optional<ReservationBoat> reservation =  reservBoatRepo.findByReservationIdAndActionRes(reservationId, false);
 		if(reservation.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Reservations not found");		
@@ -197,6 +202,33 @@ public class ReservationBoatController {
 		fishermanRepo.save(fisherman.get());
 		boatRepo.save(reservation.get().getBoat());
 
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/actions/cancel/{actionId}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> cancelAction(@RequestHeader("Authorization") String token, @PathVariable int actionId) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+		Optional<ReservationBoat> action =  reservBoatRepo.findByReservationIdAndActionRes(actionId, true);
+		if(action.isEmpty()) return ResponseEntity
+	            .status(HttpStatus.NOT_FOUND)
+	            .body("Action not found");		
+		if(LocalDateTime.now().isAfter(action.get().getBeginning().minusHours(72))) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("You can't cancel less than 3 days before beginning");
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		if(!username.equals(action.get().getFisherman().getEmail())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("This isn't your reservation");
+		CanceledAction actionCan = new CanceledAction();
+		actionCan.setActionId(actionId);
+		actionCan.setActionType(ActionType.BOAT);
+		actionCan.setFisherman(fisherman.get());
+		fisherman.get().addCancelAction(actionCan);
+		action.get().getBoat().cancelActionRes(action.get().getReservationId());
+		fishermanRepo.save(fisherman.get());
+		boatRepo.save(action.get().getBoat());
+		canceledRepo.save(actionCan);
 		return ResponseEntity.ok().build();
 	}
 	

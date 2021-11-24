@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
+import com.fishNdream.backend.entity.helper.ActionType;
+import com.fishNdream.backend.entity.helper.CanceledAction;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
@@ -36,12 +38,27 @@ public class Fisherman extends UserInfo{
 	        mappedBy = "fisherman"
 	    )
 	private List<SubscriptionInstructor> subscriptionInstructors;
+	
+	@OneToMany(mappedBy="fisherman")
+	private List<CanceledAction> canceledActions;
 
 	
 	public Fisherman(UserInfo user) {
 		super(user);
 	}
 	
+
+
+	public List<CanceledAction> getCanceledActions() {
+		return canceledActions;
+	}
+
+
+
+	public void setCanceledActions(List<CanceledAction> canceledActions) {
+		this.canceledActions = canceledActions;
+	}
+
 
 
 	public List<SubscriptionInstructor> getSubscriptionInstructors() {
@@ -170,8 +187,8 @@ public class Fisherman extends UserInfo{
 		
 	}
 	public boolean alreadyReservedActionBoat(int reservationId) {
-		for(ReservationBoat r : reservationBoats) {
-			if(r.getReservationId()==reservationId)
+		for(CanceledAction r : canceledActions) {
+			if(r.getActionId()==reservationId && r.getActionType().equals(ActionType.BOAT))
 					return true;
 		}
 		return false;
@@ -180,8 +197,8 @@ public class Fisherman extends UserInfo{
 
 
 	public boolean alreadyReservedActionCottage(int reservationId) {
-		for(ReservationCottage r : reservationCottages) {
-			if(r.getReservationId()==reservationId)
+		for(CanceledAction r : canceledActions) {
+			if(r.getActionId()==reservationId && r.getActionType().equals(ActionType.COTTAGE))
 					return true;
 		}
 		return false;
@@ -190,8 +207,8 @@ public class Fisherman extends UserInfo{
 
 
 	public boolean alreadyReservedActionAdventure(int reservationId) {
-		for(ReservationAdventure r : reservationAdventures) {
-			if(r.getReservationId()==reservationId)
+		for(CanceledAction r : canceledActions) {
+			if(r.getActionId()==reservationId && r.getActionType().equals(ActionType.ADVENTURE))
 					return true;
 		}
 		return false;
@@ -297,6 +314,13 @@ public class Fisherman extends UserInfo{
 				s.setCanceled(true);
 		}
 		
+	}
+
+
+
+	public void addCancelAction(CanceledAction action) {
+	
+		canceledActions.add(action);
 	}
 	
 }

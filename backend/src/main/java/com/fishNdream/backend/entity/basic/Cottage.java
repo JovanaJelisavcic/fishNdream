@@ -263,6 +263,15 @@ public class Cottage {
 		}
 		
 	}
+
+
+	public void cancelActionRes(int reservationId) {
+		for(ReservationCottage s: reservations) {
+			if(s.getReservationId()==reservationId)
+				s.setFisherman(null);
+		}
+		
+	}
 			
 		
 
