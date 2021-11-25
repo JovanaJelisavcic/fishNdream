@@ -3,6 +3,7 @@ package com.fishNdream.backend.entity.users;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
@@ -20,11 +21,11 @@ import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 @Entity
 public class Fisherman extends UserInfo{
 	
-	@OneToMany(mappedBy="fisherman")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="fisherman")
 	private List<ReservationCottage> reservationCottages;
-	@OneToMany(mappedBy="fisherman")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="fisherman")
 	private List<ReservationBoat> reservationBoats;
-	@OneToMany(mappedBy="fisherman")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="fisherman")
 	private List<ReservationAdventure> reservationAdventures;
 	@OneToMany(
 	        mappedBy = "fisherman"

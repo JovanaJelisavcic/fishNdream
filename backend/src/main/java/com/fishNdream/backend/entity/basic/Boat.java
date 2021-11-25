@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodBoats;
+import com.fishNdream.backend.entity.intercations.ComplaintBoat;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
 import com.fishNdream.backend.entity.users.BoatOwner;
@@ -80,6 +82,7 @@ public class Boat {
 	@OneToMany(
 	        mappedBy = "boat",
 	        cascade = CascadeType.ALL,
+	        		fetch=FetchType.EAGER,
 	        orphanRemoval = true
 	    )
 	private List<ReservationBoat> reservations;
@@ -90,6 +93,22 @@ public class Boat {
 	    )
 	private List<SubscriptionBoat> subscrpitions;
 	
+	@OneToMany(
+	        mappedBy = "boat",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ComplaintBoat> complaints;
+	
+	
+	public List<ComplaintBoat> getComplaints() {
+		return complaints;
+	}
+
+	public void setComplaints(List<ComplaintBoat> complaints) {
+		this.complaints = complaints;
+	}
+
 	public List<AdditionalServicesBoat> getAdditionalServices() {
 		return additionalServices;
 	}
@@ -325,6 +344,20 @@ public class Boat {
 			if(s.getReservationId()==reservationId)
 				s.setFisherman(null);
 		}
+		
+	}
+
+
+	public boolean alreadyComplained(String email) {
+		for(ComplaintBoat c: complaints) {
+			if(c.getFisherman().getEmail().equals(email))
+				return true;
+		}
+		return false;
+	}
+
+	public void addComplaint(ComplaintBoat complaint) {
+		complaints.add(complaint);
 		
 	}
 

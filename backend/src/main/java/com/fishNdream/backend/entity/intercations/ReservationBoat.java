@@ -26,13 +26,6 @@ public class ReservationBoat extends ReservationInfo {
 	 @JoinColumn(name="email")
 	private Fisherman fisherman;
 	
-	public Fisherman getFisherman() {
-		return fisherman;
-	}
-
-	public void setFisherman(Fisherman fisherman) {
-		this.fisherman = fisherman;
-	}
 
 	@ManyToMany
 	@JsonView(Views.AdditionalServices.class)
@@ -43,6 +36,13 @@ public class ReservationBoat extends ReservationInfo {
 	}
 
 	public void setAdditionalServices(List<AdditionalServicesBoat> additionalServices) {
+		this.additionalServices = additionalServices;
+	}
+
+	public ReservationBoat(Boat boat, Fisherman fisherman, List<AdditionalServicesBoat> additionalServices) {
+		super();
+		this.boat = boat;
+		this.fisherman = fisherman;
 		this.additionalServices = additionalServices;
 	}
 
@@ -59,6 +59,15 @@ public class ReservationBoat extends ReservationInfo {
 	public ReservationBoat(Boat boat) {
 		super();
 		this.boat = boat;
+	}
+	
+
+	public Fisherman getFisherman() {
+		return fisherman;
+	}
+
+	public void setFisherman(Fisherman fisherman) {
+		this.fisherman = fisherman;
 	}
 
 	public boolean isCaptainBusy(LocalDateTime beginning, LocalDateTime ending) {

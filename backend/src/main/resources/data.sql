@@ -18,10 +18,8 @@ values (1, '2021-11-28T12:00:00', false, '2021-11-28T14:00:00', 10, 250, 1, null
 --insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,3);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (2, '2021-11-29T12:00:00', false, '2021-11-30T14:00:00', 10, 250, 1, 'erumbold0@usa.gov', true, '2021-11-17T14:00:00', '2021-11-25T14:00:00');
+values (2, '2021-10-29T12:00:00', false, '2021-10-30T14:00:00', 10, 250, 1, 'cboniface1@about.me', true, '2021-11-17T14:00:00', '2021-11-25T14:00:00');
 
-insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (4, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 10, 250, 1, 'cboniface1@about.me', true, '2021-10-20T14:00:00', '2021-10-24T15:00:00');
  insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL) values
  (2, 'Tara', 'No pets', false, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Kalina', 'ferry',  'erumbold0@usa.gov' );
  insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
@@ -49,7 +47,7 @@ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_
 (2, '2022-02-26', '2022-08-26', 1);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-11-22T12:00:00', false, '2021-11-24T14:00:00', 5, 150, 1,'cboniface1@about.me' , true, '2021-11-20T14:00:00','2021-11-26T14:00:00' );
+values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 150, 1,'cboniface1@about.me' , true, '2021-11-20T14:00:00','2021-11-26T14:00:00' );
 
 insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM) values
  (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6);

@@ -1,5 +1,6 @@
 package com.fishNdream.backend.entity.basic;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesCottage;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodCottages;
+import com.fishNdream.backend.entity.intercations.ComplaintCottage;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
 import com.fishNdream.backend.entity.users.CottageOwner;
@@ -78,6 +80,24 @@ public class Cottage {
 	    )
 	private List<SubscriptionCottage> subscriptions;
 	
+	@OneToMany(
+	        mappedBy = "cottage",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ComplaintCottage> complaints;
+	
+	
+	public List<ComplaintCottage> getComplaints() {
+		return complaints;
+	}
+
+
+	public void setComplaints(List<ComplaintCottage> complaints) {
+		this.complaints = complaints;
+	}
+
+
 	public List<AdditionalServicesCottage> getAdditionalServices() {
 		return additionalServices;
 	}
@@ -276,6 +296,31 @@ public class Cottage {
 				s.setFisherman(null);
 		}
 		
+	}
+
+
+	public boolean atLeastOnceReserved(String email) {
+		for(ReservationCottage r : reservations) {
+			if(r.getFisherman().getEmail().equals(email) && !r.isCanceled() && r.getEnding().toLocalDate().isBefore(LocalDate.now())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public void addComplaint(ComplaintCottage complaint) {
+		complaints.add(complaint);
+		
+	}
+
+
+	public boolean alreadyComplained(String email) {
+		for(ComplaintCottage c: complaints) {
+			if(c.getFisherman().getEmail().equals(email))
+				return true;
+		}
+		return false;
 	}
 			
 		

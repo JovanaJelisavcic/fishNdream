@@ -14,6 +14,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.intercations.ComplaintBoat;
+import com.fishNdream.backend.entity.intercations.ComplaintCottage;
+import com.fishNdream.backend.entity.intercations.ComplaintInstructor;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
@@ -190,6 +193,109 @@ public class MailUtil {
 			    content = content.replace("[[ending]]", newReservation.getEnding().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm")));
 			    content = content.replace("[[guestNum]]", String.valueOf(newReservation.getParticipantsNum()));
 			    content = content.replace("[[action]]", newReservation.isActionRes()?"":"not");
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+		}
+
+
+		public void sendComplainResponseC(ComplaintCottage complaint) throws MessagingException, UnsupportedEncodingException {
+
+			 String toAddress1 = complaint.getFisherman().getEmail();
+			 String toAddress2 = complaint.getCottage().getOwner().getEmail();
+			    String subject = "Complaint Response";
+			    String content = "Dear [[name]],<br>"
+			            + "The complaint was :<br>"
+			            + "[[complaint]] <br>"
+			            + "<br>We have reviewed and decided that <br>"
+			            + "<br> [[response]]  <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress1);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
+			    content = content.replace("[[complaint]]", complaint.getComplaintText());
+			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			    
+			    content = content.replace("[[name]]", complaint.getCottage().getOwner().getSurname());
+			    helper.setTo(toAddress2);
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			
+		}
+
+		public void sendComplainResponseB(ComplaintBoat complaint) throws UnsupportedEncodingException, MessagingException {
+			 String toAddress1 = complaint.getFisherman().getEmail();
+			 String toAddress2 = complaint.getBoat().getOwner().getEmail();
+			    String subject = "Complaint Response";
+			    String content = "Dear [[name]],<br>"
+			            + "The complaint was :<br>"
+			            + "[[complaint]] <br>"
+			            + "<br>We have reviewed and decided that <br>"
+			            + "<br> [[response]]  <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress1);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
+			    content = content.replace("[[complaint]]", complaint.getComplaintText());
+			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			    
+			    content = content.replace("[[name]]", complaint.getBoat().getOwner().getSurname());
+			    helper.setTo(toAddress2);
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			
+		}
+
+		public void sendComplainResponseI(ComplaintInstructor complaint) throws UnsupportedEncodingException, MessagingException {
+			String toAddress1 = complaint.getFisherman().getEmail();
+			 String toAddress2 = complaint.getInstructor().getEmail();
+			    String subject = "Complaint Response";
+			    String content = "Dear [[name]],<br>"
+			            + "The complaint was :<br>"
+			            + "[[complaint]] <br>"
+			            + "<br>We have reviewed and decided that <br>"
+			            + "<br> [[response]]  <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress1);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
+			    content = content.replace("[[complaint]]", complaint.getComplaintText());
+			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			    
+			    content = content.replace("[[name]]", complaint.getInstructor().getSurname());
+			    helper.setTo(toAddress2);
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);

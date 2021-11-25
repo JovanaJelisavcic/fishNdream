@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.intercations.ComplaintInstructor;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 
@@ -30,6 +31,12 @@ public class Instructor extends UserInfo {
 	        orphanRemoval = true
 	    )
 	private List<SubscriptionInstructor> subscriptions; 
+	@OneToMany(
+	        mappedBy = "instructor",
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	private List<ComplaintInstructor> complaints;
 	
 	
 	public Instructor(SignUpRequest request) {
@@ -42,6 +49,12 @@ public class Instructor extends UserInfo {
 		return adventures;
 	}
 
+	public List<ComplaintInstructor> getComplaints() {
+		return complaints;
+	}
+	public void setComplaints(List<ComplaintInstructor> complaints) {
+		this.complaints = complaints;
+	}
 	public List<SubscriptionInstructor> getSubscriptions() {
 		return subscriptions;
 	}
@@ -80,6 +93,26 @@ public class Instructor extends UserInfo {
 	}
 	public void removeSubscription(String email) {
 		subscriptions.removeIf(s-> s.getFisherman().getEmail().equals(email));
+		
+	}
+	public boolean atLeastOnceReserved(String email) {
+		for(Adventure a : adventures) {
+			for(ReservationAdventure r : a.getReservations()) {
+				if(!r.isCanceled() && r.getFisherman().getEmail().equals(email) && r.getEnding().isBefore(LocalDateTime.now()) )
+						return true;
+			}
+		}
+		return false;
+	}
+	public boolean alreadyComplained(String email) {
+		for(ComplaintInstructor c : complaints) {
+			if(c.getFisherman().getEmail().equals(email))
+				return true;
+		}
+		return false;
+	}
+	public void addComplaint(ComplaintInstructor complaint) {
+		complaints.add(complaint);
 		
 	}
 	
