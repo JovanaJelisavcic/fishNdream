@@ -100,6 +100,9 @@ public class ReservationCottageController {
 		if(action.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Action not found");		
+		if(LocalDate.now().isAfter(action.get().getActionEndTime().toLocalDate()) || LocalDate.now().isBefore(action.get().getActionStartTime().toLocalDate())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("Action is not active");
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
@@ -169,8 +172,9 @@ public class ReservationCottageController {
 		fisherman.get().addReservationCottage(newReservation);
 		cottage.get().addReservation(newReservation);
 		
-		fishermanRepo.save(fisherman.get());
+		//fishermanRepo.save(fisherman.get());
 		cottage.get().removeAction(newReservation.getBeginning(),newReservation.getEnding());
+		reservCottagesRepo.save(newReservation);
 		cottagesRepo.save(cottage.get());
 		mailUtil.sendReservationCottageConfirmation(fisherman.get().getEmail(), newReservation);
 		return ResponseEntity.ok().build();

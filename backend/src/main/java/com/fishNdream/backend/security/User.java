@@ -16,11 +16,16 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username")
 		})
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE user_id=?")
+@Where(clause = "deleted=false")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +43,7 @@ public class User {
 	private String verificationCode;
 	
 	private boolean enabled;
+	private boolean deleted = Boolean.FALSE;
 	
 	
 	
@@ -101,5 +107,13 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

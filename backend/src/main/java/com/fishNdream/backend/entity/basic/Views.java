@@ -27,6 +27,8 @@ public class Views {
 	
 	public interface Complaint extends UnauthoCottages, UserInfo, UnauthoBoats, UnauthoInstuctors {}
 	
+	public interface DeleteRq extends UserInfo{}
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,9 @@ public class ReservationAdventureController {
 		if(fisherman.get().alreadyReservedActionAdventure(action.get().getReservationId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
+		if(LocalDate.now().isAfter(action.get().getActionEndTime().toLocalDate()) || LocalDate.now().isBefore(action.get().getActionStartTime().toLocalDate())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("Action is not active");
 		
 	
 		fisherman.get().addReservationAdventure(action.get());
@@ -168,7 +172,8 @@ public class ReservationAdventureController {
 		adventure.get().addReservation(newReservation);
 		Adventure toSaveAdventureAction = adventure.get().removeAction(newReservation.getBeginning(),newReservation.getEnding());
 		if(toSaveAdventureAction!=null && toSaveAdventureAction.getAdventureId()!=adventure.get().getAdventureId())  adventureRepo.save(toSaveAdventureAction);
-		fishermanRepo.save(fisherman.get());
+		//fishermanRepo.save(fisherman.get());
+		adventureReservRepo.save(newReservation);
 		adventureRepo.save(adventure.get());
 		
 		mailUtil.sendReservationAdventureConfirmation(fisherman.get().getEmail(), newReservation);

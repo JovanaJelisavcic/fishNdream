@@ -3,10 +3,12 @@ package com.fishNdream.backend.entity.users;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import com.fishNdream.backend.entity.helper.ActionType;
 import com.fishNdream.backend.entity.helper.CanceledAction;
@@ -19,13 +21,15 @@ import com.fishNdream.backend.entity.intercations.SubscriptionCottage;
 import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 
 @Entity
+@SQLDelete(sql = "UPDATE fisherman SET deleted = true WHERE email=?")
+@Where(clause = "deleted=false")
 public class Fisherman extends UserInfo{
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="fisherman")
+	@OneToMany(mappedBy="fisherman", orphanRemoval=false)
 	private List<ReservationCottage> reservationCottages;
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="fisherman")
+	@OneToMany(mappedBy="fisherman", orphanRemoval=false)
 	private List<ReservationBoat> reservationBoats;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="fisherman")
+	@OneToMany( mappedBy="fisherman", orphanRemoval=false)
 	private List<ReservationAdventure> reservationAdventures;
 	@OneToMany(
 	        mappedBy = "fisherman"
@@ -322,6 +326,20 @@ public class Fisherman extends UserInfo{
 	public void addCancelAction(CanceledAction action) {
 	
 		canceledActions.add(action);
+	}
+
+
+
+	public void removeFK() {
+		canceledActions.forEach(a-> a.setFisherman(null));
+		reservationAdventures.forEach(a->a.setFisherman(null));
+		reservationBoats.forEach(a-> a.setFisherman(null));
+		reservationCottages.forEach(a->a.setFisherman(null));
+		subscriptionCotagges.forEach(a-> a.setFisherman(null));
+		subscriptionInstructors.forEach(a-> a.setFisherman(null));
+		subsriptionsBoats.forEach(a-> a.setFisherman(null));
+		
+		
 	}
 	
 }

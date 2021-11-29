@@ -100,7 +100,10 @@ public class ReservationBoatController {
 		Optional<ReservationBoat> action =  reservBoatRepo.findByReservationIdAndActionRes(actionId, true);
 		if(action.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
-	            .body("Action not found");		
+	            .body("Action not found");	
+		if(LocalDateTime.now().isAfter(action.get().getActionEndTime()) || LocalDateTime.now().isBefore(action.get().getActionStartTime())) return ResponseEntity
+	            .status(HttpStatus.FORBIDDEN)
+	            .body("Action is not active");
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
@@ -173,7 +176,8 @@ public class ReservationBoatController {
 		Boat toSaveBoatAction = boat.get().removeAction(newReservation.getBeginning(),newReservation.getEnding(), containsCaptain );
 		if(toSaveBoatAction!=null && toSaveBoatAction.getBoatId()!=boat.get().getBoatId())  boatRepo.save(toSaveBoatAction);
 		
-		fishermanRepo.save(fisherman.get());
+		//fishermanRepo.save(fisherman.get());
+		reservBoatRepo.save(newReservation);
 		boatRepo.save(boat.get());
 
 		mailUtil.sendReservationBoatConfirmation(fisherman.get().getEmail(), newReservation);

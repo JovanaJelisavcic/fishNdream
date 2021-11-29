@@ -47,6 +47,8 @@ public class UserInfo {
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		private String confirmPassword;
 		
+		private boolean deleted = Boolean.FALSE;
+		
 		
 		
 		
@@ -146,6 +148,14 @@ public class UserInfo {
 
 		public void setPhoneNum(String phoneNum) {
 			this.phoneNum = phoneNum;
+		}
+
+		public boolean isDeleted() {
+			return deleted;
+		}
+
+		public void setDeleted(boolean deleted) {
+			this.deleted = deleted;
 		}
 
 		

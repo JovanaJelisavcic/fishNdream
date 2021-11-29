@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,7 +123,7 @@ public class RegisterController {
 	
 	@PostMapping("/user")
 	public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
-		if (userRepository.existsByUsername(signUpRequest.getEmail())) {
+	try {	if (userRepository.existsByUsername(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest().build();
 		}
@@ -138,6 +139,9 @@ public class RegisterController {
 			service.register(user, getSiteURL(request));
 			return ResponseEntity.ok().build();
 		}else return ResponseEntity.badRequest().build();
+	}catch( DataIntegrityViolationException e) {
+		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+	}
 			
 	}
 	
