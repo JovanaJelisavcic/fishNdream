@@ -1,6 +1,7 @@
 package com.fishNdream.backend.entity.users;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Boat;
+import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
@@ -19,6 +22,7 @@ public class BoatOwner extends UserInfo {
 	
 	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Boat.class)
+	@JsonView(Views.BoatOwner.class)
 	private List<Boat> boats;
 	
 
@@ -78,6 +82,15 @@ public class BoatOwner extends UserInfo {
 			if(removed) return b;
 		}
 		return null;
+	}
+
+	public List<Integer> getBoatsIds() {
+		List<Integer> res = new ArrayList<Integer>();
+		if(boats.isEmpty()) res.add(0);
+		for(Boat c: boats) {
+			res.add(c.getBoatId());
+		}
+		return res;
 	} 
 	
 	

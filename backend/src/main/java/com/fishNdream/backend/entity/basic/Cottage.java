@@ -52,7 +52,7 @@ public class Cottage {
 	@JsonView(Views.CottageProfile.class)
 	private Set<String> cottagePics = new HashSet<>();
 	@ManyToOne
-	@JsonView(Views.UserInfo.class)
+	@JsonView(Views.CottageProfile.class)
 	private CottageOwner owner;
 	@OneToMany(
 	        mappedBy = "cottage",

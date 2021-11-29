@@ -103,6 +103,11 @@ public class RegisterController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		/*if(service.isAdminsFirst(jwtUtils.getUserNameFromJwtToken(jwt))) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", "/changePassword.vue");  
+			return new ResponseEntity<String>(headers,HttpStatus.FOUND);
+		} */
 		return ResponseEntity.ok(new JwtResponse(jwt,
 												 loginRequest.getUsername(), roles));
 	}

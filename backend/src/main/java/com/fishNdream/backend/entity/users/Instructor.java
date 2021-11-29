@@ -1,6 +1,7 @@
 package com.fishNdream.backend.entity.users;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -114,6 +115,14 @@ public class Instructor extends UserInfo {
 	public void addComplaint(ComplaintInstructor complaint) {
 		complaints.add(complaint);
 		
+	}
+	public List<Integer> getAdventureIds() {
+		List<Integer> res = new ArrayList<Integer>();
+		if(adventures.isEmpty()) res.add(0);
+		for(Adventure c: adventures) {
+			res.add(c.getAdventureId());
+		}
+		return res;
 	}
 	
 	

@@ -183,5 +183,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	    }
 	}
 
+	public boolean isAdminsFirst(String username) {
+		 Optional<User> user = userRepository.findByUsername(username);
+			 if(user.get().getVerificationCode().equals("initial"))
+				 return true;
+		return false;
+	}
+
 
 }

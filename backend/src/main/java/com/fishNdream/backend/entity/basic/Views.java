@@ -29,6 +29,11 @@ public class Views {
 	
 	public interface DeleteRq extends UserInfo{}
 	
+	public interface CottageOwner extends UserInfo, UnauthoCottages{}
+	public interface BoatOwner extends UserInfo, UnauthoBoats{}
+
+	
+	
 	
 	
 	

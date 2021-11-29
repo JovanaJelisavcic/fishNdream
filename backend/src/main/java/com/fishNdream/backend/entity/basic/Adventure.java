@@ -38,6 +38,7 @@ public class Adventure {
 	@JsonView(Views.AdventureInfo.class)
 	private boolean cancelPolicy; // 0-free
 	@ManyToOne
+
 	private Instructor instructor;
 	@OneToMany(
 	        mappedBy = "adventure",

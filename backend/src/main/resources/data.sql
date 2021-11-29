@@ -16,7 +16,7 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (2, '2022-02-26', '2022-08-26', 1);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (1, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 10, 250, 1, null, true, '2021-11-20T14:00:00', '2021-11-30T15:00:00');
+values (1, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 10, 250, 1, 'cboniface1@about.me', true, '2021-11-20T14:00:00', '2021-11-30T15:00:00');
 --insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,3);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
@@ -49,7 +49,7 @@ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_
 (2, '2022-02-26', '2022-08-26', 1);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-12-22T12:00:00', false, '2021-12-24T14:00:00', 5, 150, 1,'cboniface1@about.me' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00' );
+values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 150, 1,'cboniface1@about.me' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00' );
 
 insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM) values
  (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6);
@@ -73,7 +73,7 @@ insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DE
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (2, '2022-02-26', '2022-08-26', 3);
 insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-10-28T12:00:00', false, '2021-10-29T14:00:00', 3, 200, 3, 'cboniface1@about.me', true, '2021-11-20T14:00:00', '2021-11-25T14:00:00');
+values (1, '2021-12-28T12:00:00', false, '2021-12-29T14:00:00', 3, 200, 3, 'cboniface1@about.me', true, '2021-11-20T14:00:00', '2021-11-25T14:00:00');
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL) values
 (2, 'Zaovine', 'Carry bear protection', false, 'Fishing only for catfish', 2, 'BearsInTrap', 'lgorch3@cnn.com');
  insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
@@ -97,11 +97,11 @@ INSERT INTO roles(name) VALUES('INSTRUCTOR');
 
 
 
-insert into users (user_id,username, password, enabled, deleted) values (1,'erumbold0@usa.gov', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
-insert into users (user_id,username, password, enabled, deleted) values (2,'cboniface1@about.me', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
-insert into users (user_id,username, password, enabled, deleted) values (3,'bhellin2@gravatar.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
-insert into users (user_id,username, password, enabled, deleted) values (4,'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
-insert into users (user_id,username, password, enabled, deleted) values (5,'wvanmerwe1@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
+insert into users (user_id,username, password, enabled, deleted, verification_code) values (1,'erumbold0@usa.gov', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false, null);
+insert into users (user_id,username, password, enabled, deleted, verification_code) values (2,'cboniface1@about.me', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false, null);
+insert into users (user_id,username, password, enabled, deleted, verification_code) values (3,'bhellin2@gravatar.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false, null);
+insert into users (user_id,username, password, enabled, deleted, verification_code) values (4,'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false, null);
+insert into users (user_id,username, password, enabled, deleted, verification_code) values (5,'wvanmerwe1@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false, null);
 
 
 

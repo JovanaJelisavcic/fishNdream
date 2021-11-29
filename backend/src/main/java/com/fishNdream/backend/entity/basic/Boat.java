@@ -62,7 +62,7 @@ public class Boat {
 	@JsonView(Views.BoatProfile.class)
 	private boolean cancelPolicy; // 0-besplatno 
 	@ManyToOne
-	@JsonView(Views.UserInfo.class)
+	@JsonView(Views.BoatProfile.class)
 	private BoatOwner owner;
 	@OneToMany(
 	        mappedBy = "boat",
@@ -360,6 +360,8 @@ public class Boat {
 		complaints.add(complaint);
 		
 	}
+
+
 
 	
 	
