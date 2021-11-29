@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.fishNdream.backend.entity.helper.DeleteAccountRequest;
+import com.fishNdream.backend.entity.helper.DeleteAccountRequestAdmin;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.intercations.ComplaintBoat;
 import com.fishNdream.backend.entity.intercations.ComplaintCottage;
@@ -319,6 +320,31 @@ public class MailUtil {
 			    helper.setSubject(subject);
 			     
 			    content = content.replace("[[name]]", req.getFisherman().getSurname());
+			    content = content.replace("[[reason]]", req.getResponse());
+			    content = content.replace("[[action]]", req.isPermited()?"":"not");
+			    helper.setText(content, true);
+			     
+			    javaMailSender.send(message);
+			
+		}
+
+		public void sendDeletionResponse(DeleteAccountRequestAdmin req) throws UnsupportedEncodingException, MessagingException {
+			 String toAddress = req.getAdmin().getEmail();
+			    String subject = "Account Deletion Response";
+			    String content = "Dear [[name]],<br>"
+			            + "Your request for deleting you account was [[permited]] permited. <br>"
+			            + " [[reson]] <br>"
+			            + "<br>Thank you for trusting us,<br>"
+			            + "fishNdream.";
+			     
+			    MimeMessage message = javaMailSender.createMimeMessage();
+			    MimeMessageHelper helper = new MimeMessageHelper(message);
+			     
+			    helper.setFrom(fromAddress, senderName);
+			    helper.setTo(toAddress);
+			    helper.setSubject(subject);
+			     
+			    content = content.replace("[[name]]", req.getAdmin().getSurname());
 			    content = content.replace("[[reason]]", req.getResponse());
 			    content = content.replace("[[action]]", req.isPermited()?"":"not");
 			    helper.setText(content, true);

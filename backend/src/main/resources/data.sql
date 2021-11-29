@@ -1,6 +1,8 @@
 insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('erumbold0@usa.gov', 'Lenin 145', 'Moskow', 'Russia', 'Erum', '556-885-999', 'Boldov', false);
 insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('cboniface1@about.me', 'Picaso Street 85', 'Bilbao', 'Spain', 'Clara', '551-815-989', 'Bonifaces', false);
 insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('bhellin2@gravatar.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
+insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe3@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
+insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe1@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
 
 insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('erumbold0@usa.gov', 'Eirena', 'Rumbold', '0 Village Place', 'Živinice', 'Bosnia and Herzegovina', '521-486-3914', false);
 insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL) values
@@ -99,6 +101,7 @@ insert into users (user_id,username, password, enabled, deleted) values (1,'erum
 insert into users (user_id,username, password, enabled, deleted) values (2,'cboniface1@about.me', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
 insert into users (user_id,username, password, enabled, deleted) values (3,'bhellin2@gravatar.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
 insert into users (user_id,username, password, enabled, deleted) values (4,'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
+insert into users (user_id,username, password, enabled, deleted) values (5,'wvanmerwe1@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2', true, false);
 
 
 
@@ -106,3 +109,4 @@ insert into USER_ROLES(user_id, role_id) values(1, 1);
 insert into USER_ROLES(user_id, role_id) values(2, 1);
 insert into USER_ROLES(user_id, role_id) values(3, 1);
 insert into USER_ROLES(user_id, role_id) values(4, 2);
+insert into USER_ROLES(user_id, role_id) values(5, 2);
