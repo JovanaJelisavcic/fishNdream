@@ -8,6 +8,10 @@ import java.util.Optional;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,9 +42,14 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+@Configuration
+@ComponentScan(basePackages = { "com.fishNdream.*" })
+@PropertySource("classpath:/prop/config.properties")
 @RestController
 @RequestMapping("/deleteAccount")
 public class AccountController {
+	@Autowired
+	Environment env;
 	
 	@Autowired
 	FishermanRepository fishermanRepo;
@@ -162,6 +171,10 @@ public class AccountController {
 			return ResponseEntity
 		            .status(HttpStatus.FORBIDDEN)
 		            .body("You can't accept your own deletion request");		
+		if(req.get().getAdmin().getEmail().equals(System.getProperty("app.superadmin"))) {
+			System.setProperty("app.superadmin", username);
+			System.out.println("we changed the superadmin to" + System.getProperty("app.superadmin"));
+		}
 		req.get().setPermited(true);
 		req.get().setProcessed(true);
 		req.get().setResponse(resp);

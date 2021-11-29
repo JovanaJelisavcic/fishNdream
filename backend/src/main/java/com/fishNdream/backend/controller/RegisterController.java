@@ -15,6 +15,10 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -34,6 +38,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fishNdream.backend.entity.helper.SignUpRequest;
+import com.fishNdream.backend.entity.users.Admin;
+import com.fishNdream.backend.repository.AdminRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.ERole;
@@ -50,7 +56,9 @@ import com.fishNdream.backend.security.UserRepository;
 
 
 
-
+@Configuration
+@ComponentScan(basePackages = { "com.fishNdream.*" })
+@PropertySource("classpath:/prop/config.properties")
 @RestController
 @RequestMapping("/register")
 public class RegisterController {
@@ -58,6 +66,8 @@ public class RegisterController {
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RegisterController.class);
 	@Autowired
 	AuthenticationManager authenticationManager;
+	@Autowired
+	Environment env;
 
 	@Value("${app.superadmin}")
 	private String superAdmin;
@@ -73,6 +83,8 @@ public class RegisterController {
 	
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	AdminRepository adminRepo;
 
 
 	@Autowired
@@ -218,26 +230,27 @@ public class RegisterController {
 	 @PostMapping("/admin")
 	 @PreAuthorize("hasAuthority('SYS_ADMIN')")
 		public ResponseEntity<String> registerAdmin(@Valid @RequestBody SignUpRequest signUpRequest,@RequestHeader("Authorization") String token ) throws UnsupportedEncodingException, MessagingException {
-		 	String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		 	if(username!=superAdmin) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		 try {
+		 String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		 	if(!username.equals(System.getProperty("app.superadmin").toString())) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		 
 		 if (userRepository.existsByUsername(signUpRequest.getEmail())) {
 				return ResponseEntity
 						.badRequest().build();
 			}
-		    signUpRequest.setPassword("initial");
-		    signUpRequest.setConfirmPassword("initial");
-			SignUpRequest otherCheck =  requestRepository.save(signUpRequest);
-			if(otherCheck!=null) {
+		 
 				User user = new User(signUpRequest.getEmail(), 
-						 signUpRequest.getPassword());
+						 "initial");
 					Set<Role> userRole = new HashSet<>();
 						userRole.add(roleRepository.findByName(ERole.SYS_ADMIN));
 						user.setRoles(userRole);
 				service.registerAdmin(user);
-				return ResponseEntity.ok().build();
-			}else return ResponseEntity.badRequest().build();
 				
+				 Admin admin = new Admin(signUpRequest);
+				 adminRepo.save(admin);
+				 
+				return ResponseEntity.ok().build();
+		 }catch(DataIntegrityViolationException e) {return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); }
 		}
 
 }
