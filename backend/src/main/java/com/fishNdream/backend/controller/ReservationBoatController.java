@@ -2,6 +2,7 @@ package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -142,6 +143,9 @@ public class ReservationBoatController {
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
 		
+		long duration= ChronoUnit.MINUTES.between(reservation.getBeginning(), reservation.getEnding());
+		int addition = (duration%60==0)?0:1;
+		float price=boat.get().getPrice()*(Math.round(duration/60)+ addition);
 		
 		ReservationBoat newReservation = new ReservationBoat();
 		List<AdditionalServicesBoat> services = new ArrayList<>();
@@ -152,6 +156,7 @@ public class ReservationBoatController {
 				if(service.getServiceId()==serviceId) {
 					if(service.getName().toUpperCase().contains("Capetain".toUpperCase())) containsCaptain=true;
 					services.add(service);
+					price+=service.getPrice();
 					found=true;
 					break;
 				}
@@ -170,7 +175,7 @@ public class ReservationBoatController {
 		newReservation.setEnding(reservation.getEnding());
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
-		newReservation.setPrice(0);
+		newReservation.setPrice(price);
 		fisherman.get().addReservationBoat(newReservation);
 		boat.get().addReservation(newReservation);
 		Boat toSaveBoatAction = boat.get().removeAction(newReservation.getBeginning(),newReservation.getEnding(), containsCaptain );

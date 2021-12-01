@@ -40,6 +40,8 @@ public class Cottage {
 	@JsonView(Views.UnauthoCottages.class)
 	private String address;
 	@JsonView(Views.UnauthoCottages.class)
+	private float price;
+	@JsonView(Views.UnauthoCottages.class)
 	private String description;
 	@JsonView(Views.CottageProfile.class)
 	private int roomNum;
@@ -110,6 +112,16 @@ public class Cottage {
 
 	
 	
+	public float getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+
 	public Cottage() {}
 	
 	

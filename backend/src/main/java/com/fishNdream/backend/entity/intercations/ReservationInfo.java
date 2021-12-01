@@ -25,6 +25,7 @@ public class ReservationInfo {
 	private LocalDateTime ending;
 	@JsonView(Views.ReservationView.class)
 	private int participantsNum;
+	@JsonView(Views.ReservationView.class)
 	private float price;
 	private boolean canceled;
 	private boolean actionRes;
@@ -32,6 +33,7 @@ public class ReservationInfo {
 	private LocalDateTime actionStartTime;
 	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime actionEndTime;
+
 
 
 	public ReservationInfo() {}
@@ -46,6 +48,7 @@ public class ReservationInfo {
 		this.price = price;
 	}
 
+	
 	public int getReservationId() {
 		return reservationId;
 	}

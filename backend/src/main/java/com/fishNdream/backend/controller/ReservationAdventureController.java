@@ -3,6 +3,7 @@ package com.fishNdream.backend.controller;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -140,7 +141,9 @@ public class ReservationAdventureController {
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
 		
-		
+		long duration= ChronoUnit.MINUTES.between(reservation.getBeginning(), reservation.getEnding());
+		int addition = (duration%60==0)?0:1;
+		float price=adventure.get().getPrice()*(Math.round(duration/60)+ addition);
 		ReservationAdventure newReservation = new ReservationAdventure();
 		List<AdditionalServicesAdventure> services = new ArrayList<>();
 		for(int serviceId : reservation.getServicesIds()) {
@@ -148,6 +151,7 @@ public class ReservationAdventureController {
 			for(AdditionalServicesAdventure service : adventure.get().getAdditionalServices()) {
 				if(service.getServiceId()==serviceId) {
 					services.add(service);
+					price+=service.getPrice();
 					found=true;
 					break;
 				}
@@ -166,7 +170,7 @@ public class ReservationAdventureController {
 		newReservation.setEnding(reservation.getEnding());
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
-		newReservation.setPrice(0);
+		newReservation.setPrice(price);
 		
 		fisherman.get().addReservationAdventure(newReservation);
 		adventure.get().addReservation(newReservation);

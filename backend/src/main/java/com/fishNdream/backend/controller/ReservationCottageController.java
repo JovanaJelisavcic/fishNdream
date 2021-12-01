@@ -2,6 +2,7 @@ package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -141,6 +142,8 @@ public class ReservationCottageController {
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
 		
+		long duration= ChronoUnit.DAYS.between(reservation.getBeginning().toLocalDate(), reservation.getEnding().toLocalDate());
+		float price=cottage.get().getPrice()*duration;
 		
 		ReservationCottage newReservation = new ReservationCottage();
 		List<AdditionalServicesCottage> services = new ArrayList<>();
@@ -149,6 +152,7 @@ public class ReservationCottageController {
 			for(AdditionalServicesCottage service : cottage.get().getAdditionalServices()) {
 				if(service.getServiceId()==serviceId) {
 					services.add(service);
+					price+=service.getPrice();
 					found=true;
 					break;
 				}
@@ -167,7 +171,7 @@ public class ReservationCottageController {
 		newReservation.setEnding(reservation.getEnding());
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
-		newReservation.setPrice(0);
+		newReservation.setPrice(price);
 		
 		fisherman.get().addReservationCottage(newReservation);
 		cottage.get().addReservation(newReservation);

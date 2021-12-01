@@ -31,6 +31,12 @@ public class ReservationBoat extends ReservationInfo {
 	@ManyToOne
 	 @JoinColumn(name="email")
 	private Fisherman fisherman;
+	@Transient
+	@JsonView(Views.ActionInfo.class)
+	private float discount;
+	@Transient
+	@JsonView(Views.ActionInfo.class)
+	private float originalPrice;
 	
 
 	@ManyToMany
@@ -40,7 +46,19 @@ public class ReservationBoat extends ReservationInfo {
 	@PostLoad
     public void doStuff(){
 		duration = ChronoUnit.MINUTES.between(super.getBeginning(), super.getEnding());
+		discount= 100-calculateDiscountPricePrc();
     }
+	
+	private float calculateDiscountPricePrc() {
+		int addition = (duration%60==0)?0:1;
+		float original=boat.getPrice()*(Math.round(duration/60)+ addition);
+		for(AdditionalServicesBoat s : additionalServices) {
+			original+=s.getPrice();
+		}
+		this.originalPrice=original;
+		return super.getPrice()*100/original;
+		
+	}
 	
 	public List<AdditionalServicesBoat> getAdditionalServices() {
 		return additionalServices;
@@ -96,6 +114,22 @@ public class ReservationBoat extends ReservationInfo {
 
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
+	public float getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(float originalPrice) {
+		this.originalPrice = originalPrice;
 	}
 	
 	

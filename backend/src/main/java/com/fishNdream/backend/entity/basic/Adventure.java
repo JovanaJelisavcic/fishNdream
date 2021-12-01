@@ -28,6 +28,8 @@ public class Adventure {
 	@JsonView(Views.UnauthoInstuctors.class)
 	private String name;
 	@JsonView(Views.UnauthoInstuctors.class)
+	private float price;
+	@JsonView(Views.UnauthoInstuctors.class)
 	private String address;
 	@JsonView(Views.UnauthoInstuctors.class)
 	private String description;
@@ -97,6 +99,15 @@ public class Adventure {
 		this.behaviourRules = behaviourRules;
 		this.cancelPolicy = cancelPolicy;
 	}
+	
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	public int getAdventureId() {
 		return adventureId;
 	}

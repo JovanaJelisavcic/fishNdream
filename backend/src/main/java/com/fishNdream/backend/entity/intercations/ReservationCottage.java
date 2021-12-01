@@ -32,13 +32,30 @@ public class ReservationCottage extends ReservationInfo {
 	@ManyToOne
 	 @JoinColumn(name="email")
 	private Fisherman fisherman;
-	
+	@Transient
+	@JsonView(Views.ActionInfo.class)
+	private float discount;
+	@Transient
+	@JsonView(Views.ActionInfo.class)
+	private float originalPrice;
 	
 	@PostLoad
     public void doStuff(){
 		duration = ChronoUnit.DAYS.between(super.getBeginning(), super.getEnding());
+		//koliko je procenata od cene ovo e pa onda 100-to
+		discount = 100-calculateDiscountPricePrc();
     }
 	
+	private float calculateDiscountPricePrc() {
+		float original=cottage.getPrice()*duration;
+		for(AdditionalServicesCottage s : additionalServices) {
+			original+=s.getPrice();
+		}
+		this.originalPrice=original;
+		return super.getPrice()*100/original;
+		
+	}
+
 	public Fisherman getFisherman() {
 		return fisherman;
 	}
@@ -76,6 +93,22 @@ public class ReservationCottage extends ReservationInfo {
 
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public float getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+
+	public float getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(float originalPrice) {
+		this.originalPrice = originalPrice;
 	}
 	
 	

@@ -37,6 +37,8 @@ public class Boat {
 	private int boatId;
 	@JsonView(Views.UnauthoBoats.class)
 	private String name;
+	@JsonView(Views.UnauthoBoats.class)
+	private float price;
 	@JsonView(Views.BoatProfile.class)
 	private String boatType;
 	@JsonView(Views.BoatProfile.class)
@@ -180,6 +182,16 @@ public class Boat {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	public String getType() {
 		return boatType;
 	}
