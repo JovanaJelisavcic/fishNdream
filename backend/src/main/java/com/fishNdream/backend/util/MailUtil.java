@@ -223,7 +223,7 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
 			    content = content.replace("[[complaint]]", complaint.getComplaintText());
-			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    content = content.replace("[[response]]", complaint.getResponse());
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -257,7 +257,7 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
 			    content = content.replace("[[complaint]]", complaint.getComplaintText());
-			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    content = content.replace("[[response]]", complaint.getResponse());
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -291,7 +291,7 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", complaint.getFisherman().getSurname());
 			    content = content.replace("[[complaint]]", complaint.getComplaintText());
-			    content = content.replace("[[reponse]]", complaint.getResponse());
+			    content = content.replace("[[response]]", complaint.getResponse());
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -308,7 +308,7 @@ public class MailUtil {
 			    String subject = "Account Deletion Response";
 			    String content = "Dear [[name]],<br>"
 			            + "Your request for deleting you account was [[permited]] permited. <br>"
-			            + " [[reson]] <br>"
+			            + " [[reason]] <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -321,7 +321,7 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", req.getFisherman().getSurname());
 			    content = content.replace("[[reason]]", req.getResponse());
-			    content = content.replace("[[action]]", req.isPermited()?"":"not");
+			    content = content.replace("[[permited]]", req.isPermited()?"":"not");
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);
@@ -333,7 +333,7 @@ public class MailUtil {
 			    String subject = "Account Deletion Response";
 			    String content = "Dear [[name]],<br>"
 			            + "Your request for deleting you account was [[permited]] permited. <br>"
-			            + " [[reson]] <br>"
+			            + " [[reason]] <br>"
 			            + "<br>Thank you for trusting us,<br>"
 			            + "fishNdream.";
 			     
@@ -346,7 +346,7 @@ public class MailUtil {
 			     
 			    content = content.replace("[[name]]", req.getAdmin().getSurname());
 			    content = content.replace("[[reason]]", req.getResponse());
-			    content = content.replace("[[action]]", req.isPermited()?"":"not");
+			    content = content.replace("[[permited]]", req.isPermited()?"":"not");
 			    helper.setText(content, true);
 			     
 			    javaMailSender.send(message);

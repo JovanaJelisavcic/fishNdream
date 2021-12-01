@@ -75,7 +75,13 @@ public class AccountController {
 	@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String token, @RequestBody String rqText) throws UnsupportedEncodingException, URISyntaxException {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		if(requestRepository.findByEmailAndProcessed(username)!=0) 
+			return ResponseEntity
+		            .status(HttpStatus.FORBIDDEN)
+		            .body("You already filed a request");		
 		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		
+		
 		DeleteAccountRequest req = new DeleteAccountRequest();
 		req.setFisherman(fisherman.get());
 		req.setProcessed(false);
@@ -143,7 +149,12 @@ public class AccountController {
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
 	public ResponseEntity<?> deleteSA(@RequestHeader("Authorization") String token, @RequestBody String rqText) throws UnsupportedEncodingException, URISyntaxException {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		if(requestAdminRepository.findByEmailAndProcessed(username)!=0) 
+			return ResponseEntity
+		            .status(HttpStatus.FORBIDDEN)
+		            .body("You already filed a request");		
 		Optional<Admin> admin = adminRepo.findById(username);
+		
 		DeleteAccountRequestAdmin req = new DeleteAccountRequestAdmin();
 		req.setAdmin(admin.get());
 		req.setProcessed(false);

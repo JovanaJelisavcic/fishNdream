@@ -1,6 +1,5 @@
 package com.fishNdream.backend.entity.intercations;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -8,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
@@ -25,8 +23,6 @@ public class ReservationInfo {
 	private LocalDateTime beginning; 
 	@JsonView(Views.ReservationView.class)
 	private LocalDateTime ending;
-	@Transient
-	private Duration duration;
 	@JsonView(Views.ReservationView.class)
 	private int participantsNum;
 	private float price;
@@ -40,13 +36,12 @@ public class ReservationInfo {
 
 	public ReservationInfo() {}
 
-	public ReservationInfo(int reservationId, LocalDateTime beginning, LocalDateTime ending, Duration duration,
+	public ReservationInfo(int reservationId, LocalDateTime beginning, LocalDateTime ending, long duration,
 			int participantsNum, float price) {
 		super();
 		this.reservationId = reservationId;
 		this.beginning = beginning;
 		this.ending = ending;
-		this.duration = duration;
 		this.participantsNum = participantsNum;
 		this.price = price;
 	}
@@ -75,13 +70,6 @@ public class ReservationInfo {
 		this.ending = ending;
 	}
 
-	public Duration getDuration() {
-		return duration;
-	}
-
-	public void setDuration(Duration duration) {
-		this.duration = duration;
-	}
 
 	public int getParticipantsNum() {
 		return participantsNum;

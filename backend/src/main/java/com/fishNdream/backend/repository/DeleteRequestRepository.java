@@ -15,6 +15,9 @@ public interface DeleteRequestRepository extends JpaRepository<DeleteAccountRequ
 	@Query(value="SELECT * FROM DELETE_ACCOUNT_REQUEST where processed='false'", nativeQuery=true)
 	List<DeleteAccountRequest> getByProcessed();
 
+	@Query(value="SELECT COUNT(*) FROM DELETE_ACCOUNT_REQUEST where processed='false' and email=?1 ", nativeQuery=true)
+	int findByEmailAndProcessed(String username);
+
 
 	
 	
