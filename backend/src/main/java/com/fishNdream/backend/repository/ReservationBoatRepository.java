@@ -23,8 +23,9 @@ public interface ReservationBoatRepository extends JpaRepository<ReservationBoat
 	@Query(value="Select COUNT(boat_id) from reservation_boat where ending > NOW() and NOT canceled and email=?1", nativeQuery=true)
 	int hasPendingReservations(String email);
 
-	
-	
+	@Query(value="Select * from reservation_boat where reservation_id NOT IN (SELECT reservation_id FROM revenue_item where res_type='BOAT') and ending <= NOW() and NOT canceled and email IS NOT NULL ", nativeQuery=true)
+	List<ReservationBoat> findUnrevenued();
+
 
 	
 }

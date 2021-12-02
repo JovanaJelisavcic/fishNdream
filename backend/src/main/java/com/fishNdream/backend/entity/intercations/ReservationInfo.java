@@ -33,6 +33,7 @@ public class ReservationInfo {
 	private LocalDateTime actionStartTime;
 	@JsonView(Views.ActionInfo.class)
 	private LocalDateTime actionEndTime;
+	private float percentageRevenue;
 
 
 
@@ -123,6 +124,14 @@ public class ReservationInfo {
 
 	public void setActionEndTime(LocalDateTime actionEndTime) {
 		this.actionEndTime = actionEndTime;
+	}
+
+	public float getPercentageRevenue() {
+		return percentageRevenue;
+	}
+
+	public void setPercentageRevenue(float f) {
+		this.percentageRevenue = f;
 	}
 	
 	

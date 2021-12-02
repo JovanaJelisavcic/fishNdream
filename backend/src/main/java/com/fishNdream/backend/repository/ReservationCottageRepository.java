@@ -18,6 +18,9 @@ public interface ReservationCottageRepository extends JpaRepository<ReservationC
 	
 	@Query(value="Select COUNT(cottage_id) from reservation_cottage where ending > CURDATE() and NOT canceled and email=?1", nativeQuery=true)
 	int hasPendingReservations(String email);
+	
+	@Query(value="Select * from reservation_cottage where reservation_id NOT IN (SELECT reservation_id FROM revenue_item where res_type='COTTAGE') and ending <= CURDATE() and NOT canceled and email IS NOT NULL ", nativeQuery=true)
+	List<ReservationCottage> findUnrevenued();
 
 	
 	

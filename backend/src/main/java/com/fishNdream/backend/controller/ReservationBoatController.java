@@ -176,6 +176,7 @@ public class ReservationBoatController {
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
 		newReservation.setPrice(price);
+		newReservation.setPercentageRevenue(Float.parseFloat(System.getProperty("app.percentage")));
 		fisherman.get().addReservationBoat(newReservation);
 		boat.get().addReservation(newReservation);
 		Boat toSaveBoatAction = boat.get().removeAction(newReservation.getBeginning(),newReservation.getEnding(), containsCaptain );

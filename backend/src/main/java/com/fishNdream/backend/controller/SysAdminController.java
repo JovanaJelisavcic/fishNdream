@@ -25,6 +25,7 @@ import com.fishNdream.backend.entity.basic.Boat;
 import com.fishNdream.backend.entity.basic.Cottage;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.intercations.SystemGain;
 import com.fishNdream.backend.entity.users.Admin;
 import com.fishNdream.backend.entity.users.BoatOwner;
 import com.fishNdream.backend.entity.users.CottageOwner;
@@ -40,7 +41,10 @@ import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.InstructorRepository;
 import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.repository.ReservationCottageRepository;
+import com.fishNdream.backend.repository.RevenueRepository;
+import com.fishNdream.backend.repository.SysGainRepository;
 import com.fishNdream.backend.security.JwtUtils;
+import com.fishNdream.backend.util.RevenueUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -72,6 +76,12 @@ public class SysAdminController {
 	BoatRepository boatRepo;
 	@Autowired
 	InstructorRepository instructorRepo;
+	@Autowired
+	SysGainRepository sysRepo;
+	@Autowired
+	RevenueRepository revenueRepo;
+	@Autowired
+	RevenueUtil revenueUtil;
 	
 	@JsonView(Views.UserInfo.class)
 	@GetMapping("/myprofile")
@@ -207,7 +217,7 @@ public class SysAdminController {
 		instructorRepo.deleteById(owner.get().getEmail());
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
-	//delete fisherman
+
 	@PostMapping("/delete/fisherman/{email}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
 	public ResponseEntity<?> delfish(@PathVariable String email){
@@ -228,5 +238,26 @@ public class SysAdminController {
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 	
+	@PostMapping("/gain")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public ResponseEntity<?> gain(@RequestBody SystemGain newGain){
+		SystemGain latestGain = sysRepo.getLatest();
+		latestGain.setEnding(newGain.getBeginning().minusDays(1));
+		sysRepo.save(latestGain);
+		System.setProperty("app.percentage", String.valueOf(newGain.getPercentage()));
+		sysRepo.save(newGain);
+		return new ResponseEntity<>(HttpStatus.OK);		
+	}
+	
+	
+	@GetMapping("/revenue")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public List<RevenueItem> revenue() {
+		List<RevenueItem> newrevenues= revenueUtil.getNewReservationsRevenue();
+		revenueRepo.saveAll(newrevenues);
+		return revenueRepo.findAll();
+				
+	}
+
 
 }

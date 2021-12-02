@@ -172,6 +172,7 @@ public class ReservationCottageController {
 		newReservation.setFisherman(fisherman.get());
 		newReservation.setParticipantsNum(reservation.getParticipantsNum());
 		newReservation.setPrice(price);
+		newReservation.setPercentageRevenue(Float.parseFloat(System.getProperty("app.percentage")));
 		
 		fisherman.get().addReservationCottage(newReservation);
 		cottage.get().addReservation(newReservation);

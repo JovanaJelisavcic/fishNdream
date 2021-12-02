@@ -15,12 +15,12 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (2, '2022-02-26', '2022-08-26', 1);
 
-insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (1, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 10, 8, 1, null, true, '2021-11-20T14:00:00', '2021-12-30T15:00:00');
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
+values (1, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 10, 8, 1, null, true, '2021-11-20T14:00:00', '2021-12-30T15:00:00', 10);
 --insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,3);
 
-insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (2, '2021-10-29T12:00:00', false, '2021-10-30T14:00:00', 10, 205, 1, 'jovana.jelisavcic95@gmail.com', true, '2021-11-17T14:00:00', '2021-11-25T14:00:00');
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (2, '2021-10-29T12:00:00', false, '2021-10-30T14:00:00', 10, 205, 1, 'jovana.jelisavcic95@gmail.com', true, '2021-11-17T14:00:00', '2021-11-25T14:00:00',10);
 
  insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price) values
  (2, 'Tara', 'No pets', false, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Kalina', 'ferry',  'petarv7@gmail.com', 20.0 );
@@ -28,8 +28,8 @@ values (2, '2021-10-29T12:00:00', false, '2021-10-30T14:00:00', 10, 205, 1, 'jov
 (3, '2021-08-26', '2022-01-01', 2);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (4, '2022-02-26', '2022-08-26', 2);
-insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time )
-values (3, '2021-11-26T12:00:00', false, '2021-11-26T14:00:00', 10, 125, 2, null, true, '2021-11-17T14:00:00', '2021-11-25T14:00:00');
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (3, '2021-11-26T12:00:00', false, '2021-11-26T14:00:00', 10, 125, 2, null, true, '2021-11-17T14:00:00', '2021-11-25T14:00:00',10);
  insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (4,'minibar', 20, 2);
 insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (5,'Capetain', 40, 2);
 insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('cboniface1@about.me', 'Crystal', 'Boniface', '9 Sommers Circle', 'Biaoxi', 'China', '966-218-4628', false);
@@ -48,8 +48,8 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (2, '2022-02-26', '2022-08-26', 1);
 
-insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 130, 1,'jovana.jelisavcic95@gmail.com' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00' );
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 130, 1,'jovana.jelisavcic95@gmail.com' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
 
 insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM, price) values
  (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6, 12.2);
@@ -72,8 +72,8 @@ insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DE
 (1, '2021-08-26', '2022-01-01',3 );
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (2, '2022-02-26', '2022-08-26', 3);
-insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time)
-values (1, '2021-10-28T12:00:00', false, '2021-10-29T14:00:00', 3, 200, 3, 'jovana.jelisavcic95@gmail.com', true, '2021-11-20T14:00:00', '2021-12-25T14:00:00');
+insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (1, '2021-10-28T12:00:00', false, '2021-10-29T14:00:00', 3, 200, 3, 'jovana.jelisavcic95@gmail.com', true, '2021-11-20T14:00:00', '2021-12-25T14:00:00', 10);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (2, 'Zaovine', 'Carry bear protection', false, 'Fishing only for catfish', 2, 'BearsInTrap', 'lgorch3@cnn.com', 9.0);
  insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
@@ -86,7 +86,11 @@ insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DE
 
 
 
+insert into system_gain (gain_id,percentage, beginning, ending) values
+						(1,10, '2021-02-26', '2022-02-26' );
 
+insert into revenue_item(revenue_id, reservation_id, res_type, percentage_active, fisherman_price, revenue)
+values (1, 1, 'BOAT', 10, 10, 1);
 
 
 INSERT INTO roles(name) VALUES('FISHERMAN');
