@@ -53,6 +53,8 @@ public class Boat {
 	private String description;
 	@JsonView(Views.UnauthoBoats.class)
 	private String address;
+	@JsonView(Views.UnauthoBoats.class)
+	private float rating;
 	@JsonView(Views.BoatProfile.class)
 	private int capacity;
 	@JsonView(Views.BoatProfile.class)
@@ -371,6 +373,14 @@ public class Boat {
 	public void addComplaint(ComplaintBoat complaint) {
 		complaints.add(complaint);
 		
+	}
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 
 

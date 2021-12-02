@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,7 +65,7 @@ public class ReservationBoatController {
 	@JsonView(Views.AdditionalServices.class)
 	@GetMapping("/services")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> servicesBoat(@RequestBody ReservationDTO reservation )  {
+	public ResponseEntity<?> servicesBoat(@Valid @RequestBody ReservationDTO reservation )  {
 		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
 		if(boat.isEmpty()) return ResponseEntity.notFound().build();
 		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());		
@@ -75,7 +76,7 @@ public class ReservationBoatController {
 	@JsonView(Views.AdditionalServices.class)
 	@GetMapping("/services/{criteria}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> searchServices(@RequestBody ReservationDTO reservation, @PathVariable String criteria )  {	
+	public ResponseEntity<?> searchServices(@Valid @RequestBody ReservationDTO reservation, @PathVariable String criteria )  {	
 		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
 		if(boat.isEmpty()) return ResponseEntity.notFound().build();
 		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());
@@ -125,7 +126,7 @@ public class ReservationBoatController {
 	
 	@PostMapping("/confirm")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> confirmBoat(@RequestHeader("Authorization") String token,@RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> confirmBoat(@RequestHeader("Authorization") String token,@Valid @RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
 		if(boat.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)

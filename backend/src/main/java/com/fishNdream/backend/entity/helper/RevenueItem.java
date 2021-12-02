@@ -1,4 +1,4 @@
-package com.fishNdream.backend.controller;
+package com.fishNdream.backend.entity.helper;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -6,8 +6,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fishNdream.backend.entity.helper.ActionType;
 
 @Entity
 public class RevenueItem {

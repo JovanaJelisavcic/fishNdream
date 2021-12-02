@@ -2,6 +2,8 @@ package com.fishNdream.backend.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +44,7 @@ public class SearchController {
 	@JsonView(Views.UnauthoCottages.class)
 	@GetMapping("/cottages")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> freeCottages( @RequestBody SerachDTO search )  {	
+	public ResponseEntity<?> freeCottages( @Valid @RequestBody SerachDTO search )  {	
 		List<Cottage> cottages =  cottagesRepo.findAll();
 		List<Cottage> available = filterUtil.getAvaiableCottages(cottages, search.getDateTime(),search.getEndTime());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getCottagesOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
@@ -53,7 +55,7 @@ public class SearchController {
 	@JsonView(Views.UnauthoBoats.class)
 	@GetMapping("/boats")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> freeBoats( @RequestBody SerachDTO search )  {	
+	public ResponseEntity<?> freeBoats(@Valid  @RequestBody SerachDTO search )  {	
 		List<Boat> boats =  boatRepo.findAll();
 		List<Boat> available = filterUtil.getAvaiableBoats(boats, search.getDateTime(),search.getEndTime());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getBoatsOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
@@ -64,7 +66,7 @@ public class SearchController {
 	@JsonView(Views.UnauthoInstuctors.class)
 	@GetMapping("/adventures")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> freeAdventures( @RequestBody SerachDTO search )  {	
+	public ResponseEntity<?> freeAdventures(@Valid  @RequestBody SerachDTO search )  {	
 		List<Adventure> adventures =  adventureRepo.findAll();
 		List<Adventure> available = filterUtil.getAvaiableAdventures(adventures, search.getDateTime(),search.getEndTime());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getAdventuresOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());

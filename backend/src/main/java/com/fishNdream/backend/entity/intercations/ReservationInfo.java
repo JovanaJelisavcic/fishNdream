@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
@@ -20,8 +23,12 @@ public class ReservationInfo {
 	@JsonView(Views.ReservationView.class)
 	private int reservationId;
 	@JsonView(Views.ReservationView.class)
+	@NotNull(message="Date is mandatory")
+ 	@Future(message="Date has to be in the future")
 	private LocalDateTime beginning; 
 	@JsonView(Views.ReservationView.class)
+	@NotNull(message="Date is mandatory")
+ 	@Future(message="Date has to be in the future")
 	private LocalDateTime ending;
 	@JsonView(Views.ReservationView.class)
 	private int participantsNum;
@@ -48,6 +55,9 @@ public class ReservationInfo {
 		this.participantsNum = participantsNum;
 		this.price = price;
 	}
+	 @AssertTrue public boolean isValidRange() {
+		    return beginning.isBefore(ending);
+		  }
 
 	
 	public int getReservationId() {

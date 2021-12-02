@@ -42,6 +42,8 @@ public class Cottage {
 	@JsonView(Views.UnauthoCottages.class)
 	private float price;
 	@JsonView(Views.UnauthoCottages.class)
+	private float rating;
+	@JsonView(Views.UnauthoCottages.class)
 	private String description;
 	@JsonView(Views.CottageProfile.class)
 	private int roomNum;
@@ -229,6 +231,16 @@ public class Cottage {
 	}
 	
 	
+
+	public float getRating() {
+		return rating;
+	}
+
+
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+
 
 	public boolean isAvailableAndFree(LocalDateTime from, LocalDateTime to) {
 		boolean available =false;

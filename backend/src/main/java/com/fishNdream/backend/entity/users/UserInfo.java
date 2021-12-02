@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -21,6 +22,7 @@ public class UserInfo {
 		@Column(nullable=false, unique =true,
 		        updatable=false)
 		@JsonView(Views.UserInfo.class)
+		@Email(message = "Email should be valid")
 		private String email;
 		@NotBlank(message = "Name is mandatory")
 		@JsonView(Views.UserInfo.class)

@@ -266,7 +266,7 @@ public class RegisterController {
 	 
 	 @PostMapping("/changePassword")
 	 @PreAuthorize("hasAuthority('SYS_ADMIN') or hasAuthority('FISHERMAN')")
-		public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest passwordChange) throws URISyntaxException {
+		public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChangeRequest passwordChange) throws URISyntaxException {
 		 UserDetails user = service.loadUserByUsername(
 			      SecurityContextHolder.getContext().getAuthentication().getName());
 			    

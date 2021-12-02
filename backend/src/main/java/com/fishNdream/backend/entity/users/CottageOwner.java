@@ -21,6 +21,9 @@ public class CottageOwner extends UserInfo {
             cascade = CascadeType.ALL, targetEntity = Cottage.class)
 	@JsonView(Views.CottageOwner.class)
 	private List<Cottage> cottages;
+	@JsonView(Views.CottageOwner.class)
+	private float rating;
+	
 
 	public CottageOwner(SignUpRequest request) {
 		
@@ -32,6 +35,14 @@ public class CottageOwner extends UserInfo {
 
 	public List<Cottage> getCottages() {
 		return cottages;
+	}
+
+	public float getRating() {
+		return rating;
+	}
+
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 
 	public void setCottages(List<Cottage> cottages) {

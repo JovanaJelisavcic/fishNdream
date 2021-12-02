@@ -111,8 +111,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public void changeUserPassword(UserDetails user, String password) {
 		User old =userRepository.findByUsername(user.getUsername()).get();
 		old.setPassword(passwordEncoder.encode(password));
-		if(old.getVerificationCode().equals("initial")) old.setVerificationCode(null);
-		userRepository.save(old);
+		if(old.getVerificationCode()==null) userRepository.save(old);
+		if(old.getVerificationCode()!=null && old.getVerificationCode().equals("initial")) {
+			old.setVerificationCode(null);
+			 userRepository.save(old);
+		}
+		
 		
 	}
 

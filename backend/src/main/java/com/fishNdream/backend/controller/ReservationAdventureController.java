@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -123,7 +124,7 @@ public class ReservationAdventureController {
 	
 	@PostMapping("/confirm")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> confirmAdventure(@RequestHeader("Authorization") String token,@RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> confirmAdventure(@RequestHeader("Authorization") String token,@Valid @RequestBody ReservationDTO reservation) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<Adventure> adventure =  adventureRepo.findById(reservation.getEntityId());
 		if(adventure.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)

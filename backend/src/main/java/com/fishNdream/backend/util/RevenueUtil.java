@@ -6,15 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fishNdream.backend.controller.RevenueItem;
 import com.fishNdream.backend.entity.helper.ActionType;
+import com.fishNdream.backend.entity.helper.RevenueItem;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
 import com.fishNdream.backend.repository.ReservationAdventureRepository;
 import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.repository.ReservationCottageRepository;
-import com.fishNdream.backend.repository.SysGainRepository;
 
 @Component
 public class RevenueUtil {
@@ -25,8 +24,7 @@ public class RevenueUtil {
 	ReservationBoatRepository btResRepo;
 	@Autowired
 	ReservationAdventureRepository AdResRepo;
-	@Autowired
-	SysGainRepository sysRepo;
+
 
 	public List<RevenueItem> getNewReservationsRevenue() {
 		List<RevenueItem> result = new ArrayList<>();

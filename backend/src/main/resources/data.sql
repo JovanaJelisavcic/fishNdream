@@ -4,9 +4,9 @@ insert into fisherman (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, de
 insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe3@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
 insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe1@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
 
-insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('petarv7@gmail.com', 'Eirena', 'Rumbold', '0 Village Place', 'Živinice', 'Bosnia and Herzegovina', '521-486-3914', false);
-insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price) values
- (1, 'Zlatibor', 'No smoking', true, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Ursel', 'gliser',  'petarv7@gmail.com', 15.0 );
+insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('petarv7@gmail.com', 'Eirena', 'Rumbold', '0 Village Place', 'Živinice', 'Bosnia and Herzegovina', '521-486-3914', false, 4.6);
+insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price, rating) values
+ (1, 'Zlatibor', 'No smoking', true, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Ursel', 'gliser',  'petarv7@gmail.com', 15.0 , 4.56);
 insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (1,'pet friendly', 5, 1);
 insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (2,'minibar', 20, 1);
 insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (3,'Capetain', 40, 1);
@@ -22,8 +22,8 @@ values (1, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 10, 8, 1, null, 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
 values (2, '2021-10-29T12:00:00', false, '2021-10-30T14:00:00', 10, 205, 1, 'jovana.jelisavcic95@gmail.com', true, '2021-11-17T14:00:00', '2021-11-25T14:00:00',10);
 
- insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price) values
- (2, 'Tara', 'No pets', false, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Kalina', 'ferry',  'petarv7@gmail.com', 20.0 );
+ insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price, rating) values
+ (2, 'Tara', 'No pets', false, 12, 'Beautiful and fast', 2, 152, 12.5, 45, 'Kalina', 'ferry',  'petarv7@gmail.com', 20.0 , 4.5);
  insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (3, '2021-08-26', '2022-01-01', 2);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
@@ -32,15 +32,13 @@ insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTI
 values (3, '2021-11-26T12:00:00', false, '2021-11-26T14:00:00', 10, 125, 2, null, true, '2021-11-17T14:00:00', '2021-11-25T14:00:00',10);
  insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (4,'minibar', 20, 2);
 insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (5,'Capetain', 40, 2);
-insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('cboniface1@about.me', 'Crystal', 'Boniface', '9 Sommers Circle', 'Biaoxi', 'China', '966-218-4628', false);
-insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('bhellin2@gravatar.com', 'Brenna', 'Hellin', '4 Charing Cross Way', 'Kukawa', 'Nigeria', '748-544-1143', false);
-insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('igitsham3@cdc.gov', 'Itch', 'Gitsham', '2124 Pawling Street', 'Liping', 'China', '521-698-2896', false);
-insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted) values ('pedmed4@vk.com', 'Pete', 'Edmed', '88 Fuller Lane', 'Qinhe', 'China', '916-404-7190', false);
+insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('cboniface1@about.me', 'Crystal', 'Boniface', '9 Sommers Circle', 'Biaoxi', 'China', '966-218-4628', false, 4.9);
 
 
-insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted) values ('acretney7@businessinsider.com', 'Antin', 'Vuitton', '8 Mayfield Road', 'Hīsh', 'Syria', '627-651-4290', false);
-insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price) values
- (1, 'Zlatibor', 'No smoking', 'Lovely cottage', 'Zlatni bor', 2, 'acretney7@businessinsider.com', 5 , 15.0);
+
+insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('acretney7@businessinsider.com', 'Antin', 'Vuitton', '8 Mayfield Road', 'Hīsh', 'Syria', '627-651-4290', false, 4.2);
+insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price, rating) values
+ (1, 'Zlatibor', 'No smoking', 'Lovely cottage', 'Zlatni bor', 2, 'acretney7@businessinsider.com', 5 , 15.0, 4.1);
  insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (1,'WiFi', 3, 1);
   insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (2,'Free Parking', 5, 1);
  insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
@@ -51,19 +49,14 @@ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
 values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 130, 1,'jovana.jelisavcic95@gmail.com' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
 
-insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM, price) values
- (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6, 12.2);
+insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM, price, rating) values
+ (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6, 12.2, 4.8);
 
  
- insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted) values ('bcoffey8@cmu.edu', 'Alleen', 'Carabet', '85 Rowland Alley', 'Taoyuan', 'China', '307-249-1188', false);
-insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted) values ('swilkie9@digg.com', 'Ariela', 'Angel', '529 Spohn Alley', 'Kabor', 'Indonesia', '407-853-9057', false);
-insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted) values ('kgriswooda@aol.com', 'Rodrique', 'Rudman', '634 Golf Course Crossing', 'Gandekan', 'Indonesia', '833-691-1487', false);
-insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted) values ('nlustedb@skyrock.com', 'Gottfried', 'Tutchell', '05420 Tomscot Drive', 'Prior Velho', 'Portugal', '252-676-2335', false);
+ insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('bcoffey8@cmu.edu', 'Alleen', 'Carabet', '85 Rowland Alley', 'Taoyuan', 'China', '307-249-1188', false, 4.6);
 
-insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted) values ('Legra', 'D''Aguanno', 'ldaguanno0@issuu.com', '15313 Burrows Alley', 'Hongzhou', 'China', '331-356-5166', 'not schooled for this but success guaranteed', false);
-insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted) values ('Lisle', 'Creeber', 'lcreeber1@google.de', '1955 Fair Oaks Plaza', 'Wushi', 'China', '518-718-7196', 'finished 2 courses myself', false);
-insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted) values ('Cybill', 'Exroll', 'cexroll2@barnesandnoble.com', '6 Paget Crossing', 'Xiejiatan', 'China', '879-718-3715', 'I have a show called fishing with bello', false);
-insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted) values ('Leticia', 'Gorch', 'lgorch3@cnn.com', '7 Cambridge Lane', 'Ternovka', 'Russia', '340-956-7178', 'I never participated in any competitions but I am the best', false);
+
+insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Leticia', 'Gorch', 'lgorch3@cnn.com', '7 Cambridge Lane', 'Ternovka', 'Russia', '340-956-7178', 'I never participated in any competitions but I am the best', false, 4.5);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (3, 'Djetinja', 'Never return the fish', true, 'We start from city beach', 6, 'Riverfish', 'lgorch3@cnn.com', 10.0);
  insert into additional_services_adventure (SERVICE_ID, NAME, PRICE, ADVENTURE_ID) values (1,'Boat, Fishing ofshore', 15, 3);
@@ -80,14 +73,13 @@ insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DE
 (3, '2021-08-26', '2022-01-01',2 );
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (4, '2022-02-26', '2022-08-26', 2);
-insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868', 'My grandfather gave me the love for fishing', false);
+insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868', 'My grandfather gave me the love for fishing', false, 4.2);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (1, 'Uvac', 'ALways return the fish', false, 'We start from sjenicko jezero and continue towards peak', 5, 'Beloglavi supovi', 'ulago4@vimeo.com', 5.0);
 
 
 
-insert into system_gain (gain_id,percentage, beginning, ending) values
-						(1,10, '2021-02-26', '2022-02-26' );
+
 
 insert into revenue_item(revenue_id, reservation_id, res_type, percentage_active, fisherman_price, revenue)
 values (1, 1, 'BOAT', 10, 10, 1);

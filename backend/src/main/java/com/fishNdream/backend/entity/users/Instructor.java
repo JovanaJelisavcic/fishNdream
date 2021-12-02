@@ -26,6 +26,8 @@ public class Instructor extends UserInfo {
             cascade = CascadeType.ALL, targetEntity = Adventure.class)
 	@JsonView(Views.UnauthoInstuctors.class)
 	private List<Adventure> adventures;
+	@JsonView(Views.UnauthoInstuctors.class)
+	private float rating;
 	@OneToMany(
 	        mappedBy = "instructor",
 	        cascade = CascadeType.ALL,
@@ -123,6 +125,12 @@ public class Instructor extends UserInfo {
 			res.add(c.getAdventureId());
 		}
 		return res;
+	}
+	public float getRating() {
+		return rating;
+	}
+	public void setRating(float rating) {
+		this.rating = rating;
 	}
 	
 	

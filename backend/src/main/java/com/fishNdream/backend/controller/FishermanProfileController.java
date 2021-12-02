@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +52,7 @@ public class FishermanProfileController {
 	
 	@PutMapping("/update")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> updateProfile(@RequestHeader("Authorization") String token,@Valid @RequestBody ChangeInfoDTO user) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
+	public ResponseEntity<?> updateProfile(@RequestHeader("Authorization") String token,@RequestBody ChangeInfoDTO user) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Fisherman newOne = fishermanRepo.findById(username).get();
 		if(!user.getEmail().equals(username)) {
@@ -128,7 +126,7 @@ public class FishermanProfileController {
 		if(reservations.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		return  new ResponseEntity<>(reservations, HttpStatus.OK);
 	}
-///////////////////////////////////////////////////////////////////
+
 	@JsonView(Views.ReservationView.class)
 	@GetMapping("/reservations/cottage/past")
 	@PreAuthorize("hasAuthority('FISHERMAN')")

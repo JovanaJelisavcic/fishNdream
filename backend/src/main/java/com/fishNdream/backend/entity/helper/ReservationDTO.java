@@ -3,9 +3,17 @@ package com.fishNdream.backend.entity.helper;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+
 public class ReservationDTO {
 	
+	@NotNull(message="Dates are mandatory")
+ 	@Future(message="Date has to be in the future")
 	private LocalDateTime beginning; 
+	@NotNull(message="Dates are mandatory")
+ 	@Future(message="Date has to be in the future")
 	private LocalDateTime ending;
 	private int participantsNum;
 	private int entityId;
@@ -21,6 +29,9 @@ public class ReservationDTO {
 		this.entityId = entityId;
 		this.servicesIds = servicesIds;
 	}
+	 @AssertTrue public boolean isValidRange() {
+		    return beginning.isBefore(ending);
+		  }
 	public LocalDateTime getBeginning() {
 		return beginning;
 	}
