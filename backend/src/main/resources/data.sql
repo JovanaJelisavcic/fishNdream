@@ -226,6 +226,122 @@ insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID
 
 
 
+insert into boat_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values
+('sowsowabdel@bookj.site', 'Tamara', 'Tadic', 'Nikole Pasica 5', 'Beograd', 'Serbia', '502-658-7854', false, 4.4);
+
+insert into boat (BOAT_ID,	ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, CAPACITY, DESCRIPTION, ENGINE_NUM, ENGINE_POWER, LENGTH, MAX_SPEED, NAME, BOAT_TYPE, OWNER_EMAIL, price, rating) values
+ (6, 'Beograd', 'Clean everything; No jumping off', true, 90, 'Good for cruising for families', 3, 750, 48.5, 38, 'Oktabas', 'cluiser',  'sowsowabdel@bookj.site', 150.0 , 4.8);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (20,'pet friendly', 5, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (21,'minibar', 200, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (22,'Capetain', 80, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (23,'Wifi', 5, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (24,'Food', 100, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (25,'Fishing equipments', 50, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (26,'Party Decorations', 10, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (27,'Waiters', 100, 6);
+insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (28,'Barman', 60, 6);
+insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
+(11, '2021-08-26', '2022-01-01', 6);
+insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
+(12, '2022-02-26', '2022-08-26', 6);
+
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
+values (31, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 50 , 400, 6, 'kbotten7@foxnews.com' , false, null, null, 10);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(31,20);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(31,22);
+
+
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (32, '2021-10-29T10:00:00', false, '2021-10-29T14:00:00', 90, 500, 6, 'ebeardmore6@netvibes.com' , true, '2021-10-17T14:00:00', '2021-10-25T14:00:00',10);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(32,20);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(32,21);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(32,22);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(32,23);
+
+
+
+
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
+values (33, '2021-12-28T12:00:00', false, '2021-12-28T14:00:00', 80, 350, 6, 'taddy4@bbb.org', true, '2021-11-20T14:00:00', '2021-12-30T15:00:00', 10);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(33,20);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(33,22);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(33,28);
+
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
+values (34, '2021-12-26T12:00:00', false, '2021-12-26T14:00:00', 90, 500 , 6, 'opiscopo0@storify.com', true, '2021-11-20T14:00:00', '2021-12-24T15:00:00', 10);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,20);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,21);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,22);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,23);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,24);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,25);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(34,26);
+insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (35, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 90, 1300, 6, null, true, '2021-11-17T14:00:00', '2021-12-25T14:00:00',10);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(35,22);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(35,23);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(35,24);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(35,25);
+insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(35,26);
+
+--cottage
+
+insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('acretney7@businessinsider.com', 'Antin', 'Vuitton', '8 Mayfield Road', 'Hīsh', 'Syria', '627-651-4290', false, 4.2);
+insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price, rating) values
+ (1, 'Zlatibor', 'No smoking', 'Lovely cottage', 'Zlatni bor', 2, 'acretney7@businessinsider.com', 5 , 45.0, 4.1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (1,'WiFi', 3, 1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (2,'Parking', 5, 1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (3,'Breakfast', 6, 1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (4,'Baby crib', 3, 1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (5,'Cleaning', 10, 1);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (6,'Tour day', 15, 1);
+ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
+(1, '2021-08-26', '2022-01-01', 1);
+insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
+(2, '2022-02-26', '2022-08-26', 1);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (1, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 5, 220, 1,'bsallnow3@goo.ne.jp', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,1);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,2);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (2, '2021-10-29T12:00:00', false, '2021-11-06T14:00:00', 4, 250, 1, 'rtownsend2@nba.com', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(2,3);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(2,2);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (3, '2021-12-22T12:00:00', false, '2021-12-24T14:00:00', 5, 100, 1,'lrymmer1@merriam-webster.com' , false, null,null, 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(3,3);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(3,2);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(3,1);
+
+
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (4, '2021-12-25T12:00:00', false, '2021-12-29T14:00:00', 4, 190, 1, 'opiscopo0@storify.com' , false, null,null, 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,1);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,2);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,3);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,4);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,5);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,6);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (5, '2021-12-30T12:00:00', false, '2022-01-05T14:00:00', 3, 250, 1, null , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,3);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,5);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,1);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (6, '2022-01-22T12:00:00', false, '2021-01-30T14:00:00', 5, 300, 1, null , true, '2021-11-19T14:00:00','2022-01-19T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,1);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,2);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,5);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,6);
+
+
+
 
 --------------------DOVDE URADILA
 /*---cottage
@@ -304,6 +420,8 @@ insert into USERS (user_id, username, password, enabled, deleted, verification_c
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (13, 'nelson@verizon.net', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (14, 'jimtopo@cloudscredit.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (15, 'xjpzll@littlefarmhouserecipes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (16, 'sowsowabdel@bookj.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (17, 'acretney7@businessinsider.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 
 
 
@@ -322,5 +440,7 @@ insert into USER_ROLES(user_id, role_id) values(12, 2);
 insert into USER_ROLES(user_id, role_id) values(13, 4);
 insert into USER_ROLES(user_id, role_id) values(14, 4);
 insert into USER_ROLES(user_id, role_id) values(15, 4);
+insert into USER_ROLES(user_id, role_id) values(16, 4);
+insert into USER_ROLES(user_id, role_id) values(16, 3);
 
 
