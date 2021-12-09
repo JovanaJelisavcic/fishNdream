@@ -1,13 +1,24 @@
 <template>
-<div class="main">
+  <div class="main">
     <p class="sign" align="center">Sign in</p>
     <form class="form1">
-      <input class="un " type="text" align="center" placeholder="Username">
-      <input class="pass" type="password" align="center" placeholder="Password">
-      <a  @click="tryLogin" class="submit" align="center">Sign in</a>        
+      <input
+        v-model="username"
+        class="un"
+        type="text"
+        align="center"
+        placeholder="Username"
+      />
+      <input
+        v-model="password"
+        class="pass"
+        type="password"
+        align="center"
+        placeholder="Password"
+      />
+      <a @click="tryLogin" class="submit" align="center">Sign in</a>
     </form>
-    </div>
-
+  </div>
 </template>
 
          
@@ -25,14 +36,11 @@ export default {
   },
   methods: {
     async tryLogin() {
-      if (
-        await this.$store.dispatch("login/login", {
-          email: this.username,
-          password: this.password,
-        })
-      ) {
-        this.$router.push("/home");
-      }
+      await this.$store.dispatch("login/login", {
+        email: this.username,
+        password: this.password,
+      });
+      this.$router.push("/");
     },
   },
 };

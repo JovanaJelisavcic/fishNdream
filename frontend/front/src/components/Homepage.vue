@@ -2,31 +2,28 @@
   <div>
     <h1><img src="@/assets/logo.png" />fishNdream</h1>
     <div class="ui secondary pointing menu">
-      <a class="item"> Cottages </a>
-      <a class="item"> Boats </a>
-      <a class="item active"> Instructors </a>
+      <div>
+        <router-link to="/cottages">Cottages</router-link>
+        <router-link to="/boats">Boats</router-link>
+        <router-link to="/instructors">Instructors</router-link>
+      </div>
       <div class="right menu">
         <a @click="goLogin" class="ui item"> Login </a>
       </div>
     </div>
     <div class="ui segment">
-      <p> <Login></Login></p>
+      <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import Login from "../views/Login";
 export default {
-  
-  name: "AppHeader",
-   methods: {
+  name: "Homepage",
+  methods: {
     goLogin() {
-        this.$router.push("/login");
-      }
+      this.$router.push("/login");
     },
-  components: {
-    Login
-  }
+  },
 };
 </script>

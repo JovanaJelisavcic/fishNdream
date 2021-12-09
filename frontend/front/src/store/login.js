@@ -1,5 +1,5 @@
-import axios from "../../config/axios";
-import { login } from "../../api";
+import axios from "../config/axios";
+import { login } from "../api";
 export default {
   namespaced: true,
   state: {
