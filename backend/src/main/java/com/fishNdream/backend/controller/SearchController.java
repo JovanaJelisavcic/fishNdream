@@ -43,7 +43,7 @@ public class SearchController {
 
 	@JsonView(Views.UnauthoCottages.class)
 	@GetMapping("/cottages")
-	@PreAuthorize("hasAuthority('FISHERMAN')")
+	//@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> freeCottages( @Valid @RequestBody SerachDTO search )  {	
 		List<Cottage> cottages =  cottagesRepo.findAll();
 		List<Cottage> available = filterUtil.getAvaiableCottages(cottages, search.getDateTime(),search.getEndTime());

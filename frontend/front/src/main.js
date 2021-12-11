@@ -1,12 +1,20 @@
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Vue from 'vue';
 import App from './App';
 import store from './store';
 import router from './router';
 import axios from "./config/axios";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
+
+
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
+
+Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 new Vue({
     store,
     router,

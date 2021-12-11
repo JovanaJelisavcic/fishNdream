@@ -1,5 +1,16 @@
 <template>
   <div>
-    <h1>This is a Cottages page</h1>
+    <SearchCottages/>
   </div>
 </template>
+
+
+<script>
+import SearchCottages from '../components/SearchCottages.vue';
+export default {
+ name: 'Cottages',
+ components: {
+   SearchCottages
+ }
+};
+</script>
