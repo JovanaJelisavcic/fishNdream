@@ -6,6 +6,6 @@ export const login = async (params) => {
 };
 
 export const searchCottages = async (params) => {
-  let { data } = await axios.post("/search/cottages", { ...params });
+  let { data } = await axios.post("/search/cottages", { ...params});
   return data;
 };

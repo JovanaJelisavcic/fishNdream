@@ -1,5 +1,4 @@
 import axios from "axios";
-console.log(process.env);
 axios.defaults.baseURL = process.env.VUE_APP_BAKEND_PUTANJA;
 const token = localStorage.getItem("token");
 if (token) {

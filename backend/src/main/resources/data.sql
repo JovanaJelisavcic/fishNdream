@@ -448,6 +448,64 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(18,16);
 
 
+------------------------------------------------------------------------------------------------
+insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating)
+values ('bobacott@codw.site', 'Bob', 'Cottag', 'Liversville 16', 'Brisbane', 'UK', '256-958-6853', false, 4.36);
+insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price, rating) values
+ (4, 'Zlatibor', 'No noise', 'Cottage secluded from town noise', 'Capiljica', 4, 'bobacott@codw.site', 8 , 90.0, 4.8);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (18,'WiFi', 3, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (19,'Parking', 5, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (20,'Breakfast', 6, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (21,'Baby crib', 3, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (22,'Cleaning', 10, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (23,'Tour day', 15, 4);
+ insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (24,'2 bathrooms', 20, 4);
+ insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
+(7, '2021-08-26', '2022-01-01', 4);
+insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
+(8, '2022-02-26', '2022-08-26', 4);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (19, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 8, 500, 4,'mgiottini5@51.la', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(19,18);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(19,20);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (20, '2021-10-29T12:00:00', false, '2021-11-06T14:00:00', 6, 600, 4, 'cfleeming8@ucla.edu', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(20,23);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(20,24);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (21, '2021-12-22T12:00:00', false, '2021-12-24T14:00:00', 7, 203, 4,'opiscopo0@storify.com' , false, null,null, 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,23);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,21);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,19);
+
+
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (22, '2021-12-25T12:00:00', false, '2021-12-29T14:00:00', 6, 412,4, 'glodder9@last.fm' , false, null,null, 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,19);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,20);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,23);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,24);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,18);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(22,21);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (23, '2021-12-30T12:00:00', false, '2022-01-05T14:00:00', 8, 520, 4, null , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(23,23);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(23,18);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(23,19);
+
+insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
+values (24, '2022-01-22T12:00:00', false, '2021-01-30T14:00:00', 8, 650, 4, null , true, '2021-11-19T14:00:00','2022-01-19T14:00:00', 10 );
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(24,19);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(24,20);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(24,22);
+insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(24,23);
+
+
 
 
 
@@ -531,6 +589,7 @@ insert into USERS (user_id, username, password, enabled, deleted, verification_c
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (15, 'xjpzll@littlefarmhouserecipes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (16, 'sowsowabdel@bookj.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (17, 'acretney7@businessinsider.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (18, 'bobacott@codw.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 
 
 
@@ -550,6 +609,7 @@ insert into USER_ROLES(user_id, role_id) values(13, 4);
 insert into USER_ROLES(user_id, role_id) values(14, 4);
 insert into USER_ROLES(user_id, role_id) values(15, 4);
 insert into USER_ROLES(user_id, role_id) values(16, 4);
-insert into USER_ROLES(user_id, role_id) values(16, 3);
+insert into USER_ROLES(user_id, role_id) values(17, 3);
+insert into USER_ROLES(user_id, role_id) values(18, 3);
 
 

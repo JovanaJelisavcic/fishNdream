@@ -6,7 +6,8 @@ import store from './store';
 import router from './router';
 import axios from "./config/axios";
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
-
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 
 
 Vue.prototype.$http = axios;
@@ -15,6 +16,7 @@ Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.component('vue-date-picker',VueCtkDateTimePicker);
 new Vue({
     store,
     router,

@@ -1,18 +1,22 @@
 package com.fishNdream.backend.entity.helper;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SerachDTO {
 	
 	@NotNull(message="Dates are mandatory")
- 	@Future(message="Date has to be in the future")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	 	private LocalDateTime dateTime;
 	@NotNull(message="Dates are mandatory")
  	@Future(message="Date has to be in the future")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	    private LocalDateTime endTime;
 		private String location;
 		private int guestsNum;
@@ -25,7 +29,7 @@ public class SerachDTO {
 		
 		@AssertTrue
 	  public boolean isValidRange() {
-			    return dateTime.isBefore(endTime);
+			    return dateTime.isBefore(endTime) && !dateTime.toLocalDate().isBefore(LocalDate.now());
 			  }
 		
 		public LocalDateTime getDateTime() {
