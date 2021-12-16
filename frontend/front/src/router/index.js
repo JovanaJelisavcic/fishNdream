@@ -1,37 +1,38 @@
-import Vue from 'vue' 
+import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from "../store";
-
+import store from "../store"
+import Homepage from "../components/Homepage.vue"
+import Cottages from "../views/Cottages.vue"
+import Boats from "../views/Boats.vue"
+import Instructors from "../views/Instructors.vue"
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "Homepage",
-    component: require("../components/Homepage.vue").default,
-    meta: {
-    },
+    component: Homepage,
+    children: [
+      {
+        path: "cottages",
+        name: "Cottages",
+        component:  Cottages
+      }, {
+        path: "boats",
+        name: "Boats",
+        component: Boats
+      }, {
+        path: "instructors",
+        name: "Instructors",
+        component: Instructors
+      }
+    ]
   },
   {
     path: "/login",
     name: "Login",
     component: require("../views/Login.vue").default,
-    meta: {},
-  },{
-    path: "/cottages",
-    name: "Cottages",
-    component: require("../views/Cottages.vue").default,
-    meta: {},
-  },{
-    path: "/boats",
-    name: "Boats",
-    component: require("../views/Boats.vue").default,
-    meta: {},
-  },{
-    path: "/instructors",
-    name: "Instructors",
-    component: require("../views/Instructors.vue").default,
-    meta: {},
+
   }
 ];
 

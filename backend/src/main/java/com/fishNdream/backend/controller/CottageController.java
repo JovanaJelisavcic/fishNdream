@@ -1,6 +1,7 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -92,6 +93,12 @@ public class CottageController {
 		Optional<Cottage> cottage =  cottagesRepo.findById(cottageId);
 		if(cottage.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(cottage, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/")
+	public List<Cottage> allcttg( )  {	
+		 return  cottagesRepo.findAll();
 	}
 	
 	

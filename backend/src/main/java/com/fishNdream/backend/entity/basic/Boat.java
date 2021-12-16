@@ -61,7 +61,7 @@ public class Boat {
 	private String behaviourRules;
 	@ElementCollection
 	@CollectionTable(name = "boat_pics", joinColumns = @JoinColumn(name = "boat_id"))
-	@JsonView(Views.BoatProfile.class)
+	@JsonView(Views.UnauthoBoats.class)
 	private Set<String> boatPics = new HashSet<>();
 	@JsonView(Views.BoatProfile.class)
 	private boolean cancelPolicy; // 0-besplatno 

@@ -1,14 +1,16 @@
 <template>
   <ul class="list-group">
     <CottageItem
-     v-for="(cottage, cottageId) in cottages"
+      v-for="(cottage, cottageId) in cottages"
       :key="cottageId"
-      :cottage="cottage"></CottageItem>
+      :cottage="cottage"
+    ></CottageItem>
   </ul>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { allCottages } from "../api";
 import CottageItem from "./CottageItem.vue";
 export default {
   name: "CottagesList",
@@ -17,8 +19,12 @@ export default {
   },
   computed: {
     cottages: {
-      ...mapGetters("cottages", { get: "getCottages" }),
-    },
+      ...mapGetters("cottages", { get: "getFilteredCottages" })
+    }
   },
+  async mounted() {
+    const response = await allCottages();
+    this.$store.commit("cottages/setCottages", response);
+  }
 };
 </script>

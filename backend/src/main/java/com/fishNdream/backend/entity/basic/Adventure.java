@@ -2,13 +2,18 @@ package com.fishNdream.backend.entity.basic;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -61,6 +66,10 @@ public class Adventure {
 	        orphanRemoval = true
 	    )
 	private List<AdditionalServicesAdventure> additionalServices;
+	@ElementCollection
+	@CollectionTable(name = "adventure_pics", joinColumns = @JoinColumn(name = "adventure_id"))
+	@JsonView(Views.UnauthoInstuctors.class)
+	private Set<String> adventurePics = new HashSet<>();
 	
 	public List<ReservationAdventure> getReservations() {
 		return reservations;

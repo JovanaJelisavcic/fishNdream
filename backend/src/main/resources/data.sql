@@ -37,6 +37,11 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (1, '2021-08-26', '2022-01-01', 1);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (2, '2022-02-26', '2022-08-26', 1);
+insert into boat_pics(boat_id,boat_pics) values(1, 'boat1.jpg');
+insert into boat_pics(boat_id,boat_pics) values(1, 'boat2.jpg');
+insert into boat_pics(boat_id,boat_pics) values(1, 'boat3.jpg');
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (1, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 3, 90, 1, 'opiscopo0@storify.com' , false, null, null, 10);
@@ -70,6 +75,11 @@ insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (
 (3, '2021-08-26', '2022-01-01', 2);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (4, '2022-02-26', '2022-08-26', 2);
+insert into boat_pics(boat_id,boat_pics) values(2, 'boat4.jpg');
+insert into boat_pics(boat_id,boat_pics) values(2, 'boat5.jpg');
+insert into boat_pics(boat_id,boat_pics) values(2, 'boat6.jpg');
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (7, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 4, 90, 2, 'glodder9@last.fm' , false, null, null, 10);
@@ -114,6 +124,13 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (5, '2021-08-26', '2022-01-01', 3);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (6, '2022-02-26', '2022-08-26', 3);
+insert into boat_pics(boat_id,boat_pics) values(3, 'boat7.jpg');
+insert into boat_pics(boat_id,boat_pics) values(3, 'boat8.jpg');
+insert into boat_pics(boat_id,boat_pics) values(3, 'boat9.jpg');
+
+
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (13, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 50 , 485, 3, 'rtownsend2@nba.com' , false, null, null, 10);
@@ -167,6 +184,12 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (7, '2021-08-26', '2022-01-01', 4);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (8, '2022-02-26', '2022-08-26', 4);
+insert into boat_pics(boat_id,boat_pics) values(4, 'boat10.jpg');
+insert into boat_pics(boat_id,boat_pics) values(4, 'boat11.jpg');
+insert into boat_pics(boat_id,boat_pics) values(4, 'boat12.jpg');
+
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (19, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 3, 60, 4, 'glodder9@last.fm' , false, null, null, 10);
@@ -200,6 +223,13 @@ insert into additional_services_boat (SERVICE_ID, NAME, PRICE, BOAT_ID) values (
 (9, '2021-08-26', '2022-01-01', 5);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (10, '2022-02-26', '2022-08-26', 5);
+insert into boat_pics(boat_id,boat_pics) values(5, 'boat13.jpg');
+insert into boat_pics(boat_id,boat_pics) values(5, 'boat14.jpg');
+insert into boat_pics(boat_id,boat_pics) values(5, 'boat15.jpg');
+
+
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (25, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 4, 56, 5, 'rtownsend2@nba.com' , false, null, null, 10);
@@ -244,6 +274,13 @@ insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) v
 (11, '2021-08-26', '2022-01-01', 6);
 insert into AVAILABILITY_PERIOD_BOATS  (PERIOD_ID, BEGGINING, ENDING,BOAT_ID ) values
 (12, '2022-02-26', '2022-08-26', 6);
+
+insert into boat_pics(boat_id,boat_pics) values(6, 'boat16.jpg');
+insert into boat_pics(boat_id,boat_pics) values(6, 'boat17.jpg');
+insert into boat_pics(boat_id,boat_pics) values(6, 'boat18.jpg');
+
+
+
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
 values (31, '2021-10-28T12:00:00', false, '2021-10-28T14:00:00', 50 , 400, 6, 'kbotten7@foxnews.com' , false, null, null, 10);
@@ -300,6 +337,12 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (2, '2022-02-26', '2022-08-26', 1);
 
+insert into cottage_pics(cottage_id,cottage_pics) values(1, 'cottage1.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(1, 'cottage2.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(1, 'cottage3.jpg');
+
+
+
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
 values (1, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 5, 220, 1,'bsallnow3@goo.ne.jp', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,1);
@@ -351,6 +394,12 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
 (3, '2021-08-26', '2022-01-01', 2);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (4, '2022-02-26', '2022-08-26', 2);
+insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage4.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage5.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage6.jpg');
+
+
+
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
 values (7, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 2, 150, 2,'kbotten7@foxnews.com', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
@@ -406,6 +455,12 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
 (5, '2021-08-26', '2022-01-01', 3);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (6, '2022-02-26', '2022-08-26', 3);
+
+insert into cottage_pics(cottage_id,cottage_pics) values(3, 'cottage7.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(3, 'cottage8.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(3, 'cottage9.jpg');
+
+
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
 values (13, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 10, 450, 2,'taddy4@bbb.org', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );
@@ -464,6 +519,10 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
 (7, '2021-08-26', '2022-01-01', 4);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (8, '2022-02-26', '2022-08-26', 4);
+insert into cottage_pics(cottage_id,cottage_pics) values(4, 'cottage10.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(4, 'cottage11.jpg');
+insert into cottage_pics(cottage_id,cottage_pics) values(4, 'cottage12.jpg');
+
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
 values (19, '2021-10-22T12:00:00', false, '2021-10-28T14:00:00', 8, 500, 4,'mgiottini5@51.la', true, '2021-10-19T14:00:00','2021-10-20T14:00:00', 10 );

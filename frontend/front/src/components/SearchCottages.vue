@@ -17,13 +17,32 @@
       ></vue-date-picker>
       <button type="submit">Search</button>
     </form>
+    <div>
+      <div>
+        <div>
+          Price range:
+          <Slider
+            v-model="priceValues"
+            @update="priceFilterChanged"
+            :format="format"
+            :max="1000"
+            :step="10"
+          />
+          <button type="reset" @click="resetFilter">Reset</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { searchCottages } from "../api";
+import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchCottages",
+  components: {
+    Slider,
+  },
   data() {
     return {
       location: "",
@@ -32,6 +51,10 @@ export default {
       ending: null,
       date: new Date(),
       currentDate: new Date(),
+      priceValues: [0, 1000],
+      format: function (value) {
+        return `€${value}`;
+      }
     };
   },
   methods: {
@@ -57,6 +80,13 @@ export default {
         this.$store.commit("cottages/setCottages", response);
       });
     },
+    priceFilterChanged() {
+      this.$store.commit("cottages/filterPriceCottages", this.priceValues);
+    },
+    resetFilter() {
+      this.$store.commit("cottages/resetFilter");
+      this.priceValues= [0, 1000];
+    }
   },
   computed: {
     minDate() {
@@ -65,3 +95,9 @@ export default {
   },
 };
 </script>
+
+
+<style src="@vueform/slider/themes/default.css"></style>
+
+<style scoped>
+</style>

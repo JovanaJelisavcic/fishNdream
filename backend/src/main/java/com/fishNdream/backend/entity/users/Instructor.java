@@ -42,6 +42,7 @@ public class Instructor extends UserInfo {
 	private List<ComplaintInstructor> complaints;
 	
 	
+	
 	public Instructor(SignUpRequest request) {
 		super(request.getEmail(), request.getName(),request.getSurname(), request.getAdress(), request.getCity(), request.getState(),
 				request.getPhoneNum());

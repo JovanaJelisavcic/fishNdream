@@ -53,7 +53,7 @@ public class Cottage {
 	private String behaviourRules;
 	@ElementCollection
 	@CollectionTable(name = "cottage_pics", joinColumns = @JoinColumn(name = "cottage_id"))
-	@JsonView(Views.CottageProfile.class)
+	@JsonView(Views.UnauthoCottages.class)
 	private Set<String> cottagePics = new HashSet<>();
 	@ManyToOne
 	@JsonView(Views.CottageProfile.class)

@@ -9,3 +9,8 @@ export const searchCottages = async (params) => {
   let { data } = await axios.post("/search/cottages", { ...params});
   return data;
 };
+
+export const allCottages = async () => {
+  let { data } = await axios.get("/cottage/");
+  return data;
+};

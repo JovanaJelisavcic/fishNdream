@@ -8,12 +8,15 @@ import axios from "./config/axios";
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
+import VueCompositionAPI from '@vue/composition-api'
+
+
 
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
-
+Vue.use(VueCompositionAPI);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.component('vue-date-picker',VueCtkDateTimePicker);
