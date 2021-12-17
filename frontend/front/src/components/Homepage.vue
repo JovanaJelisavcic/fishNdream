@@ -1,50 +1,54 @@
 <template>
-<div>
-  <div class="ui top fixed secondary menu">
-    <div class="header item">
-      <h1><img src="@/assets/logo.png" />fishNdream</h1>
-    </div>
-    <router-link to="/cottages" class="item"> Cottages </router-link>
-    <router-link to="/boats" class="item"> Boats </router-link>
-    <router-link to="/instructors" class="item"> Instructors </router-link>
-    <div class="right menu">
-       <div class="item">
-    <div class="ui primary button">Sign up</div>
-  </div>
-      <div class="item">
-      <a @click="goLogin" class="ui button"> Login </a>
+  <div>
+    <div
+      class="ui top fixed secondary menu"
+      style="background-color: rgb(140, 85, 170)"
+    >
+      <div class="header item">
+        <h1><img src="@/assets/logo.png" />fishNdream</h1>
+
+        <router-link
+          to="/cottages"
+          class="item"
+          active-class="active"
+          exact-active-class="active"
+        >
+          Cottages
+        </router-link>
+        <router-link
+          to="/boats"
+          class="item"
+          active-class="active"
+          exact-active-class="active"
+        >
+          Boats
+        </router-link>
+        <router-link
+          to="/instructors"
+          class="item"
+          active-class="active"
+          exact-active-class="active"
+        >
+          Instructors
+        </router-link>
       </div>
-    </div>
-  </div>
-  <div class="content">
-        <router-view></router-view>
-  </div>
-</div>
-  <!-- <div>
-        <b-tabs content-class="mt-3">
-          <b-tab class="item" title="Cottages" active
-            ><p><Cottages /></p
-          ></b-tab>
-          <b-tab class="item" title="Boats"
-            ><p><Boats /></p
-          ></b-tab>
-          <b-tab class="item" title="Instructors"
-            ><p><Instructors /></p
-          ></b-tab>
-        </b-tabs>
-      </div>
-
-
-
-
-
       <div class="right menu">
-      <a @click="goLogin" class="ui item"> Login </a>
+        <div class="item">
+          <div class="ui primary button">Sign up</div>
+        </div>
+        <div class="item">
+          <a @click="goLogin" class="ui button"> Login </a>
+        </div>
+      </div>
     </div>
-    </div>-->
+    <div class="content">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
 <script>
+import { allCottages } from "../api";
 export default {
   name: "Homepage",
   methods: {
@@ -52,12 +56,22 @@ export default {
       this.$router.push("/login");
     },
   },
+  async mounted() {
+    const response = await allCottages();
+    this.$store.commit("cottages/setCottages", response);
+    const path = `/cottages`;
+    if (this.$route.path !== path) this.$router.push("/cottages");
+    
+  },
 };
 </script>
 
 <style scoped>
 .content {
   height: calc(100%-150px);
-  margin-top:150px
+  margin-top: 150px;
+}
+.macolor {
+  background-color: rgb(140, 85, 170);
 }
 </style>

@@ -1,31 +1,38 @@
 <template>
-  <li class="list-group-item">
-      <img  :src="image_prefix + '/' + cottage.cottagePics[0]"/>
-      <h4>{{cottage.name}}</h4>
-      <p> {{cottage.address}}<br/>
-          Price : {{cottage.price}} <br/> 
-          Rating : {{cottage.rating}} <br/> 
-          
-      </p>
-      
-  </li>
+  <div class="item">
+    <div class="ui image">
+      <img :src="image_prefix + '/' + cottage.cottagePics[0]" />
+    </div>
+    <div class="content">
+       <div class="header">{{ cottage.name }}</div>
+        <div class="meta">
+        <span class="price">{{ cottage.price }}$</span>
+        <span class="rating"> {{ cottage.rating }}⭐</span>
+      </div>
+    <div class="description">
+        <p>{{cottage.address}}</p>
+        
+      </div>
+   </div> 
+  </div>
 </template>
 
 <script>
 export default {
   name: "CottageItem",
-  props: ['cottage'],
+  props: ["cottage"],
   data() {
     return {
-      image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA
+      image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
-img {
-  width: 150px;
-  height: 150px;
+.image{
+  height: 250px;
+  width: 250px;
+  padding: 10px 10px 10px 10px;
 }
 </style>

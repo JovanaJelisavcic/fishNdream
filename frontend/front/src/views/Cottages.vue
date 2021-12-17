@@ -1,7 +1,7 @@
 <template>
   <div>
-    <SearchCottages/>
-    <CottagesList/>
+    <SearchCottages class="container"/>
+    <CottagesList class=""/>
   </div>
 </template>
 
@@ -17,3 +17,7 @@ export default {
  }
 };
 </script>
+
+<style scoped>
+
+</style>

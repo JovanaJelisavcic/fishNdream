@@ -12,7 +12,6 @@ import VueCompositionAPI from '@vue/composition-api'
 
 
 
-
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 

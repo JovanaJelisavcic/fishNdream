@@ -16,7 +16,7 @@ const routes = [
       {
         path: "cottages",
         name: "Cottages",
-        component:  Cottages
+        component: Cottages
       }, {
         path: "boats",
         name: "Boats",
