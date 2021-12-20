@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { allCottages } from "../api";
+import { allCottages, allBoats } from "../api";
 export default {
   name: "Homepage",
   methods: {
@@ -61,6 +61,8 @@ export default {
     this.$store.commit("cottages/setCottages", response);
     const path = `/cottages`;
     if (this.$route.path !== path) this.$router.push("/cottages");
+    const responseB = await allBoats();
+    this.$store.commit("boats/setBoats", responseB);
     
   },
 };

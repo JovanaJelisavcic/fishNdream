@@ -1,44 +1,51 @@
 <template>
   <div>
-    <form class="search-container" @submit.prevent="submitSearch">
-      <div class="upper-search">
-         <vue-date-picker
+    <form class="search-container wrapper" @submit.prevent="submitSearch">
+      <div class="one">
+        <vue-date-picker
           class="date-picker"
-          id="date_from"
-          v-model="date"
-          label="Check In - Check Out"
-          formatted="DD-MM-YYYY"
-          only-date
-          :min-date="minDate"
-          range
+          v-model="startDate"
+          label="Check In"
+          formatted="DD-MM-YYYY HH:mm"
+          :min-date="minDateStart"
           no-header
           no-shortcuts
           output-format="YYYY-MM-DDTHH:mm"
-        ></vue-date-picker>     
+        ></vue-date-picker>
+        <vue-date-picker
+          class="date-picker"
+          v-model="endDate"
+          label="Check Out"
+          formatted="DD-MM-YYYY HH:mm"
+          :min-date="minDateEnd"
+          no-header
+          no-shortcuts
+          output-format="YYYY-MM-DDTHH:mm"
+        ></vue-date-picker>
       </div>
-      <div class="lower-search">
-          <input
+      <div class="two">
+        <input
           class="location-field"
           type="text"
           v-model="location"
           placeholder="Location"
         />
-         <input
-          class="guests-num-field"
+        <div class="wrapper">
+        <input
+          class="guests-num-field one"
           type="number"
           v-model="guestsNum"
           placeholder="Guests Num"
         />
-        
-        <button class="search-button" type="submit">Search</button>
-       
+        <button class="search-button two" type="submit">Search</button>
+        </div>
       </div>
     </form>
     <div class="slider-container">
       <h4 id="filterh4">Filters</h4>
 
       <div class="slider">
-        Price per night:
+        Price per hour:
         <Slider
           v-model="priceValues"
           @update="priceFilterChanged"
@@ -55,10 +62,10 @@
 </template>
 
 <script>
-import { searchCottages } from "../api";
+import { searchBoats } from "../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
-  name: "SearchCottages",
+  name: "SearchBoats",
   components: {
     Slider,
   },
@@ -66,9 +73,8 @@ export default {
     return {
       location: "",
       guestsNum: 0,
-      beginning: null,
-      ending: null,
-      date: new Date(),
+      startDate: new Date(),
+      endDate: null,
       currentDate: new Date(),
       priceValues: [0, 1000],
       format: function (value) {
@@ -78,38 +84,37 @@ export default {
   },
   methods: {
     async submitSearch() {
-      var bs = new Date(this.date.start);
-      bs.setHours(10);
-      bs.setMinutes(0);
-      bs.setSeconds(0);
-      var bsa = bs.toISOString().split(".")[0].split("T");
+      var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
       this.beginning = bsa[0] + " " + bsa[1];
-      bs = new Date(this.date.end);
-      bs.setHours(12);
-      bs.setMinutes(0);
-      bs.setSeconds(0);
-      bsa = bs.toISOString().split(".")[0].split("T");
+      bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
       this.ending = bsa[0] + " " + bsa[1];
-      await searchCottages({
+      await searchBoats({
         location: this.location,
         guestsNum: this.guestsNum,
         dateTime: this.beginning,
         endTime: this.ending,
       }).then((response) => {
-        this.$store.commit("cottages/setCottages", response);
+        this.$store.commit("boats/setBoats", response);
       });
     },
     priceFilterChanged() {
-      this.$store.commit("cottages/filterPriceCottages", this.priceValues);
+      this.$store.commit("boats/filterPriceBoats", this.priceValues);
     },
     resetFilter() {
-      this.$store.commit("cottages/resetFilter");
+      this.$store.commit("boats/resetFilter");
       this.priceValues = [0, 1000];
     },
   },
   computed: {
-    minDate() {
-      return new Date().toISOString().split("T")[0];
+    minDateStart() {
+      var minDate = new Date(this.currentDate);
+      minDate.setHours(minDate.getHours() + 2);
+      return minDate.toISOString();
+    },
+    minDateEnd() {
+      var minDate = new Date(this.startDate);
+      minDate.setHours(minDate.getHours() + 1);
+      return minDate.toISOString();
     },
   },
 };
@@ -151,39 +156,28 @@ export default {
   float: left;
   text-align: center;
 }
-.upper-search {
-  width: auto;
-  height: auto;
-  margin-bottom: 50px;
-}
-.lower-search {
-  width: auto;
-  height: auto;
-  margin-top: 30px;
-}
 .guests-num-field {
   background: url("~@/assets/person.png") no-repeat;
   height: auto;
-  width: 10%;
-  margin-left: 10px;
+  width: auto;
+  margin-top: 15px;
   color: #a4a3a3;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: right;
   padding: 5px;
-  position: relative;
-  float: center;
 }
 .location-field {
   background: url("~@/assets/location.png") no-repeat 2px 2px;
   height: auto;
   width: auto;
-  margin: 0px 0px 0px 29px;
+  margin-left: 0px;
   padding: 5px;
   color: #a4a3a3;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
+
 }
 .search-button {
   background: url("~@/assets/iconsearch.png") no-repeat;
@@ -200,14 +194,27 @@ export default {
 .date-picker {
   background: url("~@/assets/calendar.png") no-repeat 7px 7px;
   padding-left: 30px;
-  width: 60%;
-  height: 30%;
+  width: 80%;
+  height: auto;
   position: relative;
   float: left;
   border-radius: 5px;
   text-align: center;
 }
 
-
+.wrapper {
+  display: grid;
+  gap: 10px;
+}
+.one {
+  width: auto;
+  height: auto;
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+.two {
+  grid-column: 2 / 2;
+  grid-row: 1;
+}
 </style>
 

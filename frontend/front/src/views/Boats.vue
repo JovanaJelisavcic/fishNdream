@@ -1,5 +1,19 @@
 <template>
   <div>
-    <h1>This is a Boats page</h1>
+    <SearchBoats class="container" />
+    <BoatsList class="" />
   </div>
 </template>
+
+
+<script>
+import SearchBoats from '../components/SearchBoats.vue';
+import BoatsList from '../components/BoatsList.vue';
+export default {
+ name: 'Boats',
+ components: {
+   SearchBoats,
+   BoatsList
+ }
+};
+</script>

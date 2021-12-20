@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,11 +59,11 @@ public class SearchController {
 	}
 	
 	@JsonView(Views.UnauthoBoats.class)
-	@GetMapping("/boats")
-	@PreAuthorize("hasAuthority('FISHERMAN')")
+	@PostMapping("/boats")
 	public ResponseEntity<?> freeBoats(@Valid  @RequestBody SerachDTO search )  {	
 		List<Boat> boats =  boatRepo.findAll();
 		List<Boat> available = filterUtil.getAvaiableBoats(boats, search.getDateTime(),search.getEndTime());
+		System.out.println(search.getGuestsNum());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getBoatsOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
 		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(available, HttpStatus.OK);

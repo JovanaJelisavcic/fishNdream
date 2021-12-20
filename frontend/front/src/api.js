@@ -14,3 +14,13 @@ export const allCottages = async () => {
   let { data } = await axios.get("/cottage/");
   return data;
 };
+
+export const allBoats = async () => {
+  let { data } = await axios.get("/boat/");
+  return data;
+};
+
+export const searchBoats = async (params) => {
+  let { data } = await axios.post("/search/boats", { ...params});
+  return data;
+};
