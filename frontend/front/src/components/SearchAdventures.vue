@@ -1,0 +1,220 @@
+<template>
+  <div>
+    <form class="search-container wrapper" @submit.prevent="submitSearch">
+      <div class="one">
+        <vue-date-picker
+          class="date-picker"
+          v-model="startDate"
+          label="Check In"
+          formatted="DD-MM-YYYY HH:mm"
+          :min-date="minDateStart"
+          no-header
+          no-shortcuts
+          output-format="YYYY-MM-DDTHH:mm"
+        ></vue-date-picker>
+        <vue-date-picker
+          class="date-picker"
+          v-model="endDate"
+          label="Check Out"
+          formatted="DD-MM-YYYY HH:mm"
+          :min-date="minDateEnd"
+          no-header
+          no-shortcuts
+          output-format="YYYY-MM-DDTHH:mm"
+        ></vue-date-picker>
+      </div>
+      <div class="two">
+        <input
+          class="location-field"
+          type="text"
+          v-model="location"
+          placeholder="Location"
+        />
+        <div class="wrapper">
+        <input
+          class="guests-num-field one"
+          type="number"
+          v-model="guestsNum"
+          placeholder="Guests Num"
+        />
+        <button class="search-button two" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+    <div class="slider-container">
+      <h4 id="filterh4">Filters</h4>
+
+      <div class="slider">
+        Price per hour:
+        <Slider
+          v-model="priceValues"
+          @update="priceFilterChanged"
+          :format="format"
+          :max="1000"
+          :step="10"
+        />
+      </div>
+      <button class="reset-button" type="reset" @click="resetFilter">
+        Reset
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+import { searchAdventures } from "../api";
+import Slider from "@vueform/slider/dist/slider.vue2.js";
+export default {
+  name: "SearchAdventures",
+  components: {
+    Slider,
+  },
+  data() {
+    return {
+      location: "",
+      guestsNum: 0,
+      startDate: new Date(),
+      endDate: null,
+      currentDate: new Date(),
+      priceValues: [0, 1000],
+      format: function (value) {
+        return `€${value}`;
+      },
+    };
+  },
+  methods: {
+    async submitSearch() {
+      var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
+      this.beginning = bsa[0] + " " + bsa[1];
+      bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
+      this.ending = bsa[0] + " " + bsa[1];
+      await searchAdventures({
+        location: this.location,
+        guestsNum: this.guestsNum,
+        dateTime: this.beginning,
+        endTime: this.ending,
+      }).then((response) => {
+        this.$store.commit("adventures/setAdventures", response);
+      });
+    },
+    priceFilterChanged() {
+      this.$store.commit("adventures/filterPriceAdventures", this.priceValues);
+    },
+    resetFilter() {
+      this.$store.commit("adventures/resetFilter");
+      this.priceValues = [0, 1000];
+    },
+  },
+  computed: {
+    minDateStart() {
+      var minDate = new Date(this.currentDate);
+      minDate.setHours(minDate.getHours() + 2);
+      return minDate.toISOString();
+    },
+    minDateEnd() {
+      var minDate = new Date(this.startDate);
+      minDate.setHours(minDate.getHours() + 1);
+      return minDate.toISOString();
+    },
+  },
+};
+</script>
+
+
+<style src="@vueform/slider/themes/default.css"></style>
+
+<style scoped>
+.search-container {
+  width: 50%;
+  height: 40%;
+  position: relative;
+  float: left;
+}
+.slider-container {
+  width: 15%;
+  height: 40%;
+  position: relative;
+  float: right;
+}
+.reset-button {
+  color: rgb(31, 32, 32);
+  border-radius: 12px;
+  position: relative;
+  float: right;
+  margin-top: 10px;
+}
+#filterh4 {
+  background: url("~@/assets/filter.png") no-repeat;
+  text-align: right;
+  margin-right: 100px;
+  margin-bottom: 20px;
+}
+.slider {
+  width: 150px;
+  height: 20%;
+  position: relative;
+  float: left;
+  text-align: center;
+}
+.guests-num-field {
+  background: url("~@/assets/person.png") no-repeat;
+  height: auto;
+  width: auto;
+  margin-top: 15px;
+  color: #a4a3a3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: right;
+  padding: 5px;
+}
+.location-field {
+  background: url("~@/assets/location.png") no-repeat 2px 2px;
+  height: auto;
+  width: auto;
+  margin-left: 0px;
+  padding: 5px;
+  color: #a4a3a3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+
+}
+.search-button {
+  background: url("~@/assets/iconsearch.png") no-repeat;
+  text-align: right;
+  height: auto;
+  width: 80px;
+  margin-left: 10px;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid rgb(140, 85, 170);
+  color: rgb(140, 85, 170);
+  border-radius: 8px;
+}
+.date-picker {
+  background: url("~@/assets/calendar.png") no-repeat 7px 7px;
+  padding-left: 30px;
+  width: 80%;
+  height: auto;
+  position: relative;
+  float: left;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.wrapper {
+  display: grid;
+  gap: 10px;
+}
+.one {
+  width: auto;
+  height: auto;
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+.two {
+  grid-column: 2 / 2;
+  grid-row: 1;
+}
+</style>
+

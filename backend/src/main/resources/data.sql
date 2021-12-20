@@ -502,8 +502,6 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(18,15);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(18,16);
 
-
-------------------------------------------------------------------------------------------------
 insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating)
 values ('bobacott@codw.site', 'Bob', 'Cottag', 'Liversville 16', 'Brisbane', 'UK', '256-958-6853', false, 4.36);
 insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price, rating) values
@@ -569,53 +567,48 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 
 
 
---------------------DOVDE URADILA
-/*---cottage
-insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('acretney7@businessinsider.com', 'Antin', 'Vuitton', '8 Mayfield Road', 'Hīsh', 'Syria', '627-651-4290', false, 4.2);
-insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL, GUESTS_NUM, price, rating) values
- (1, 'Zlatibor', 'No smoking', 'Lovely cottage', 'Zlatni bor', 2, 'acretney7@businessinsider.com', 5 , 15.0, 4.1);
- insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (1,'WiFi', 3, 1);
-  insert into additional_services_cottage (SERVICE_ID, NAME, PRICE, COTTAGE_ID) values (2,'Free Parking', 5, 1);
- insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
-(1, '2021-08-26', '2022-01-01', 1);
-insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
-(2, '2022-02-26', '2022-08-26', 1);
 
-insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (1, '2021-10-22T12:00:00', false, '2021-10-24T14:00:00', 5, 130, 1,'jovana.jelisavcic95@gmail.com' , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
-
-insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, ROOM_NUM, OWNER_EMAIL,GUESTS_NUM, price, rating) values
- (2, 'Tara', 'No pets', 'Family house', 'Tarska zora', 3, 'acretney7@businessinsider.com',6, 12.2, 4.8);
 
  
- insert into cottage_owner (email, name, surname, address, city, state, phone_num, deleted, rating) values ('bcoffey8@cmu.edu', 'Alleen', 'Carabet', '85 Rowland Alley', 'Taoyuan', 'China', '307-249-1188', false, 4.6);
-
- 
- 
- ---adventuree
+---adventure
 
 insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Leticia', 'Gorch', 'lgorch3@cnn.com', '7 Cambridge Lane', 'Ternovka', 'Russia', '340-956-7178', 'I never participated in any competitions but I am the best', false, 4.5);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
-(3, 'Djetinja', 'Never return the fish', true, 'We start from city beach', 6, 'Riverfish', 'lgorch3@cnn.com', 10.0);
- insert into additional_services_adventure (SERVICE_ID, NAME, PRICE, ADVENTURE_ID) values (1,'Boat, Fishing ofshore', 15, 3);
-  insert into additional_services_adventure (SERVICE_ID, NAME, PRICE, ADVENTURE_ID) values (2,'Transport to destination', 10, 3);
+(1, 'Djetinja', 'Never return the fish', true, 'We start from city beach', 6, 'Riverfish', 'lgorch3@cnn.com', 10.0);
+ insert into additional_services_adventure (SERVICE_ID, NAME, PRICE, ADVENTURE_ID) values (1,'Boat, Fishing ofshore', 15, 1);
+  insert into additional_services_adventure (SERVICE_ID, NAME, PRICE, ADVENTURE_ID) values (2,'Transport to destination', 10, 1);
  insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
-(1, '2021-08-26', '2022-01-01',3 );
+(1, '2021-08-26', '2022-01-01',1 );
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
-(2, '2022-02-26', '2022-08-26', 3);
-insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (1, '2021-10-28T12:00:00', false, '2021-10-29T14:00:00', 3, 200, 3, 'jovana.jelisavcic95@gmail.com', true, '2021-11-20T14:00:00', '2021-12-25T14:00:00', 10);
+(2, '2022-02-26', '2022-08-26', 1);
+insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing1.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing2.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing3.jpg');
+
+
+
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (2, 'Zaovine', 'Carry bear protection', false, 'Fishing only for catfish', 2, 'BearsInTrap', 'lgorch3@cnn.com', 9.0);
  insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (3, '2021-08-26', '2022-01-01',2 );
 insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
 (4, '2022-02-26', '2022-08-26', 2);
+insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing4.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing5.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing6.jpg');
+
 insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868', 'My grandfather gave me the love for fishing', false, 4.2);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
-(1, 'Uvac', 'ALways return the fish', false, 'We start from sjenicko jezero and continue towards peak', 5, 'Beloglavi supovi', 'ulago4@vimeo.com', 5.0);
-*/
----------------------------------------------ODAVDE JE SVE OK--------------------------------------------
+(3, 'Uvac', 'ALways return the fish', false, 'We start from sjenicko jezero and continue towards peak', 5, 'Beloglavi supovi', 'ulago4@vimeo.com', 5.0);
+ insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
+(5, '2021-08-26', '2022-01-01',3 );
+insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENTURE_ID ) values
+(6, '2022-02-26', '2022-08-26', 3);
+insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing7.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing8.jpg');
+insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing9.jpg');
+
+
 
 --additional
 
@@ -649,6 +642,8 @@ insert into USERS (user_id, username, password, enabled, deleted, verification_c
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (16, 'sowsowabdel@bookj.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (17, 'acretney7@businessinsider.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (18, 'bobacott@codw.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (19, 'lgorch3@cnn.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (20, 'ulago4@vimeo.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
 
 
 
@@ -670,5 +665,6 @@ insert into USER_ROLES(user_id, role_id) values(15, 4);
 insert into USER_ROLES(user_id, role_id) values(16, 4);
 insert into USER_ROLES(user_id, role_id) values(17, 3);
 insert into USER_ROLES(user_id, role_id) values(18, 3);
-
+insert into USER_ROLES(user_id, role_id) values(19, 5);
+insert into USER_ROLES(user_id, role_id) values(20, 5);
 

@@ -24,3 +24,13 @@ export const searchBoats = async (params) => {
   let { data } = await axios.post("/search/boats", { ...params});
   return data;
 };
+
+export const allAdventures = async () => {
+  let { data } = await axios.get("/instructor/");
+  return data;
+};
+
+export const searchAdventures = async (params) => {
+  let { data } = await axios.post("/search/adventures", { ...params});
+  return data;
+};

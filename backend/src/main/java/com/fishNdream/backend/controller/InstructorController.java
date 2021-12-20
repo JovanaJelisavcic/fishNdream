@@ -1,6 +1,7 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -90,6 +91,14 @@ public class InstructorController {
 	@PreAuthorize("hasAuthority('FISHERMAN')")
 	public ResponseEntity<?> freeBoats( @PathVariable String email )  {	
 		Optional<Instructor> instructor =  instructorRepo.findById(email);
+		if(instructor.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(instructor, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.UnauthoInstuctors.class)
+	@GetMapping("/")
+	public ResponseEntity<?> allBoats( )  {	
+		List<Instructor> instructor =  instructorRepo.findAll();
 		if(instructor.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(instructor, HttpStatus.OK);
 	}

@@ -3,6 +3,7 @@ import Vue from 'vue';
 import login from './login'
 import cottages from './cottages'
 import boats from './boats'
+import adventures from './adventures'
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
         login,
         cottages,
-        boats
+        boats,
+        adventures
     }
 });
