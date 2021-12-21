@@ -9,6 +9,7 @@ import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 import VueCompositionAPI from '@vue/composition-api'
+import SimpleVueValidation from 'simple-vue-validator';
 
 
 
@@ -18,6 +19,7 @@ Vue.config.productionTip = false;
 Vue.use(VueCompositionAPI);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
+Vue.use(SimpleVueValidation);
 Vue.component('vue-date-picker',VueCtkDateTimePicker);
 new Vue({
     store,

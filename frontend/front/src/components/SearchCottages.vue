@@ -2,9 +2,13 @@
   <div>
     <form class="search-container" @submit.prevent="submitSearch">
       <div class="upper-search">
-         <vue-date-picker
+        <p class="error" v-if="errors">
+          {{ errors }}
+        </p>
+        <vue-date-picker
           class="date-picker"
-          id="date_from"
+          id="date"
+          name="name"
           v-model="date"
           label="Check In - Check Out"
           formatted="DD-MM-YYYY"
@@ -14,24 +18,23 @@
           no-header
           no-shortcuts
           output-format="YYYY-MM-DDTHH:mm"
-        ></vue-date-picker>     
+        ></vue-date-picker>
       </div>
       <div class="lower-search">
-          <input
+        <input
           class="location-field"
           type="text"
           v-model="location"
           placeholder="Location"
         />
-         <input
+        <input
           class="guests-num-field"
           type="number"
           v-model="guestsNum"
           placeholder="Guests Num"
         />
-        
+
         <button class="search-button" type="submit">Search</button>
-       
       </div>
     </form>
     <div class="slider-container">
@@ -65,19 +68,38 @@ export default {
   data() {
     return {
       location: "",
-      guestsNum: 0,
+      guestsNum: 1,
       beginning: null,
       ending: null,
-      date: new Date(),
+      date: null,
       currentDate: new Date(),
       priceValues: [0, 1000],
       format: function (value) {
         return `€${value}`;
       },
+      errors: ""
     };
   },
   methods: {
     async submitSearch() {
+         if (this.date) {
+           this.errors=""
+        this.callSearch();
+
+      }
+
+      if (!this.date) {
+        this.errors= 'Dates required.';
+      }
+    },
+    priceFilterChanged() {
+      this.$store.commit("cottages/filterPriceCottages", this.priceValues);
+    },
+    resetFilter() {
+      this.$store.commit("cottages/resetFilter");
+      this.priceValues = [0, 1000];
+    },
+    async callSearch(){
       var bs = new Date(this.date.start);
       bs.setHours(10);
       bs.setMinutes(0);
@@ -98,14 +120,8 @@ export default {
       }).then((response) => {
         this.$store.commit("cottages/setCottages", response);
       });
-    },
-    priceFilterChanged() {
-      this.$store.commit("cottages/filterPriceCottages", this.priceValues);
-    },
-    resetFilter() {
-      this.$store.commit("cottages/resetFilter");
-      this.priceValues = [0, 1000];
-    },
+
+    }
   },
   computed: {
     minDate() {
@@ -207,7 +223,11 @@ export default {
   border-radius: 5px;
   text-align: center;
 }
-
-
+.error{
+  color: red;
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-left: 30px;
+}
 </style>
 

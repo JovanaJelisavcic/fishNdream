@@ -2,6 +2,9 @@
   <div>
     <form class="search-container wrapper" @submit.prevent="submitSearch">
       <div class="one">
+        <p class="error" v-if="errors">
+          {{ errors }}
+        </p>
         <vue-date-picker
           class="date-picker"
           v-model="startDate"
@@ -31,13 +34,13 @@
           placeholder="Location"
         />
         <div class="wrapper">
-        <input
-          class="guests-num-field one"
-          type="number"
-          v-model="guestsNum"
-          placeholder="Guests Num"
-        />
-        <button class="search-button two" type="submit">Search</button>
+          <input
+            class="guests-num-field one"
+            type="number"
+            v-model="guestsNum"
+            placeholder="Guests Num"
+          />
+          <button class="search-button two" type="submit">Search</button>
         </div>
       </div>
     </form>
@@ -72,18 +75,29 @@ export default {
   data() {
     return {
       location: "",
-      guestsNum: 0,
-      startDate: new Date(),
+      guestsNum: 1,
+      startDate: null,
       endDate: null,
       currentDate: new Date(),
       priceValues: [0, 1000],
       format: function (value) {
         return `€${value}`;
       },
+      errors: ""
     };
   },
   methods: {
-    async submitSearch() {
+     async submitSearch() {
+         if (this.startDate && this.endDate) {
+          this.errors=""
+          this.callSearch();
+      }
+
+      if (!this.startDate || !this.endDate) {
+        this.errors= 'Dates required.';
+      }
+    },
+    async callSearch() {
       var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
       this.beginning = bsa[0] + " " + bsa[1];
       bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
@@ -115,8 +129,8 @@ export default {
       var minDate = new Date(this.startDate);
       minDate.setHours(minDate.getHours() + 1);
       return minDate.toISOString();
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -177,7 +191,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
-
 }
 .search-button {
   background: url("~@/assets/iconsearch.png") no-repeat;
@@ -215,6 +228,12 @@ export default {
 .two {
   grid-column: 2 / 2;
   grid-row: 1;
+}
+.error{
+  color: red;
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-left: 30px;
 }
 </style>
 

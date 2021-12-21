@@ -23,10 +23,12 @@
     "mdbvue": "^6.7.3",
     "moment": "^2.29.1",
     "qs": "^6.10.2",
+    "simple-vue-validator": "^0.16.0",
     "vue": "^2.6.14",
     "vue-ctk-date-time-picker": "^2.5.0",
     "vue-router": "^3.5.3",
     "vuejs-datepicker": "^1.6.2",
+    "vuelidate": "^0.7.7",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

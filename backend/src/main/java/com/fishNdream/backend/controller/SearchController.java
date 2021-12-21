@@ -48,7 +48,6 @@ public class SearchController {
     produces = MediaType.APPLICATION_JSON_VALUE, 
     method = { RequestMethod.POST})
 	public ResponseEntity<?> freeCottages( @Valid @RequestBody SerachDTO search )  {
-		System.out.println(search.getEndTime().toString()+" "+ search.getDateTime().toString());
 		List<Cottage> cottages =  cottagesRepo.findAll();
 		List<Cottage> available = filterUtil.getAvaiableCottages(cottages, search.getDateTime(),search.getEndTime());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getCottagesOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
@@ -61,7 +60,6 @@ public class SearchController {
 	public ResponseEntity<?> freeBoats(@Valid  @RequestBody SerachDTO search )  {	
 		List<Boat> boats =  boatRepo.findAll();
 		List<Boat> available = filterUtil.getAvaiableBoats(boats, search.getDateTime(),search.getEndTime());
-		System.out.println(search.getGuestsNum());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getBoatsOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
 		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(available, HttpStatus.OK);
@@ -72,7 +70,9 @@ public class SearchController {
 	public ResponseEntity<?> freeAdventures(@Valid  @RequestBody SerachDTO search )  {	
 		List<Adventure> adventures =  adventureRepo.findAll();
 		List<Adventure> available = filterUtil.getAvaiableAdventures(adventures, search.getDateTime(),search.getEndTime());
-		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getAdventuresOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
+		if(search.getLocation()!=null || search.getGuestsNum()!=0) {
+			available = filterUtil.getAdventuresOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
+		} 
 		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(available, HttpStatus.OK);
 	}

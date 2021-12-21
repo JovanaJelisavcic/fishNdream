@@ -34,13 +34,11 @@ public class FilteringUtil {
 	
 	public List<Boat> getBoatsOnLocationAndGuests(List<Boat> available, String location, int guestsNum) {
 		List<Boat> result = new ArrayList<>();
-		System.out.println("here i get list of "+ available.size());
 		for(Boat b : available) {
-			System.out.println("boat id"+ b.getBoatId());
-			if(location!=null && location.isEmpty() && b.getAddress().toUpperCase().contains(location.toUpperCase())) { 
-				System.out.println("passes location");
+			
+			if(location.isEmpty() || b.getAddress().toUpperCase().contains(location.toUpperCase())) { 
+
 				if(b.getCapacity()>=guestsNum) {
-					System.out.println("passes nums");
 					result.add(b);
 				}
 					
@@ -63,8 +61,8 @@ public class FilteringUtil {
 	public List<Cottage> getCottagesOnLocationAndGuests(List<Cottage> available, String location, int guests) {
 		List<Cottage> result = new ArrayList<>();
 		for(Cottage c : available) {
-			if(location!=null && location.isEmpty() && c.getAddress().toUpperCase().contains(location.toUpperCase())) {
-				if(guests!=0 && c.getGuestsNum()>=guests) {
+			if(location.isEmpty() || c.getAddress().toUpperCase().contains(location.toUpperCase())) {
+				if(c.getGuestsNum()>=guests) {
 					result.add(c);
 				}
 			} 
@@ -90,21 +88,22 @@ public class FilteringUtil {
 		for(Adventure a : adventures) {
 			if(a.isAvailableAndFreeWithInstructor(from,to)) result.add(a);
 			}
-
+		System.out.println("available bude " + result.size());
 		return result;
 	}
 
 	public List<Adventure> getAdventuresOnLocationAndGuests(List<Adventure> available, String location, int guestsNum) {
 		List<Adventure> result = new ArrayList<>();
 		for(Adventure a : available) {
-			if(location!=null && location.isEmpty() && a.getAddress().toUpperCase().contains(location.toUpperCase())) result.add(a);
-				{
-				if(a.getMaxParticipants()>=guestsNum) 
-					{
-						result.add(a);
-					}
+			if(location.isEmpty() || a.getAddress().toUpperCase().contains(location.toUpperCase())) {
+				if(a.getMaxParticipants()>=guestsNum) {
+					result.add(a);
+				}
+					
 			}
-		}
+				
+			}
+		
 		return result;
 	}
 

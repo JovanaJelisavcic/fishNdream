@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 import com.fishNdream.backend.entity.users.Fisherman;
 import com.fishNdream.backend.entity.users.Instructor;
+import com.fishNdream.backend.repository.AdventureRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.InstructorRepository;
 import com.fishNdream.backend.security.JwtUtils;
@@ -38,6 +40,8 @@ public class InstructorController {
 	InstructorRepository instructorRepo;
 	@Autowired
 	FishermanRepository fishermanRepo;
+	@Autowired
+	AdventureRepository adventureRepo;
 	@Autowired
 	JwtUtils jwtUtils;
 	
@@ -98,7 +102,7 @@ public class InstructorController {
 	@JsonView(Views.UnauthoInstuctors.class)
 	@GetMapping("/")
 	public ResponseEntity<?> allBoats( )  {	
-		List<Instructor> instructor =  instructorRepo.findAll();
+		List<Adventure> instructor =  adventureRepo.findAll();
 		if(instructor.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(instructor, HttpStatus.OK);
 	}

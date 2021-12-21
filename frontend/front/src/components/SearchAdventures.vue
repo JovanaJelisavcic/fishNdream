@@ -2,6 +2,9 @@
   <div>
     <form class="search-container wrapper" @submit.prevent="submitSearch">
       <div class="one">
+         <p class="error" v-if="errors">
+          {{ errors }}
+        </p>
         <vue-date-picker
           class="date-picker"
           v-model="startDate"
@@ -18,6 +21,7 @@
           label="Check Out"
           formatted="DD-MM-YYYY HH:mm"
           :min-date="minDateEnd"
+          :max-date="maxDateEnd"
           no-header
           no-shortcuts
           output-format="YYYY-MM-DDTHH:mm"
@@ -72,18 +76,29 @@ export default {
   data() {
     return {
       location: "",
-      guestsNum: 0,
-      startDate: new Date(),
+      guestsNum: 1,
+      startDate: null,
       endDate: null,
       currentDate: new Date(),
       priceValues: [0, 1000],
       format: function (value) {
         return `€${value}`;
       },
+      errors: ""
     };
   },
   methods: {
-    async submitSearch() {
+      async submitSearch() {
+         if (this.startDate && this.endDate) {
+          this.errors=""
+          this.callSearch();
+      }
+
+      if (!this.startDate || !this.endDate) {
+        this.errors= 'Dates required.';
+      }
+    },
+    async callSearch() {
       var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
       this.beginning = bsa[0] + " " + bsa[1];
       bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
@@ -116,6 +131,11 @@ export default {
       minDate.setHours(minDate.getHours() + 1);
       return minDate.toISOString();
     },
+    maxDateEnd() {
+      var minDate = new Date(this.startDate);
+      minDate.setHours(minDate.getHours() + 8);
+      return minDate.toISOString();
+    }
   },
 };
 </script>
@@ -215,6 +235,12 @@ export default {
 .two {
   grid-column: 2 / 2;
   grid-row: 1;
+}
+.error{
+  color: red;
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-left: 30px;
 }
 </style>
 

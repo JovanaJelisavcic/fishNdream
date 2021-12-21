@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SerachDTO {
 	
-	@NotNull(message="Dates are mandatory")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	 	private LocalDateTime dateTime;
 	@NotNull(message="Dates are mandatory")
+	 	private LocalDateTime dateTime;
  	@Future(message="Date has to be in the future")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+ 	@NotNull(message="Dates are mandatory")
 	    private LocalDateTime endTime;
 		private String location;
 		private int guestsNum;
