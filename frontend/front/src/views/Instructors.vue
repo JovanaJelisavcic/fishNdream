@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <SearchAdventures class="container"/>
-    <AdventuresList class=""/>
+  <div class="container">
+    <SearchAdventures />
+    <AdventuresList />
   </div>
 </template>
 

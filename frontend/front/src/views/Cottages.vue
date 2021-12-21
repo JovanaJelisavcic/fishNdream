@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <SearchCottages class="container"/>
-    <CottagesList class=""/>
+  <div class="container" >
+    <SearchCottages/>
+    <CottagesList class="float-left"/>
   </div>
 </template>
 
@@ -19,5 +19,9 @@ export default {
 </script>
 
 <style scoped>
-
+.entity-list{
+  margin-left: auto;
+  position: relative;
+  float: left;
+}
 </style>

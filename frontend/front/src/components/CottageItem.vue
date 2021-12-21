@@ -1,10 +1,8 @@
 <template>
-  <div class="item">
-    <div class="ui image">
-      <img :src="image_prefix + '/' + cottage.cottagePics[0]" />
-    </div>
-    <div class="content">
-       <div class="header">{{ cottage.name }}</div>
+<li class="list-group-item media">
+      <img class="m3-3" :src="image_prefix + '/' + cottage.cottagePics[0]" />
+    <div class="media-body">
+       <h4>{{ cottage.name }}</h4>
         <div class="meta">
         <span class="price">{{ cottage.price }}$</span>
         <span class="rating"> {{ cottage.rating }}⭐</span>
@@ -14,7 +12,7 @@
         
       </div>
    </div> 
-  </div>
+  </li>
 </template>
 
 <script>
@@ -30,9 +28,17 @@ export default {
 </script>
 
 <style scoped>
-.image{
+img{
   height: 250px;
   width: 250px;
   padding: 10px 10px 10px 10px;
+  
+}
+li{
+  display: flex;
+  cursor: pointer;
+}
+li:hover{
+  background-color: rgb(234, 224, 235);
 }
 </style>

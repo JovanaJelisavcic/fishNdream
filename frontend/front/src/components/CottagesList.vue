@@ -1,5 +1,5 @@
 <template>
-  <ul class="ui items">
+  <ul class="list-group">
     <CottageItem
       v-for="(cottage, cottageId) in cottages"
       :key="cottageId"
@@ -23,3 +23,7 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+</style>

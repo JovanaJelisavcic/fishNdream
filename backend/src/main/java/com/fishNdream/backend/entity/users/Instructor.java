@@ -24,7 +24,6 @@ public class Instructor extends UserInfo {
 	private String shortBio;
 	@OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, targetEntity = Adventure.class)
-	@JsonView(Views.UnauthoInstuctors.class)
 	private List<Adventure> adventures;
 	@JsonView(Views.UnauthoInstuctors.class)
 	private float rating;

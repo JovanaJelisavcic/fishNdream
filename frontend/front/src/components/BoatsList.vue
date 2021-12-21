@@ -1,5 +1,5 @@
 <template>
-  <ul class="ui items">
+  <ul class="list-group">
     <BoatItem
       v-for="(boat, boatId) in boats"
       :key="boatId"

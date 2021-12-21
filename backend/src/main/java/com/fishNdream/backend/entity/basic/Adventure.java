@@ -45,7 +45,7 @@ public class Adventure {
 	@JsonView(Views.AdventureInfo.class)
 	private boolean cancelPolicy; // 0-free
 	@ManyToOne
-
+	@JsonView(Views.UnauthoInstuctors.class)
 	private Instructor instructor;
 	@OneToMany(
 	        mappedBy = "adventure",
