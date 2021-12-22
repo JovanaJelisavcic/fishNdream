@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <b-row>
-      <SearchCottages />
+    <b-row> 
+      <SearchCottages @searchSubmitted="onSearchSubmitted" />
     </b-row>
       <b-row>
       <CottagesList @cottageSelect="onCottageSelect" class="seconrow" />
@@ -12,9 +12,9 @@
 
 
 <script>
-import SearchCottages from "../components/SearchCottages.vue";
-import CottagesList from "../components/CottagesList.vue";
-import CottageDetail from "../components/CottageDetail.vue"
+import SearchCottages from "../components/Cottages/SearchCottages.vue";
+import CottagesList from "../components/Cottages/CottagesList.vue";
+import CottageDetail from "../components/Cottages/CottageDetail.vue"
 export default {
   name: "Cottages",
   components: {
@@ -30,6 +30,9 @@ export default {
   methods:{
     onCottageSelect(cottage){
       this.selectedCottage=cottage;
+    },
+    onSearchSubmitted(){
+      this.selectedCottage=null;
     }
   }
 };

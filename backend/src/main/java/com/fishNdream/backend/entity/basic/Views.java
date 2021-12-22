@@ -8,7 +8,7 @@ public class Views {
 	public interface UnauthoCottages {
     }
 	
-	public interface UnauthoBoats {
+	public interface UnauthoBoats extends AdditionalServices{
     }
 	
 	public interface UnauthoInstuctors extends UserInfo {

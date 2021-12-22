@@ -1,9 +1,10 @@
 <template>
-  <ul class="list-group">
+  <ul class="list-group col-md-4">
     <BoatItem
       v-for="(boat, boatId) in boats"
       :key="boatId"
       :boat="boat"
+       @boatSelect="onBoatSelect"
     ></BoatItem>
   </ul>
 </template>
@@ -21,5 +22,10 @@ export default {
       ...mapGetters("boats", { get: "getFilteredBoats" }),
     },
   },
+  methods: {
+    onBoatSelect(boat) {
+      this.$emit('boatSelect', boat);
+    },
+  }
 };
 </script>

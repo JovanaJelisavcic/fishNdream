@@ -1,5 +1,5 @@
 <template>
- <li class="list-group-item media">
+ <li class="list-group-item media" @click="onBoatSelect">
       <img class="m3-3" :src="image_prefix + '/' + boat.boatPics[0]" />
     <div class="media-body">
        <h4>{{ boat.name }}</h4>
@@ -24,6 +24,11 @@ export default {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
     };
   },
+  methods:{
+      onBoatSelect(){
+        this.$emit('boatSelect', this.boat);
+      }
+  }
 };
 </script>
 

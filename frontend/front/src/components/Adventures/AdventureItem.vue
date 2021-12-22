@@ -1,5 +1,5 @@
 <template>
-  <li class="list-group-item media">
+  <li class="list-group-item media" @click="onAdventureSelect">
 
       <img class="m3-3" :src="image_prefix + '/' + adventure.adventurePics[0]" />
     <div class="media-body">
@@ -25,6 +25,11 @@ export default {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
     };
   },
+  methods:{
+      onAdventureSelect(){
+        this.$emit('adventureSelect', this.adventure);
+      }
+  }
 };
 </script>
 

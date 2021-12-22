@@ -40,32 +40,32 @@
     <div class="slider-container">
       <b-row>
         <b-col>
-      <h4 id="filterh4">Filters</h4>
+          <h4 id="filterh4">Filters</h4>
         </b-col>
-          <b-col>
-      <button class="reset-button" type="reset" @click="resetFilter">
-        Reset
-      </button>
-          </b-col>
+        <b-col>
+          <button class="reset-button" type="reset" @click="resetFilter">
+            Reset
+          </button>
+        </b-col>
       </b-row>
       <b-row>
-      <div class="slider">
-        Price per night:
-        <Slider
-          v-model="priceValues"
-          @update="priceFilterChanged"
-          :format="format"
-          :max="1000"
-          :step="10"
-        />
-      </div>
+        <div class="slider">
+          Price per night:
+          <Slider
+            v-model="priceValues"
+            @update="priceFilterChanged"
+            :format="format"
+            :max="1000"
+            :step="10"
+          />
+        </div>
       </b-row>
     </div>
   </div>
 </template>
 
 <script>
-import { searchCottages } from "../api";
+import { searchCottages } from "../../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchCottages",
@@ -84,29 +84,30 @@ export default {
       format: function (value) {
         return `€${value}`;
       },
-      errors: ""
+      errors: "",
     };
   },
   methods: {
     async submitSearch() {
-         if (this.date) {
-           this.errors=""
+      if (this.date) {
+        this.errors = "";
+        this.$emit("searchSubmitted");
         this.callSearch();
-
       }
 
       if (!this.date) {
-        this.errors= 'Dates required.';
+        this.errors = "Dates required.";
       }
     },
     priceFilterChanged() {
+      this.$emit("searchSubmitted");
       this.$store.commit("cottages/filterPriceCottages", this.priceValues);
     },
     resetFilter() {
       this.$store.commit("cottages/resetFilter");
       this.priceValues = [0, 1000];
     },
-    async callSearch(){
+    async callSearch() {
       var bs = new Date(this.date.start);
       bs.setHours(10);
       bs.setMinutes(0);
@@ -127,8 +128,7 @@ export default {
       }).then((response) => {
         this.$store.commit("cottages/setCottages", response);
       });
-
-    }
+    },
   },
   computed: {
     minDate() {
@@ -228,7 +228,7 @@ export default {
   border-radius: 5px;
   text-align: center;
 }
-.error{
+.error {
   color: red;
   padding: 0px;
   margin-bottom: 0px;

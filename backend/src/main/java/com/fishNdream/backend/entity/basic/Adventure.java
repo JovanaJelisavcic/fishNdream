@@ -38,7 +38,7 @@ public class Adventure {
 	private String address;
 	@JsonView(Views.UnauthoInstuctors.class)
 	private String description;
-	@JsonView(Views.AdventureInfo.class)
+	@JsonView(Views.UnauthoInstuctors.class)
 	private int maxParticipants;
 	@JsonView(Views.AdventureInfo.class)
 	private String behaviourRules;

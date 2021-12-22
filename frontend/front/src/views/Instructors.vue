@@ -1,27 +1,43 @@
 <template>
   <div class="container">
-    <b-row><SearchAdventures /></b-row>
-    <b-row> <AdventuresList class="seconrow"/></b-row>
-    
-   
+    <b-row><SearchAdventures @searchSubmitted="onSearchSubmitted" /></b-row>
+    <b-row>
+      <AdventuresList @adventureSelect="onAdventureSelect" class="seconrow" />
+      <AdventureDetail :adventure="selectedAdventure" />
+    </b-row>
   </div>
 </template>
 
 
 <script>
-import SearchAdventures from '../components/SearchAdventures.vue'
-import AdventuresList from '../components/AdventruesList.vue'
+import SearchAdventures from "../components/Adventures/SearchAdventures.vue";
+import AdventuresList from "../components/Adventures/AdventruesList.vue";
+import AdventureDetail from "../components/Adventures/AdventureDetail.vue"
 export default {
- name: 'Adventures',
- components: {
-   SearchAdventures,
-   AdventuresList
- }
+  name: "Adventures",
+  components: {
+    SearchAdventures,
+    AdventuresList,
+    AdventureDetail
+  },
+  data() {
+    return {
+      selectedAdventure: null,
+    };
+  },
+  methods: {
+    onAdventureSelect(adventure) {
+      this.selectedAdventure = adventure;
+    },
+    onSearchSubmitted() {
+      this.selectedAdventure = null;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.seconrow{
+.seconrow {
   margin-top: 50px;
 }
 </style>

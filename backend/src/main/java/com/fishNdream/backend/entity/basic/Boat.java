@@ -55,7 +55,7 @@ public class Boat {
 	private String address;
 	@JsonView(Views.UnauthoBoats.class)
 	private float rating;
-	@JsonView(Views.BoatProfile.class)
+	@JsonView(Views.UnauthoBoats.class)
 	private int capacity;
 	@JsonView(Views.BoatProfile.class)
 	private String behaviourRules;
@@ -79,6 +79,7 @@ public class Boat {
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
 	    )
+	@JsonView(Views.AdditionalServices.class)
 	private List<AdditionalServicesBoat> additionalServices;
 	
 	

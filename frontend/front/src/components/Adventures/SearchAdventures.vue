@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { searchAdventures } from "../api";
+import { searchAdventures } from "../../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchAdventures",
@@ -96,6 +96,7 @@ export default {
     async submitSearch() {
       if (this.startDate && this.endDate) {
         this.errors = "";
+         this.$emit("searchSubmitted");
         this.callSearch();
       }
 
@@ -118,6 +119,7 @@ export default {
       });
     },
     priceFilterChanged() {
+       this.$emit("searchSubmitted");
       this.$store.commit("adventures/filterPriceAdventures", this.priceValues);
     },
     resetFilter() {
