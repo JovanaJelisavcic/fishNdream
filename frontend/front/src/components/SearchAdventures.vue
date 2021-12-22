@@ -2,7 +2,7 @@
   <div>
     <form class="search-container wrapper" @submit.prevent="submitSearch">
       <div class="one">
-         <p class="error" v-if="errors">
+        <p class="error" v-if="errors">
           {{ errors }}
         </p>
         <vue-date-picker
@@ -35,32 +35,37 @@
           placeholder="Location"
         />
         <div class="wrapper">
-        <input
-          class="guests-num-field one"
-          type="number"
-          v-model="guestsNum"
-          placeholder="Guests Num"
-        />
-        <button class="search-button two" type="submit">Search</button>
+          <input
+            class="guests-num-field one"
+            type="number"
+            v-model="guestsNum"
+            placeholder="Guests Num"
+          />
+          <button class="search-button two" type="submit">Search</button>
         </div>
       </div>
     </form>
     <div class="slider-container">
-      <h4 id="filterh4">Filters</h4>
+      <b-row>
+        <b-col> <h4 id="filterh4">Filters</h4></b-col>
+        <b-col>
+          <button class="reset-button" type="reset" @click="resetFilter">
+            Reset
+          </button></b-col
+        ></b-row
+      >
 
-      <div class="slider">
-        Price per hour:
-        <Slider
-          v-model="priceValues"
-          @update="priceFilterChanged"
-          :format="format"
-          :max="1000"
-          :step="10"
-        />
-      </div>
-      <button class="reset-button" type="reset" @click="resetFilter">
-        Reset
-      </button>
+      <b-row
+        ><div class="slider">
+          Price per hour:
+          <Slider
+            v-model="priceValues"
+            @update="priceFilterChanged"
+            :format="format"
+            :max="1000"
+            :step="10"
+          /></div
+      ></b-row>
     </div>
   </div>
 </template>
@@ -84,18 +89,18 @@ export default {
       format: function (value) {
         return `€${value}`;
       },
-      errors: ""
+      errors: "",
     };
   },
   methods: {
-      async submitSearch() {
-         if (this.startDate && this.endDate) {
-          this.errors=""
-          this.callSearch();
+    async submitSearch() {
+      if (this.startDate && this.endDate) {
+        this.errors = "";
+        this.callSearch();
       }
 
       if (!this.startDate || !this.endDate) {
-        this.errors= 'Dates required.';
+        this.errors = "Dates required.";
       }
     },
     async callSearch() {
@@ -135,7 +140,7 @@ export default {
       var minDate = new Date(this.startDate);
       minDate.setHours(minDate.getHours() + 8);
       return minDate.toISOString();
-    }
+    },
   },
 };
 </script>
@@ -161,13 +166,11 @@ export default {
   border-radius: 12px;
   position: relative;
   float: right;
-  margin-top: 10px;
 }
 #filterh4 {
   background: url("~@/assets/filter.png") no-repeat;
-  text-align: right;
-  margin-right: 100px;
-  margin-bottom: 20px;
+  text-align: center;
+
 }
 .slider {
   width: 150px;
@@ -175,6 +178,7 @@ export default {
   position: relative;
   float: left;
   text-align: center;
+  margin-top: 20px;
 }
 .guests-num-field {
   background: url("~@/assets/person.png") no-repeat;
@@ -197,7 +201,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: center;
-
 }
 .search-button {
   background: url("~@/assets/iconsearch.png") no-repeat;
@@ -236,7 +239,7 @@ export default {
   grid-column: 2 / 2;
   grid-row: 1;
 }
-.error{
+.error {
   color: red;
   padding: 0px;
   margin-bottom: 0px;

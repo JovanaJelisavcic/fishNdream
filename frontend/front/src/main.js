@@ -13,6 +13,7 @@ import SimpleVueValidation from 'simple-vue-validator';
 
 
 
+
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 

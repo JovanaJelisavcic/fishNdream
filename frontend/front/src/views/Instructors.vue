@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <SearchAdventures />
-    <AdventuresList />
+    <b-row><SearchAdventures /></b-row>
+    <b-row> <AdventuresList class="seconrow"/></b-row>
+    
+   
   </div>
 </template>
 
@@ -17,5 +19,11 @@ export default {
  }
 };
 </script>
+
+<style scoped>
+.seconrow{
+  margin-top: 50px;
+}
+</style>
 
 

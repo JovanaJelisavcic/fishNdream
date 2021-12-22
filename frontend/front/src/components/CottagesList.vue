@@ -1,9 +1,10 @@
 <template>
-  <ul class="list-group">
+  <ul class="list-group col-md-4">
     <CottageItem
       v-for="(cottage, cottageId) in cottages"
       :key="cottageId"
       :cottage="cottage"
+      @cottageSelect="onCottageSelect"
     ></CottageItem>
   </ul>
 </template>
@@ -19,6 +20,11 @@ export default {
   computed: {
     cottages: {
       ...mapGetters("cottages", { get: "getFilteredCottages" }),
+    },
+  },
+  methods: {
+    onCottageSelect(cottage) {
+      this.$emit('cottageSelect', cottage);
     },
   },
 };

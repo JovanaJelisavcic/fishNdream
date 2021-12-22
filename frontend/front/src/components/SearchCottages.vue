@@ -38,8 +38,17 @@
       </div>
     </form>
     <div class="slider-container">
+      <b-row>
+        <b-col>
       <h4 id="filterh4">Filters</h4>
-
+        </b-col>
+          <b-col>
+      <button class="reset-button" type="reset" @click="resetFilter">
+        Reset
+      </button>
+          </b-col>
+      </b-row>
+      <b-row>
       <div class="slider">
         Price per night:
         <Slider
@@ -50,9 +59,7 @@
           :step="10"
         />
       </div>
-      <button class="reset-button" type="reset" @click="resetFilter">
-        Reset
-      </button>
+      </b-row>
     </div>
   </div>
 </template>
@@ -152,13 +159,10 @@ export default {
   border-radius: 12px;
   position: relative;
   float: right;
-  margin-top: 10px;
 }
 #filterh4 {
   background: url("~@/assets/filter.png") no-repeat;
-  text-align: right;
-  margin-right: 100px;
-  margin-bottom: 20px;
+  text-align: center;
 }
 .slider {
   width: 150px;
@@ -166,6 +170,7 @@ export default {
   position: relative;
   float: left;
   text-align: center;
+  margin-top: 20px;
 }
 .upper-search {
   width: auto;

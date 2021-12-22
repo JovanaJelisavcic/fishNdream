@@ -47,7 +47,7 @@ public class Cottage {
 	private String description;
 	@JsonView(Views.CottageProfile.class)
 	private int roomNum;
-	@JsonView(Views.CottageProfile.class)
+	@JsonView(Views.UnauthoCottages.class)
 	private int guestsNum;
 	@JsonView(Views.CottageProfile.class)
 	private String behaviourRules;

@@ -1,7 +1,9 @@
 <template>
   <div  class="container">
-    <SearchBoats />
-    <BoatsList />
+    <b-row> <SearchBoats /></b-row>
+    <b-row> <BoatsList class="seconrow" /></b-row>
+   
+   
   </div>
 </template>
 
@@ -17,3 +19,10 @@ export default {
  }
 };
 </script>
+
+
+<style scoped>
+.seconrow{
+  margin-top: 50px;
+}
+</style>
