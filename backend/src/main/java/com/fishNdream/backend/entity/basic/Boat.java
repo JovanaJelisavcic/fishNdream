@@ -2,6 +2,9 @@ package com.fishNdream.backend.entity.basic;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
@@ -79,10 +84,14 @@ public class Boat {
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
 	    )
+	
 	@JsonView(Views.AdditionalServices.class)
 	private List<AdditionalServicesBoat> additionalServices;
 	
-	
+	@Transient
+	@JsonView(Views.UnauthoBoats.class)
+	private List<AvailabilityPeriodBoats> unavailablePeriods = new ArrayList<AvailabilityPeriodBoats>();	
+
 
 	@OneToMany(
 	        mappedBy = "boat",
@@ -106,6 +115,80 @@ public class Boat {
 	private List<ComplaintBoat> complaints;
 	
 	
+	@PostLoad
+	private void fillUnavalability() {
+		this.unavailablePeriods.addAll(unFromAvailable());
+		this.unavailablePeriods.addAll(unFromReservations());
+		Collections.sort(this.unavailablePeriods,new Comparator<AvailabilityPeriodBoats>() {
+		    @Override
+		    public int compare(AvailabilityPeriodBoats a1, AvailabilityPeriodBoats a2) {
+		        return (a1.getBeggining().isBefore(a2.getBeggining())) ? -1 : ( a1.getBeggining().equals(a2.getBeggining())? (a1.getEnding().isBefore(a2.getEnding())? -1: 1) : 1  );
+		    }
+		});
+	}
+	
+	
+	private Collection<? extends AvailabilityPeriodBoats> unFromReservations() {
+		ArrayList<AvailabilityPeriodBoats> result = new ArrayList<>();
+		for(ReservationBoat r : reservations) {
+			if(!r.isCanceled() && r.getFisherman()!=null) {
+				AvailabilityPeriodBoats a= new AvailabilityPeriodBoats();
+				a.setBeggining(r.getBeginning());
+				a.setEnding(r.getEnding());
+				result.add(a);
+			}
+				
+		}
+		return result;
+	}
+
+
+	private Collection<? extends AvailabilityPeriodBoats> unFromAvailable() {
+		ArrayList<AvailabilityPeriodBoats> result = new ArrayList<>();
+		if(this.availablePeriods==null) return result;
+		
+		Collections.sort(this.availablePeriods,new Comparator<AvailabilityPeriodBoats>() {
+		    @Override
+		    public int compare(AvailabilityPeriodBoats a1, AvailabilityPeriodBoats a2) {
+		        return (a1.getBeggining().isBefore(a2.getBeggining())) ? -1 : ( a1.getBeggining().equals(a2.getBeggining())? (a1.getEnding().isBefore(a2.getEnding())? -1: 1) : 1  );
+		    }
+		});
+	
+		
+		
+		if(this.availablePeriods.get(0).getBeggining().isAfter(LocalDateTime.now())) {
+			AvailabilityPeriodBoats a= new AvailabilityPeriodBoats();
+			a.setBeggining(LocalDateTime.now());
+			a.setEnding(this.availablePeriods.get(0).getBeggining());
+			result.add(a);
+		}
+		
+		if(this.availablePeriods.size()==1) {
+
+			AvailabilityPeriodBoats a= new AvailabilityPeriodBoats();
+			a.setBeggining(this.availablePeriods.get(0).getEnding());
+			a.setEnding(LocalDateTime.MAX);
+			result.add(a);
+		}else {
+			for(int i=0;i<this.availablePeriods.size()-1; i++) {
+				AvailabilityPeriodBoats a= new AvailabilityPeriodBoats();
+				a.setBeggining(this.availablePeriods.get(i).getEnding());
+				a.setEnding(this.availablePeriods.get(i+1).getBeggining());
+				result.add(a);
+			}
+			AvailabilityPeriodBoats a= new AvailabilityPeriodBoats();
+			a.setBeggining(this.availablePeriods.get(this.availablePeriods.size()-1).getEnding());
+			a.setEnding(LocalDateTime.MAX);
+			result.add(a);
+			
+		}
+		
+		
+		
+		return result;
+	}
+
+
 	public List<ComplaintBoat> getComplaints() {
 		return complaints;
 	}
@@ -276,7 +359,7 @@ public class Boat {
 		boolean available =false;
 		
 		for(AvailabilityPeriodBoats period : availablePeriods) {
-			if(period.getBeggining().isBefore(from.toLocalDate()) && period.getEnding().isAfter(to.toLocalDate()))
+			if(period.getBeggining().isBefore(from) && period.getEnding().isAfter(to))
 				available=true;			
 		}
 		if(!available) return false;
@@ -382,6 +465,14 @@ public class Boat {
 
 	public void setRating(float rating) {
 		this.rating = rating;
+	}
+
+	public List<AvailabilityPeriodBoats> getUnavailablePeriods() {
+		return unavailablePeriods;
+	}
+
+	public void setUnavailablePeriods(List<AvailabilityPeriodBoats> unavailablePeriods) {
+		this.unavailablePeriods = unavailablePeriods;
 	}
 
 

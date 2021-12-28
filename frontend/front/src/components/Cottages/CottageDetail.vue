@@ -63,7 +63,7 @@ export default {
 <style scoped>
 .details {
   margin-top: 40px;
-  margin-bottom: 550px;
+  margin-bottom: 1000px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;

@@ -1,6 +1,6 @@
 package com.fishNdream.backend.entity.helper;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Boat;
+import com.fishNdream.backend.entity.basic.Views;
 @Entity
 public class AvailabilityPeriodBoats {
 	@Id
@@ -18,11 +21,15 @@ public class AvailabilityPeriodBoats {
 	@ManyToOne
     @JoinColumn(name="boat_id", nullable=false)
 	private Boat boat;
-	private LocalDate beggining;
-	private LocalDate ending;
+	@JsonView(Views.UnauthoBoats.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime beggining;
+	@JsonView(Views.UnauthoBoats.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime ending;
 	public AvailabilityPeriodBoats() {}
 
-	public AvailabilityPeriodBoats(LocalDate beggining, LocalDate ending) {
+	public AvailabilityPeriodBoats(LocalDateTime beggining, LocalDateTime ending) {
 		super();
 		this.beggining = beggining;
 		this.ending = ending;
@@ -36,19 +43,19 @@ public class AvailabilityPeriodBoats {
 		this.boat = boat;
 	}
 
-	public LocalDate getBeggining() {
+	public LocalDateTime getBeggining() {
 		return beggining;
 	}
 
-	public void setBeggining(LocalDate beggining) {
+	public void setBeggining(LocalDateTime beggining) {
 		this.beggining = beggining;
 	}
 
-	public LocalDate getEnding() {
+	public LocalDateTime getEnding() {
 		return ending;
 	}
 
-	public void setEnding(LocalDate ending) {
+	public void setEnding(LocalDateTime ending) {
 		this.ending = ending;
 	}
 
