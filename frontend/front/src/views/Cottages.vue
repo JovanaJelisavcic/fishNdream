@@ -1,11 +1,14 @@
 <template>
-  <div class="container">
-    <b-row> 
+  <div class="">
+    <b-row>
       <SearchCottages @searchSubmitted="onSearchSubmitted" />
     </b-row>
-      <b-row>
+    <b-row>
       <CottagesList @cottageSelect="onCottageSelect" class="seconrow" />
-      <CottageDetail :cottage="selectedCottage"/>
+
+      <CottageDetail
+        :cottage="selectedCottage"
+      />
     </b-row>
   </div>
 </template>
@@ -14,31 +17,31 @@
 <script>
 import SearchCottages from "../components/Cottages/SearchCottages.vue";
 import CottagesList from "../components/Cottages/CottagesList.vue";
-import CottageDetail from "../components/Cottages/CottageDetail.vue"
+import CottageDetail from "../components/Cottages/CottageDetail.vue";
 export default {
   name: "Cottages",
   components: {
     SearchCottages,
     CottagesList,
-    CottageDetail
+    CottageDetail,
   },
   data() {
     return {
-      selectedCottage: null
+      selectedCottage: null,
     };
   },
-  methods:{
-    onCottageSelect(cottage){
-      this.selectedCottage=cottage;
+  methods: {
+    onCottageSelect(cottage) {
+      this.selectedCottage = cottage;
     },
-    onSearchSubmitted(){
-      this.selectedCottage=null;
-    }
-  }
+    onSearchSubmitted() {
+      this.selectedCottage = null;
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style >
 .seconrow {
   margin-top: 50px;
 }

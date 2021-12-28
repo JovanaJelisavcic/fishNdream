@@ -33,6 +33,12 @@ const routes = [
     name: "Login",
     component: require("../views/Login.vue").default,
 
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: require("../views/Register.vue").default,
+
   }
 ];
 

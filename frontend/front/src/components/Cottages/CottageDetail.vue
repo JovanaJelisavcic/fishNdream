@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cottage" class="col-md-8 row">
+  <div v-if="cottage" class="sticky col-md-8 row">
     <b-col>
       <button @click="prev" id="prev">Previous</button>
       <button @click="next" id="next">Next</button>
@@ -61,8 +61,16 @@ export default {
 </script>
 
 <style scoped>
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20%;
+  font-size: 18px;
+  align-self: flex-start;
+  height: auto;
+}
 .details {
-  margin-top: 40px;
+  margin-top: 50px;
   margin-bottom: 1000px;
   padding: 10px;
   border: 1px solid #ddd;

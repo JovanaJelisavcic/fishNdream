@@ -34,7 +34,7 @@
       </div>
       <div class="right menu">
         <div class="item">
-          <div class="ui primary button">Sign up</div>
+          <div class="ui primary button" @click="goRegister">Sign up</div>
         </div>
         <div class="item">
           <a @click="goLogin" class="ui button"> Login </a>
@@ -55,6 +55,9 @@ export default {
     goLogin() {
       this.$router.push("/login");
     },
+    goRegister() {
+      this.$router.push("/register");
+    }
   },
   async mounted() {
     const response = await allCottages();

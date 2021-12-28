@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="">
     <b-row><SearchAdventures @searchSubmitted="onSearchSubmitted" /></b-row>
     <b-row>
       <AdventuresList @adventureSelect="onAdventureSelect" class="seconrow" />
