@@ -10,7 +10,8 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 import VueCompositionAPI from '@vue/composition-api'
 import SimpleVueValidation from 'simple-vue-validator';
-
+import VueCal from 'vue-cal'
+import 'vue-cal/dist/vuecal.css'
 
 
 
@@ -21,6 +22,7 @@ Vue.use(VueCompositionAPI);
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 Vue.use(SimpleVueValidation);
+Vue.component('vue-cal',VueCal);
 Vue.component('vue-date-picker',VueCtkDateTimePicker);
 new Vue({
     store,

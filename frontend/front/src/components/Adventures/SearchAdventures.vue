@@ -12,6 +12,7 @@
           formatted="DD-MM-YYYY HH:mm"
           :min-date="minDateStart"
           no-header
+          :disabled-hours="['00','01','02','03','04','23', '24']"
           no-shortcuts
           output-format="YYYY-MM-DDTHH:mm"
         ></vue-date-picker>
@@ -22,6 +23,7 @@
           formatted="DD-MM-YYYY HH:mm"
           :min-date="minDateEnd"
           :max-date="maxDateEnd"
+          :disabled-hours="['00','01','02','03','04','23', '24']"
           no-header
           no-shortcuts
           output-format="YYYY-MM-DDTHH:mm"
