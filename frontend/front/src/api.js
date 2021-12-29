@@ -34,3 +34,13 @@ export const searchAdventures = async (params) => {
   let { data } = await axios.post("/search/adventures", { ...params});
   return data;
 };
+
+export const registerFisherman = async (params) => {
+  let { data } = await axios.post("/register/user", { ...params});
+  return data;
+};
+
+export const registerOwner = async (params) => {
+  let { data } = await axios.post("/register/owner", { ...params});
+  return data;
+};
