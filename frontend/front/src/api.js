@@ -1,12 +1,5 @@
 import axios from "axios";
 
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
-//  store.commit('ERROR', error) // just taking some guesses here
-  return Promise.reject(error) // this is the important part
-});
-
 export const login = async (params) => {
   let { data } = await axios.post("/register/signin", { ...params });
   return data;

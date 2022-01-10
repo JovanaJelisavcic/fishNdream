@@ -5,13 +5,21 @@ if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
-axios.interceptors.response.use(
+/*axios.interceptors.response.use(
   function(response) {
     return response;
   },
   function() {
     return { data: null };
   }
-);
+);*/
+
+axios.interceptors.response.use(
+  function (response) {
+  return response;
+}, function (error) {
+//  store.commit('ERROR', error) // just taking some guesses here
+  return Promise.reject(error) // this is the important part
+});
 
 export default axios;

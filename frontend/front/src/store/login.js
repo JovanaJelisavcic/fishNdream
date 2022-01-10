@@ -63,9 +63,9 @@ export default {
           password: password,
         });
         if (response) {
-          if (response.jwtToken) {
+          if (response.accessToken) {
             commit("loginSuccess", {
-              token: response.jwtToken ? response.jwtToken : null,
+              token: response.accessToken ? response.accessToken : null,
               username: email,
             });
             return true;

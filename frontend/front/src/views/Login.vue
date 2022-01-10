@@ -1,46 +1,82 @@
 <template>
+
   <div class="main">
     <p class="sign" align="center">Sign in</p>
-    <form class="form1">
-      <input
-        v-model="username"
-        class="un"
-        type="text"
-        align="center"
-        placeholder="Username"
-      />
-      <input
-        v-model="password"
-        class="pass"
-        type="password"
-        align="center"
-        placeholder="Password"
-      />
-      <a @click="tryLogin" class="submit" align="center">Sign in</a>
-    </form>
+     <b-form @submit.prevent="tryLogin" novalidate class="form1">
+       <b-form-group
+
+        id="input-group-1"
+        :class="{ error: validation.hasError('username') }"
+      >
+        <b-form-input
+          id="input-1"
+           class="un"
+          v-model="username"
+          type="email"
+          placeholder="lokoiuk@email.com"
+          required
+        ></b-form-input>
+        <div class="message">{{ validation.firstError("username") }}</div>
+      </b-form-group>
+        <b-form-group id="input-group-10">
+        <b-form-input
+          type="password"
+          id="input-10"
+          v-model="password"
+          placeholder="*******"
+          required
+          class="pass"
+          :class="{ error: validation.hasError('password') }"
+        ></b-form-input>
+        <div class="message">{{ validation.firstError("password") }}</div>
+      </b-form-group>
+        <p class="message" v-if="errMsg">User doesn't exist or isn't verified yet.<br>
+       <small>Fishermen can verify their accounts via mail and Service Owners need to wait for admin to verify them.</small> </p>
+      <b-button type="submit" class="submit">Sign in</b-button>
+      
+     </b-form>
+    
   </div>
+
 </template>
 
          
         
 <script>
+import SimpleVueValidation from "simple-vue-validator";
+const Validator = SimpleVueValidation.Validator;
 export default {
   data() {
     return {
       username: null,
       password: null,
+      errMsg: false,
     };
   },
   mounted() {
     this.$store.commit("login/clearToken");
   },
+  validators: {
+    username: function (value) {
+      return Validator.value(value).required().email();
+    },
+    password: function (value) {
+      return Validator.value(value).required().lengthBetween(6, 15);
+    },
+  },
   methods: {
     async tryLogin() {
-      await this.$store.dispatch("login/login", {
-        email: this.username,
-        password: this.password,
-      });
-      this.$router.push("/");
+ if (
+        await this.$store.dispatch("login/login", {
+          email: this.username,
+          password: this.password,
+        })
+      ) {
+          //here we can managage which homepage will be 
+        this.$router.push("/");
+      }else {
+            this.errMsg = true;
+      }
     },
   },
 };
@@ -135,16 +171,9 @@ form.form1 {
   box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
 
-.forgot {
-  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-  color: #e1bee7;
-  padding-top: 15px;
-}
-
-a {
-  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-  color: #e1bee7;
-  text-decoration: none;
+.message {
+  padding-left: 30px;
+  color: red;
 }
 
 @media (max-width: 600px) {
