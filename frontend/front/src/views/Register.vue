@@ -1,6 +1,18 @@
 <template>
   <div class="container">
     <b-form @submit.prevent="onSubmit" @reset="onReset" v-if="show" novalidate>
+          <h2>Register to fishNdream</h2>
+      <button @click="goHome" style=" float: right;" class="ui button">Home Page</button>
+      <p>
+       Here you can register for any Role: Fisherman, Cottage Owner, Boat Owner or Instructor.<br />
+       All you have to do is fill in this form and choose which Role are you registering for
+      </p>
+         <div v-if="usernameError">
+      <p class="message">
+        Account with this email already exists.<br />
+       If you already have an account with different role, note that you'll need new email address to register for this role.
+      </p>
+    </div>
       <b-form-group
         id="input-group-1"
         label="Email:"
@@ -178,6 +190,7 @@
           {{ validation.firstError("form.explanation") }}
         </div>
       </b-form-group>
+     
 
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
@@ -193,6 +206,7 @@
       </p>
       <button @click="goHome" class="ui button">Home Page</button>
     </div>
+   
   </div>
 </template>
 
@@ -226,6 +240,7 @@ export default {
       show: true,
       submitted: false,
       showMessage: false,
+      usernameError: false,
     };
   },
   validators: {
@@ -319,15 +334,27 @@ export default {
         phoneNum: this.form.phone,
         regType: role,
         explanation: this.form.explanation,
-      }).then(response => {
-        console.log(response);
-        if (response == 200) {
+      }).then(
+        (res) => {
+          if (res == null) {
+              this.usernameError=true;
+          }
+         else {
+            this.showMessage = true;
+            this.show = false;
+            this.usernameError=false;
+          }
+        }
+      );
+      /*.then((response) => {
+          console.log(response);
           this.showMessage = true;
           this.show = false;
-        } else {
+        })
+        .catch((error) => {
+          console.log({ error });
           console.log("username unique");
-        }
-      });
+        });*/
     },
     async registerFishermanCall() {
       await registerFisherman({
@@ -340,7 +367,18 @@ export default {
         city: this.form.city,
         state: this.form.state,
         phoneNum: this.form.phone,
-      }).then(response => {
+      }).then(
+        (res) => {
+          if (res == null) {
+              this.usernameError=true;
+          }
+         else {
+            this.showMessage = true;
+            this.show = false;
+            this.usernameError=false;
+          }
+        }
+      );/*.then((response) => {
         console.log(response);
         if (response == 200) {
           this.showMessage = true;
@@ -348,7 +386,7 @@ export default {
         } else {
           console.log("username unique");
         }
-      });
+      });*/
     },
     onReset(event) {
       event.preventDefault();
@@ -368,6 +406,7 @@ export default {
 
       this.submitted = false;
       this.show = false;
+      this.usernameError=false;
       this.$nextTick(() => {
         this.show = true;
       });
@@ -385,5 +424,9 @@ export default {
 }
 .message {
   color: red;
+}
+button{
+  margin-top: 10px;
+  margin-right: 10px;
 }
 </style>
