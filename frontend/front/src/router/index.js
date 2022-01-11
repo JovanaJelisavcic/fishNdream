@@ -6,6 +6,14 @@ import HomepageFisher from "../components/HomepageFisher.vue"
 import HomepageAdmin from "../components/HomepageAdmin.vue"
 import HomepageOwner from "../components/HomepageOwner.vue"
 import NotFoundComponent from "../components/NotFoundComponent.vue"
+import MyProfile from "../components/Fisherman/MyProfile.vue"
+import Explore from "../components/Fisherman/Explore.vue"
+import FileComplaint from "../components/Fisherman/FileComplaint.vue"
+import MyReservations from "../components/Fisherman/MyReservations.vue"
+import Subscriptions from "../components/Fisherman/Subscriptions.vue"
+import CottagesFisher from "../components/Fisherman/Cottages/CottagesFisher.vue"
+import BoatsFisher from "../components/Fisherman/Boats/BoatsFisher.vue"
+import AdventuresFisher from "../components/Fisherman/Adventures/AdventuresFisher.vue"
 import Cottages from "../views/Cottages.vue"
 import Boats from "../views/Boats.vue"
 import Instructors from "../views/Instructors.vue"
@@ -67,6 +75,49 @@ const routes = [
       adminAuth: false,
       userAuth: true,
     },
+    children: [
+      {
+        path: "explore",
+        name: "Explore",
+        component: Explore,
+        children: [
+          {
+            path: "cottages",
+            name: "CottagesFisher",
+            component: CottagesFisher
+          }, {
+            path: "boats",
+            name:"BoatsFisher",
+            component: BoatsFisher
+          }, {
+            path: "instructors",
+            name: "AdventuresFisher",
+            component: AdventuresFisher
+          }
+        ]
+      }, {
+        path: "complaint",
+        name: "FileComplaint",
+        component: FileComplaint
+      }, {
+        path: "myreservations",
+        name: "MyReservations",
+        component: MyReservations
+      }, {
+        path: "subscriptions",
+        name: "Subscriptions",
+        component: Subscriptions
+      }
+    ]
+  }, {
+    path: "/fisher/myprofile",
+    name: "MyProfile",
+    component: MyProfile,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      userAuth: true,
+    }
   }, {
     path: "/admin",
     name: "HomepageAdmin",
@@ -94,7 +145,7 @@ const routes = [
       adminAuth: false,
       userAuth: false,
     },
-  }
+  },
 ];
 
 store.commit("login/fillState");

@@ -85,7 +85,6 @@ export default {
       return false;
     },
     async logout({ commit }) {
-      //Todo
       commit("resetStatus");
       commit("clearToken");
     },
