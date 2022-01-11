@@ -11,10 +11,13 @@ export default {
     token: null,
     status: null,
     isRegisteredUser: false,
+    role: null
   },
   mutations: {
     setisRegisteredUser(state, value) {
       state.isRegisteredUser = value;
+    }, setRole(state, value) {
+      state.role = value;
     },
     setUsername(state, value) {
       state.username = value;
@@ -26,11 +29,13 @@ export default {
       state.status = "FIRST_LOGIN";
     },
     loginSuccess(state, data) {
-      const { token, username } = data;
+      const { token, username, role } = data;
       state.username = username;
       state.token = token;
+      state.role = role;
       localStorage.setItem("token", state.token);
       localStorage.setItem("username", state.username);
+      localStorage.setItem("role", state.role);
       axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
       state.isRegisteredUser = true;
     },
@@ -44,9 +49,11 @@ export default {
     clearToken(state) {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("role");
       state.isRegisteredUser = false;
       state.username = null;
       state.token = null;
+      state.role=null;
     },
     resetStatus(state) {
       state.status = null;
@@ -66,7 +73,7 @@ export default {
           if (response.accessToken) {
             commit("loginSuccess", {
               token: response.accessToken ? response.accessToken : null,
-              username: email,
+              username: email, role: response.roles[0]
             });
             return true;
           }
@@ -89,6 +96,9 @@ export default {
     },
     getEmail(state) {
       return state.email;
+    },
+    getRole(state) {
+      return state.role;
     },
     check(state) {
       let token = state.token;

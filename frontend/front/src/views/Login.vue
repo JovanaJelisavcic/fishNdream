@@ -72,8 +72,18 @@ export default {
           password: this.password,
         })
       ) {
-          //here we can managage which homepage will be 
-        this.$router.push("/");
+
+        //reroute
+        if(localStorage.getItem("role")=="FISHERMAN"){
+            this.$router.push("/fisher");
+        }else if(localStorage.getItem("role")=="SYS_ADMIN"){
+             this.$router.push("/admin");
+        }else{
+             this.$router.push("/owner");
+        }
+        
+       
+       
       }else {
             this.errMsg = true;
       }
