@@ -44,3 +44,18 @@ export const registerOwner = async (params) => {
   let { data } = await axios.post("/register/owner", { ...params} );
   return data;
 };
+
+export const allCottagesFisher = async () => {
+  let { data } = await axios.get("/cottage/all");
+  return data;
+};
+
+export const allBoatsFisher = async () => {
+  let { data } = await axios.get("/boat/all");
+  return data;
+};
+
+export const allAdventuresFisher = async () => {
+  let { data } = await axios.get("/instructor/all");
+  return data;
+};

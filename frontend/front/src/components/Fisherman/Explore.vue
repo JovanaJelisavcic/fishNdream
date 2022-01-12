@@ -38,17 +38,17 @@
 </template>
 
 <script>
-import { allCottages, allBoats, allAdventures } from "../../api";
+import { allCottagesFisher, allBoatsFisher, allAdventuresFisher } from "../../api";
 export default {
   name: "Explore",
    async mounted() {
-    const response = await allCottages();
+    const response = await allCottagesFisher();
     this.$store.commit("cottages/setCottages", response);
     const path = `fisher/explore/cottages`;
     if (this.$route.path !== path) this.$router.push("/fisher/explore/cottages");
-    const responseB = await allBoats();
+    const responseB = await allBoatsFisher();
     this.$store.commit("boats/setBoats", responseB);
-    const responseA = await allAdventures();
+    const responseA = await allAdventuresFisher();
     this.$store.commit("adventures/setAdventures", responseA);
     
   },
@@ -57,8 +57,8 @@ export default {
 
 <style scoped>
 .content {
-  height: calc(100%-150px);
-  margin-top: 150px;
+  height: calc(100%-300px);
+  margin-top: 200px;
 }
 .macolor {
   background-color: rgb(140, 85, 170);

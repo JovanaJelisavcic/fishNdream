@@ -1,66 +1,95 @@
 <template>
   <div>
-    <form class="search-container" @submit.prevent="submitSearch">
-      <div class="upper-search">
-        <p class="error" v-if="errors">
-          {{ errors }}
-        </p>
-        <vue-date-picker
-          class="date-picker"
-          id="date"
-          name="name"
-          v-model="date"
-          label="Check In - Check Out"
-          formatted="DD-MM-YYYY"
-          only-date
-          :min-date="minDate"
-          range
-          no-header
-          no-shortcuts
-          output-format="YYYY-MM-DDTHH:mm"
-        ></vue-date-picker>
-      </div>
-      <div class="lower-search">
-        <input
-          class="location-field"
-          type="text"
-          v-model="location"
-          placeholder="Location"
-        />
-        <input
-          class="guests-num-field"
-          type="number"
-          v-model="guestsNum"
-          placeholder="Guests Num"
-        />
-
-        <button class="search-button" type="submit">Search</button>
-      </div>
-    </form>
-    <div class="slider-container">
-      <b-row>
-        <b-col>
-          <h4 id="filterh4">Filters</h4>
-        </b-col>
-        <b-col>
-          <button class="reset-button" type="reset" @click="resetFilter">
-            Reset
-          </button>
-        </b-col>
-      </b-row>
-      <b-row>
-        <div class="slider">
-          Price per night:
-          <Slider
-            v-model="priceValues"
-            @update="priceFilterChanged"
-            :format="format"
-            :max="1000"
-            :step="10"
-          />
+    <b-col>
+      <form class="search-container" @submit.prevent="submitSearch">
+        <div class="upper-search">
+          <p class="error" v-if="errors">
+            {{ errors }}
+          </p>
+          <vue-date-picker
+            class="date-picker"
+            id="date"
+            name="name"
+            v-model="date"
+            label="Check In - Check Out"
+            formatted="DD-MM-YYYY"
+            only-date
+            :min-date="minDate"
+            range
+            no-header
+            no-shortcuts
+            output-format="YYYY-MM-DDTHH:mm"
+          ></vue-date-picker>
         </div>
-      </b-row>
-    </div>
+        <div class="lower-search">
+          <input
+            class="location-field"
+            type="text"
+            v-model="location"
+            placeholder="Location"
+          />
+          <input
+            class="guests-num-field"
+            type="number"
+            v-model="guestsNum"
+            placeholder="Guests Num"
+          />
+
+          <button class="search-button" type="submit">Search</button>
+        </div>
+      </form>
+    </b-col>
+    <b-col class="sort-panel">
+      <select class="ui dropdown" @change="sort">
+        <option value="">Sort by</option>
+        <option
+          
+          v-bind:class="[sortBy === 'name' ? sortDirection : '']"
+          value="name"
+        >
+          name
+        </option>
+        <option
+      
+          v-bind:class="[sortBy === 'rating' ? sortDirection : '']"
+          value="rating"
+        >
+          rating
+        </option>
+        <option
+          v-bind:class="[sortBy === 'address' ? sortDirection : '']"
+          value="address"
+        >
+          location
+        </option>
+      </select>
+    </b-col>
+    <b-col>
+      <div class="slider-container">
+        <b-row>
+          <b-col>
+            <h4 id="filterh4">Filters</h4>
+          </b-col>
+          <b-col>
+            <button class="reset-button" type="reset" @click="resetFilter">
+              Reset
+            </button>
+          </b-col>
+        </b-row>
+        <b-row>
+          <div class="slider">
+            Price per night:
+            <Slider
+              v-model="priceValues"
+              @update="priceFilterChanged"
+              :format="format"
+              :max="1000"
+              :step="10"
+            />
+          </div>
+        </b-row>
+      </div>
+    </b-col>
   </div>
 </template>
 
@@ -85,9 +114,18 @@ export default {
         return `€${value}`;
       },
       errors: "",
+      sortBy: "name",
+      sortDirection: "asc",
     };
   },
   methods: {
+    sort: function (event) {
+      if (event.target.value === this.sortBy) {
+        this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
+      }
+      this.sortBy = event.target.value;
+      this.$store.commit("cottages/sort", this.sortBy, this.sortDirection);
+    },
     async submitSearch() {
       if (this.date) {
         this.errors = "";
@@ -233,6 +271,16 @@ export default {
   padding: 0px;
   margin-bottom: 0px;
   margin-left: 30px;
+}
+.sort-panel {
+  margin-right: 500px;
+}
+.asc:after {
+  content: "\25B2";
+}
+
+.desc:after {
+  content: "\25BC";
 }
 </style>
 
