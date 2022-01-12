@@ -99,6 +99,7 @@ public class Boat {
 	        		fetch=FetchType.EAGER,
 	        orphanRemoval = true
 	    )
+	
 	private List<ReservationBoat> reservations;
 	@OneToMany(
 	        mappedBy = "boat",

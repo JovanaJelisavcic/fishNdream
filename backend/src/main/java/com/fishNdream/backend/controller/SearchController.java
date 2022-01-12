@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +69,46 @@ public class SearchController {
 	@JsonView(Views.UnauthoInstuctors.class)
 	@PostMapping("/adventures")
 	public ResponseEntity<?> freeAdventures(@Valid  @RequestBody SerachDTO search )  {	
+		List<Adventure> adventures =  adventureRepo.findAll();
+		List<Adventure> available = filterUtil.getAvaiableAdventures(adventures, search.getDateTime(),search.getEndTime());
+		if(search.getLocation()!=null || search.getGuestsNum()!=0) {
+			available = filterUtil.getAdventuresOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
+		} 
+		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(available, HttpStatus.OK);
+	}
+	
+	
+	
+	@JsonView(Views.CottageProfile.class)
+	@RequestMapping(path = "/cottages/fisher", 
+    consumes = MediaType.APPLICATION_JSON_VALUE, 
+    produces = MediaType.APPLICATION_JSON_VALUE, 
+    method = { RequestMethod.POST})
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> freeCottagesF( @Valid @RequestBody SerachDTO search )  {
+		List<Cottage> cottages =  cottagesRepo.findAll();
+		List<Cottage> available = filterUtil.getAvaiableCottages(cottages, search.getDateTime(),search.getEndTime());
+		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getCottagesOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
+		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(available, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.BoatProfile.class)
+	@PostMapping("/boats/fisher")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> freeBoatsF(@Valid  @RequestBody SerachDTO search )  {	
+		List<Boat> boats =  boatRepo.findAll();
+		List<Boat> available = filterUtil.getAvaiableBoats(boats, search.getDateTime(),search.getEndTime());
+		if(search.getLocation()!=null || search.getGuestsNum()!=0) available = filterUtil.getBoatsOnLocationAndGuests(available, search.getLocation(), search.getGuestsNum());
+		if(available.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(available, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.InstructorProfile.class)
+	@PostMapping("/adventures/fisher")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> freeAdventuresF(@Valid  @RequestBody SerachDTO search )  {	
 		List<Adventure> adventures =  adventureRepo.findAll();
 		List<Adventure> available = filterUtil.getAvaiableAdventures(adventures, search.getDateTime(),search.getEndTime());
 		if(search.getLocation()!=null || search.getGuestsNum()!=0) {

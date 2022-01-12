@@ -101,5 +101,13 @@ public class CottageController {
 		 return  cottagesRepo.findAll();
 	}
 	
+	@JsonView(Views.CottageProfile.class)
+	@GetMapping("/all")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public List<Cottage> allcttgFisher( )  {	
+		 return  cottagesRepo.findAll();
+	}
+	
+	
 	
 }

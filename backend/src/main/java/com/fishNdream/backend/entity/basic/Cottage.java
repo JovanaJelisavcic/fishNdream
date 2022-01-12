@@ -69,6 +69,7 @@ public class Cottage {
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
 	    )
+	@JsonView(Views.AdditionalServices.class)
 	private List<AdditionalServicesCottage> additionalServices;
 	@OneToMany(
 	        mappedBy = "cottage",

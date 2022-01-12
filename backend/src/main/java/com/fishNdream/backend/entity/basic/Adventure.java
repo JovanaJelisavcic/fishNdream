@@ -65,6 +65,7 @@ public class Adventure {
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
 	    )
+	@JsonView(Views.AdditionalServices.class)
 	private List<AdditionalServicesAdventure> additionalServices;
 	@ElementCollection
 	@CollectionTable(name = "adventure_pics", joinColumns = @JoinColumn(name = "adventure_id"))

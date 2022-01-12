@@ -103,5 +103,14 @@ public class BoatController {
 		 return new ResponseEntity<>(boats, HttpStatus.OK);
 	}
 	
+	@JsonView(Views.BoatProfile.class)
+	@GetMapping("/all")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> allBoatsFisher( )  {	
+		List<Boat> boats =  boatRepo.findAll();
+		if(boats.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 return new ResponseEntity<>(boats, HttpStatus.OK);
+	}
+	
 	
 }

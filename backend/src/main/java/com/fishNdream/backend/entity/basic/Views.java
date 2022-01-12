@@ -22,8 +22,8 @@ public class Views {
 	public interface AdventureInfo{}
 	
 	public interface BoatProfile extends UnauthoBoats, UserInfo{}
-	public interface CottageProfile extends UnauthoCottages, UserInfo{}
-	public interface InstructorProfile extends UnauthoInstuctors, AdventureInfo{}
+	public interface CottageProfile extends UnauthoCottages, UserInfo, AdditionalServices{}
+	public interface InstructorProfile extends UnauthoInstuctors, AdventureInfo, AdditionalServices{}
 	
 	public interface Complaint extends UnauthoCottages, UserInfo, UnauthoBoats, UnauthoInstuctors {}
 	
