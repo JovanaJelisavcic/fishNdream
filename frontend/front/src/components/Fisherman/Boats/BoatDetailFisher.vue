@@ -1,5 +1,5 @@
 <template>
-  <div v-if="boat" class="col-md-8">
+  <div v-if="boat" class="sticky col-md-8">
     <b-row>
       <b-col>
         <button @click="prev" id="prev">Previous</button>
@@ -13,18 +13,33 @@
       <b-col class="details">
         <h1>{{ boat.name }}</h1>
         <p>
-          {{ boat.description }}<br />
-          Located at {{ boat.address }}<br />
-          Price per hour is {{ boat.price }}$<br />
-          It can accomodate up to {{ boat.capacity }} people <br />
-          {{ boat.rating }}⭐
+          <small>{{ boat.boatType }}</small
+          ><br />
+          <small> {{ boat.description }}</small
+          ><br />
+          📍 at {{ boat.address }}<br />
+          {{ boat.price }}$ per hour<br />
+          {{ boat.capacity }} 👤 on {{ boat.length }}m long boat <br />
+          {{ boat.rating }}⭐<br />
+          <br>
+          The owner is {{boat.owner.name}} {{boat.owner.surname}}<br>
+          And you'll have to respect his/her rules:<br />
+          {{ boat.behaviourRules }}<br />
+        </p>
+        <p v-if="boat.cancelPolicy">If you cancel your reservation the owner keeps part of the money</p>
+         <p v-if="!boat.cancelPolicy">You can cancel your reservation for free!</p>
+        <p>
+          <br />
+          Boat spec<br>
+          *{{boat.engineNum}} engine(s) with {{boat.enginePower}}HP <br>
+          *Maximum of {{boat.maxSpeed}}knots
         </p>
         <b-table striped :items="items"></b-table>
       </b-col>
     </b-row>
     <b-row>
       <vue-cal
-        class=" vuecal--green-theme"
+        class="vuecal--green-theme"
         active-view="month"
         :disable-views="['years', 'week']"
         :min-date="minDate"
@@ -88,7 +103,7 @@ export default {
     items() {
       var items = [];
       for (let ev of this.boat.additionalServices) {
-        items.push({ service: ev.name, price: ev.price });
+        items.push({ service: ev.name, price: ev.price + "$" });
       }
 
       return items;
@@ -98,6 +113,9 @@ export default {
 </script>
 
 <style scoped>
+.sticky {
+  font-size: 18px;
+}
 .details {
   margin-top: 40px;
   margin-bottom: 0px;

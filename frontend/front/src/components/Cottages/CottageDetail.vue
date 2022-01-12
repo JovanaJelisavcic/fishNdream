@@ -12,10 +12,10 @@
     <b-col class="details">
       <h1>{{ cottage.name }}</h1>
       <p>
-        {{ cottage.description }}<br />
-        Located at {{ cottage.address }}<br />
-        Price per night is {{ cottage.price }}$<br />
-        It can accomodate up to {{ cottage.guestsNum }} people <br />
+       <small> {{ cottage.description }}</small><br />
+        📍 at {{ cottage.address }}<br />
+        {{ cottage.price }}$ per night<br />
+        {{ cottage.guestsNum }} 👤 <br />
         {{ cottage.rating }}⭐
       </p>
     </b-col>

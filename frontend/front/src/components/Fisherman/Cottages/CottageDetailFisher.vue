@@ -12,12 +12,15 @@
     <b-col class="details">
       <h1>{{ cottage.name }}</h1>
       <p>
-        {{ cottage.description }}<br />
-        Located at {{ cottage.address }}<br />
-        Price per night is {{ cottage.price }}$<br />
-        It can accomodate up to {{ cottage.guestsNum }} people <br />
-        {{ cottage.rating }}⭐
+       <small> {{ cottage.description }}</small><br />
+        📍 at {{ cottage.address }}<br />
+         {{ cottage.price }}$ per night<br />
+        {{ cottage.guestsNum }} 👤 in {{cottage.roomNum}} rooms <br />
+        {{ cottage.rating }}⭐<br>
+        You'll have to respect the rules of the owner:<br>
+        {{cottage.behaviourRules}}<br>
       </p>
+      <b-table striped :items="items"></b-table>
     </b-col>
   </div>
 </template>
@@ -56,6 +59,14 @@ export default {
         imgs.push(this.image_prefix + "/" + this.cottage.cottagePics[i]);
       }
       return imgs;
+    },
+    items() {
+      var items = [];
+      for (let ev of this.cottage.additionalServices) {
+        items.push({ service: ev.name, price: ev.price + "$" });
+      }
+
+      return items;
     },
   },
 }

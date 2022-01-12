@@ -66,7 +66,12 @@ export default {
       this.$store.dispatch('login/logout');
       this.$router.push("/");
     }
-  }
+  },
+  async mounted() {
+    const path = `/fisher/explore/cottages`;
+    if (this.$route.path !== path) this.$router.push("/fisher/explore/cottages");
+    
+  },
     
 }
 </script>
