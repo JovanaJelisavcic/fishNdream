@@ -4,7 +4,8 @@ export default {
     adventures: [],
     filtered: [],
     adventureId: null,
-    isSubscribed: true
+    isSubscribed: true,
+    actionsRes : null
   },
   mutations: {
     sort(state, by, dir) {
@@ -33,6 +34,9 @@ export default {
     },
     setIsSubscribed(state, data) {
       state.isSubscribed = data;
+    }, 
+    setActionsRes(state, data) {
+      state.actionsRes = data;
     }
   },
   actions: {
@@ -46,6 +50,8 @@ export default {
       return state.filtered;
     }, getIsSubscribed(state) {
       return state.isSubscribed;
+    }, getActionsRes(state) {
+      return state.actionsRes;
     }
   }
 };

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="adventure" class="sticky col-md-8 row">
+  <div v-if="adventure" class="sticky col-md-8">
+    <b-row>
     <b-col>
       <button @click="prev" id="prev">Previous</button>
       <button @click="next" id="next">Next</button>
@@ -54,6 +55,42 @@
       </p>
       <b-table striped :items="items"></b-table>
     </b-col>
+    </b-row>
+    <b-row
+      ><div class=" actions ui middle aligned divided list" v-if="actions">
+        <h3>Are you interested in promotions?</h3>
+        <div
+          class="item"
+          v-for="(action, reservationId) in actions"
+          :key="reservationId"
+        >
+          <div class="right floated content">
+            <div class="ui button resA-button">Reserve Promotion</div>
+          </div>
+          <div class="content">
+            <b-row>
+            <b-col>
+           <h4>  📅 {{ action.beginning }} to {{ action.ending }}<br /> </h4>
+             ONLY AVAILABLE UNTIL
+              {{ action.actionEndTime }} <br />
+              {{ action.price }}$ for {{ action.participantsNum }}👤 
+            </b-col>
+            <b-col>
+            <div v-if="action.additionalServices">
+              <div
+                v-for="service in action.additionalServices"
+                v-bind:key="service.serviceId"
+              >
+                {{ service.name }}
+              </div>
+            </div>
+            </b-col>
+            </b-row>
+          </div>
+        </div>
+      </div>
+      <div v-if="!actions">There are no active promotions for this cottage</div>
+    </b-row>
   </div>
 </template>
 
@@ -108,11 +145,20 @@ export default {
     isSubscribedInstructor: {
       ...mapGetters("adventures", { get: "getIsSubscribed" }),
     },
+    actions: {
+      ...mapGetters("adventures", { get: "getActionsRes" }),
+    },
   },
 };
 </script>
 
 <style scoped>
+.actions{
+  margin-left: 25px;
+}
+.resA-button{
+  margin-right: 100px
+}
 #subs-button {
   margin-top: 0px;
   margin-left: 40px;
@@ -122,10 +168,8 @@ export default {
 }
 .details {
   margin-top: 40px;
-  margin-bottom: 1080px;
+  margin-bottom: 0px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
 }
 img {
   height: 500px;

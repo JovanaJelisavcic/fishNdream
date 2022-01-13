@@ -5,14 +5,6 @@ if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
-/*axios.interceptors.response.use(
-  function(response) {
-    return response;
-  },
-  function() {
-    return { data: null };
-  }
-);*/
 
 axios.interceptors.response.use(
   function (response) {

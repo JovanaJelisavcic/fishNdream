@@ -89,3 +89,18 @@ export const subscribeInstructor = async (param) => {
   let { data } = await axios.post(`/instructor/subscribe/${param}`);
   return data;
 };
+
+export const getActionsCottage = async (param) => {
+  let { data } = await axios.get(`/reservationCottage/actions/${param}`);
+  return data;
+};
+
+export const getActionsBoat = async (param) => {
+  let { data } = await axios.get(`/reservationBoat/actions/${param}`);
+  return data;
+};
+
+export const getActionsAdventure = async (param) => {
+  let { data } = await axios.get(`/reservationAdventure/actions/${param}`);
+  return data;
+};
