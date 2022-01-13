@@ -218,7 +218,7 @@ public class SysAdminController {
 	@PostMapping("/delete/fisherman/{email}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
 	public ResponseEntity<?> delfish(@PathVariable String email){
-		Optional<Fisherman> owner = fishermanRepo.findById(email);
+		Optional<Fisherman> owner = fishermanRepo.findByEmail(email);
 		if(owner.isEmpty()) 
 			return ResponseEntity
 		            .status(HttpStatus.NOT_FOUND)

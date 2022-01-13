@@ -4,7 +4,7 @@
       v-for="(boat, boatId) in boats"
       :key="boatId"
       :boat="boat"
-       @boatSelect="onBoatSelect"
+      @boatSelect="onBoatSelect"
     ></BoatItem>
   </ul>
 </template>
@@ -12,6 +12,7 @@
 <script>
 import { mapGetters } from "vuex";
 import BoatItem from "./BoatItem.vue";
+import { isSubscribedBoat } from "../../api";
 export default {
   name: "BoatsList",
   components: {
@@ -23,9 +24,13 @@ export default {
     },
   },
   methods: {
-    onBoatSelect(boat) {
-      this.$emit('boatSelect', boat);
+    async onBoatSelect(boat) {
+      let isit = await isSubscribedBoat(boat.boatId);
+      this.$store.commit("boats/setIsSubscribed", isit);
+     
+     
+     this.$emit("boatSelect", boat);
     },
-  }
+  },
 };
 </script>

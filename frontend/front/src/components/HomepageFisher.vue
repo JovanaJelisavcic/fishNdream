@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <div
       class="ui top fixed secondary menu"
       style="background-color: rgb(140, 85, 170)"
@@ -31,7 +31,7 @@
         >
           Subscriptions
         </router-link>
-         <router-link
+        <router-link
           to="/fisher/complaint"
           class="item"
           active-class="active"
@@ -57,23 +57,23 @@
 
 <script>
 export default {
-     name: "HomepageFisher",
-      methods: {
+  name: "HomepageFisher",
+  methods: {
     goMyProfile() {
       this.$router.push("/fisher/myprofile");
     },
     goLogout() {
-      this.$store.dispatch('login/logout');
+      this.$store.dispatch("login/logout");
       this.$router.push("/");
-    }
+    },
   },
   async mounted() {
     const path = `/fisher/explore/cottages`;
-    if (this.$route.path !== path) this.$router.push("/fisher/explore/cottages");
-    
+    if (this.$route.path !== path) {
+      this.$router.push("/fisher/explore/cottages");
+    }
   },
-    
-}
+};
 </script>
 
 <style scoped>

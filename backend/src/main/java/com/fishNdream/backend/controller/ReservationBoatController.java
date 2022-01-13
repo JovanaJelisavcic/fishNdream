@@ -108,7 +108,7 @@ public class ReservationBoatController {
 	            .body("Action is not active");
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(fisherman.get().alreadyReservedActionBoat(action.get().getReservationId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
@@ -139,7 +139,7 @@ public class ReservationBoatController {
 		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(fisherman.get().alreadyReservedBoat(reservation.getEntityId(), reservation.getBeginning(),reservation.getEnding())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Entity already had been reserved by this user for this period");
@@ -203,7 +203,7 @@ public class ReservationBoatController {
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("You can't cancel less than 3 days before beginning");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!username.equals(reservation.get().getFisherman().getEmail())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("This reservation isn't yours");
@@ -227,7 +227,7 @@ public class ReservationBoatController {
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("You can't cancel less than 3 days before beginning");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!username.equals(action.get().getFisherman().getEmail())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("This isn't your reservation");

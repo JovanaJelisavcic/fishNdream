@@ -76,7 +76,7 @@ public class ComplaintController {
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Cottage not found");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!cottage.get().atLeastOnceReserved(fisherman.get().getEmail()))
 			return ResponseEntity
             .status(HttpStatus.FORBIDDEN)
@@ -104,7 +104,7 @@ public class ComplaintController {
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Boat not found");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		Optional<ReservationBoat> r = resBRepo.findByBoatIdAndEmail(boatId, fisherman.get().getEmail());
 		if(r.isEmpty())
 			return ResponseEntity
@@ -132,7 +132,7 @@ public class ComplaintController {
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Instructor not found");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!instr.get().atLeastOnceReserved(fisherman.get().getEmail()))
 			return ResponseEntity
             .status(HttpStatus.FORBIDDEN)

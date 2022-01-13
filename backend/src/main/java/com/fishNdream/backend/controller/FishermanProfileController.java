@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -62,6 +63,44 @@ public class FishermanProfileController {
 		fishermanRepo.save(newOne);
 		return new ResponseEntity<>(HttpStatus.OK);
 		
+	}
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/isSubscribedCottage/{cottageID}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public boolean isSubscribedCottage(@RequestHeader("Authorization") String token, @PathVariable int cottageID) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Fisherman fisher = fishermanRepo.findByEmail(username).get();
+		List<SubscriptionCottage> subscrs=fisher.getSubscriptionCotagges();
+		if(subscrs==null) return false;
+		return subscrs.stream().anyMatch(o -> o.getCottage().getCottageId()==cottageID);
+
+	}
+	
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/isSubscribedBoat/{boatID}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public boolean isSubscribedboatID(@RequestHeader("Authorization") String token, @PathVariable int boatID) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Fisherman fisher = fishermanRepo.findByEmail(username).get();
+		List<SubscriptionBoat> subscrs=fisher.getSubsriptionsBoats();
+		if(subscrs==null) return false;
+		return subscrs.stream().anyMatch(o -> o.getBoat().getBoatId()==boatID);
+
+	}
+	
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/isSubscribedInstructor/{email}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public boolean isSubscribedboatIDi(@RequestHeader("Authorization") String token, @PathVariable String email) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {	
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		Fisherman fisher = fishermanRepo.findByEmail(username).get();
+		System.out.println("provera za "+ email);
+		List<SubscriptionInstructor> subscrs=fisher.getSubscriptionInstructors();
+		if(subscrs==null) return false;
+		boolean res= subscrs.stream().anyMatch(o -> o.getInstructor().getEmail().equals(email));
+		System.out.println("res is " + res);
+		return res;
+
 	}
 	
 	@JsonView(Views.UnauthoCottages.class)

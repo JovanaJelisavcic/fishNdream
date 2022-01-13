@@ -50,7 +50,7 @@ public class BoatController {
 	            .body("Boat not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(fisherman.get().alreadySubscribedBoat(boat.get().getBoatId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Fisherman already subscribed to this boat");
@@ -74,7 +74,7 @@ public class BoatController {
 	            .body("Boat not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!fisherman.get().alreadySubscribedBoat(boat.get().getBoatId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Fisherman wasn't subscribed to this boat");

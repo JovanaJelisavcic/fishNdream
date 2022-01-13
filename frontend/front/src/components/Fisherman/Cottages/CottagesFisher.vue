@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onCottageSelect(cottage) {
-      this.selectedCottage = cottage;
+      this.selectedCottage = cottage; 
     },
     onSearchSubmitted() {
       this.selectedCottage = null;

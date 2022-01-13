@@ -50,7 +50,7 @@ public class CottageController {
 	            .body("Cottage not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(fisherman.get().alreadySubscribedCottage(cottage.get().getCottageId())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Fisherman already subscribed to this cottage");

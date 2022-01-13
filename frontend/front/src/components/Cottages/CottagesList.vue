@@ -12,6 +12,7 @@
 <script>
 import { mapGetters } from "vuex";
 import CottageItem from "./CottageItem.vue";
+import { isSubscribedCottage } from "../../api";
 export default {
   name: "CottagesList",
   components: {
@@ -23,8 +24,11 @@ export default {
     },
   },
   methods: {
-    onCottageSelect(cottage) {
-      this.$emit('cottageSelect', cottage);
+    async onCottageSelect(cottage) {
+      let isit = await isSubscribedCottage(cottage.cottageId);
+      this.$store.commit("cottages/setIsSubscribed", isit);
+
+      this.$emit("cottageSelect", cottage);
     },
   },
 };

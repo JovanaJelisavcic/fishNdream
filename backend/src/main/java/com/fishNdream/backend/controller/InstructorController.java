@@ -54,7 +54,7 @@ public class InstructorController {
 	            .body("Instructor not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(fisherman.get().alreadySubscribedInstructor(instructor.get().getEmail())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Fisherman already subscribed to this instructor");
@@ -62,7 +62,7 @@ public class InstructorController {
 	
 		fisherman.get().addSubscriptionInstructor(newOne);
 		instructor.get().addNewSubscription(newOne);
-		
+		System.out.println("subsribing to "+ instructor.get());
 		fishermanRepo.save(fisherman.get());
 		instructorRepo.save(instructor.get());
 		return ResponseEntity.ok().build();
@@ -78,7 +78,7 @@ public class InstructorController {
 	            .body("Instructor not found");		
 		
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 		if(!fisherman.get().alreadySubscribedInstructor(instructor.get().getEmail())) return ResponseEntity
 	            .status(HttpStatus.FORBIDDEN)
 	            .body("Fisherman wasn't subscribed to this instructor");

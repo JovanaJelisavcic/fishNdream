@@ -11,7 +11,25 @@
         </transition-group>
       </b-col>
       <b-col class="details">
-        <h1>{{ boat.name }}</h1>
+        <b-row>
+          <b-col>
+            <h1>{{ boat.name }}</h1>
+          </b-col>
+          <b-col>
+            <b-button
+              id="subs-button"
+              v-if="!isSubscribedBoat"
+              variant="outline-primary"
+              class="pull-right"
+              @click="goSubscribe"
+              >🔔 Subscribe</b-button
+            >
+            <div v-if="isSubscribedBoat">
+              🔔 You're subscribed!
+            </div>
+          </b-col>
+        </b-row>
+        
         <p>
           <small>{{ boat.boatType }}</small
           ><br />
@@ -21,18 +39,22 @@
           {{ boat.price }}$ per hour<br />
           {{ boat.capacity }} 👤 on {{ boat.length }}m long boat <br />
           {{ boat.rating }}⭐<br />
-          <br>
-          The owner is {{boat.owner.name}} {{boat.owner.surname}}<br>
+          <br />
+          The owner is {{ boat.owner.name }} {{ boat.owner.surname }}<br />
           And you'll have to respect his/her rules:<br />
           {{ boat.behaviourRules }}<br />
         </p>
-        <p v-if="boat.cancelPolicy">If you cancel your reservation the owner keeps part of the money</p>
-         <p v-if="!boat.cancelPolicy">You can cancel your reservation for free!</p>
+        <p v-if="boat.cancelPolicy">
+          If you cancel your reservation the owner keeps part of the money
+        </p>
+        <p v-if="!boat.cancelPolicy">
+          You can cancel your reservation for free!
+        </p>
         <p>
           <br />
-          Boat spec<br>
-          *{{boat.engineNum}} engine(s) with {{boat.enginePower}}HP <br>
-          *Maximum of {{boat.maxSpeed}}knots
+          Boat spec<br />
+          *{{ boat.engineNum }} engine(s) with {{ boat.enginePower }}HP <br />
+          *Maximum of {{ boat.maxSpeed }}knots
         </p>
         <b-table striped :items="items"></b-table>
       </b-col>
@@ -55,6 +77,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { subscribeBoat } from "../../../api";
 export default {
   name: "BoatDetailFisher",
   props: ["boat"],
@@ -73,6 +97,10 @@ export default {
     },
     prev: function () {
       this.currentNumber -= 1;
+    },
+    async goSubscribe() {
+      await subscribeBoat(this.boat.boatId);
+      this.$store.commit("boats/setIsSubscribed", true);
     },
   },
 
@@ -108,11 +136,18 @@ export default {
 
       return items;
     },
+     isSubscribedBoat: {
+      ...mapGetters("boats", { get: "getIsSubscribed" }),
+    },
   },
 };
 </script>
 
 <style scoped>
+#subs-button {
+  margin-top: 0px;
+  margin-left: 40px;
+}
 .sticky {
   font-size: 18px;
 }

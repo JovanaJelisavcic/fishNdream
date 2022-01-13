@@ -77,7 +77,7 @@ public class AccountController {
 		String username = jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		if (requestRepository.findByEmailAndProcessed(username) != 0)
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You already filed a request");
-		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
 
 		DeleteAccountRequest req = new DeleteAccountRequest();
 		req.setFisherman(fisherman.get());
@@ -105,7 +105,7 @@ public class AccountController {
 		mailUtil.sendDeletionResponse(req.get());
 		Optional<User> user = userRepository.findByUsername(req.get().getFisherman().getEmail());
 		userRepository.deleteById(user.get().getId());
-		Optional<Fisherman> fisherman = fishermanRepo.findById(req.get().getFisherman().getEmail());
+		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(req.get().getFisherman().getEmail());
 		fisherman.get().removeFK();
 		fishermanRepo.deleteById(req.get().getFisherman().getEmail());
 		return new ResponseEntity<>(HttpStatus.OK);

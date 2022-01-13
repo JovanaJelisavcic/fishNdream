@@ -59,3 +59,33 @@ export const allAdventuresFisher = async () => {
   let { data } = await axios.get("/instructor/all");
   return data;
 };
+
+export const isSubscribedCottage = async (param) => {
+  let { data } = await axios.get(`/fisherman/isSubscribedCottage/${param}`);
+  return data;
+};
+
+export const subscribeCottage = async (param) => {
+  let { data } = await axios.post(`/cottage/subscribe/${param}`);
+  return data;
+};
+
+export const isSubscribedBoat = async (param) => {
+  let { data } = await axios.get(`/fisherman/isSubscribedBoat/${param}`);
+  return data;
+};
+
+export const subscribeBoat = async (param) => {
+  let { data } = await axios.post(`/boat/subscribe/${param}`);
+  return data;
+};
+
+export const isSubscribedInstructor = async (param) => {
+  let { data } = await axios.get(`/fisherman/isSubscribedInstructor/${param}`);
+  return data;
+};
+
+export const subscribeInstructor = async (param) => {
+  let { data } = await axios.post(`/instructor/subscribe/${param}`);
+  return data;
+};

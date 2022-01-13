@@ -44,7 +44,6 @@ import com.fishNdream.backend.entity.helper.PasswordChangeRequest;
 import com.fishNdream.backend.entity.helper.SignUpRequest;
 import com.fishNdream.backend.entity.users.Admin;
 import com.fishNdream.backend.repository.AdminRepository;
-import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.SignUpRequestRepository;
 import com.fishNdream.backend.security.ERole;
 import com.fishNdream.backend.security.JwtResponse;
@@ -77,8 +76,7 @@ public class RegisterController {
 	private String superAdmin;
 	 @Autowired
 	 private UserDetailsServiceImpl service;
-	@Autowired
-	FishermanRepository fishermanRepo;
+
 
 	@Autowired
 	RoleRepository roleRepository;

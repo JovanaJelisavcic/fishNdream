@@ -3,11 +3,13 @@ export default {
   namespaced: true,
   state: {
     cottages: [],
-    filtered: []
+    filtered: [],
+    cottageId: null,
+    isSubscribed: true
   },
   mutations: {
-    sort(state, by, dir){
-      state.cottages= state.cottages.sort((p1, p2) => {
+    sort(state, by, dir) {
+      state.cottages = state.cottages.sort((p1, p2) => {
         let modifier = 1;
         if (dir === "desc") modifier = -1;
         if (p1[by] < p2[by]) return -1 * modifier;
@@ -19,16 +21,22 @@ export default {
       state.cottages = data;
       state.filtered = data;
     },
-    setFiltered(state,data){
-      state.filtered=data;
+    setCottageId(state, data) {
+      state.cottageId = data;
     },
-    filterPriceCottages(state,data){
-      state.filtered=state.filtered.filter(cottage =>
+    setFiltered(state, data) {
+      state.filtered = data;
+    },
+    filterPriceCottages(state, data) {
+      state.filtered = state.filtered.filter(cottage =>
         (cottage.price >= data[0]) && (cottage.price <= data[1])
       );
     },
-    resetFilter(state){
-      state.filtered=state.cottages;
+    resetFilter(state) {
+      state.filtered = state.cottages;
+    },
+    setIsSubscribed(state, data) {
+      state.isSubscribed = data;
     }
   },
   actions: {
@@ -40,6 +48,12 @@ export default {
     },
     getFilteredCottages(state) {
       return state.filtered;
+    }
+    ,
+    getCottageId(state) {
+      return state.cottageId;
+    },getIsSubscribed(state) {
+      return state.isSubscribed;
     }
   }
 };

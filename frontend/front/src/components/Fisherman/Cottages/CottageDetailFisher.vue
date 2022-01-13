@@ -1,5 +1,5 @@
 <template>
-      <div v-if="cottage" class="sticky col-md-8 row">
+  <div v-if="cottage" class="sticky col-md-8 row">
     <b-col>
       <button @click="prev" id="prev">Previous</button>
       <button @click="next" id="next">Next</button>
@@ -10,26 +10,48 @@
       </transition-group>
     </b-col>
     <b-col class="details">
-      <h1>{{ cottage.name }}</h1>
-      <p>
-       <small> {{ cottage.description }}</small><br />
-        📍 at {{ cottage.address }}<br />
-         {{ cottage.price }}$ per night<br />
-        {{ cottage.guestsNum }} 👤 in {{cottage.roomNum}} rooms <br />
-        {{ cottage.rating }}⭐<br>
-        You'll have to respect the rules of the owner:<br>
-        {{cottage.behaviourRules}}<br>
-      </p>
-      <b-table striped :items="items"></b-table>
+      <b-row>
+        <b-col>
+          <h1>{{ cottage.name }}</h1>
+        </b-col>
+        <b-col>
+          <b-button
+            id="subs-button"
+            v-if="!isSubscribedCottage"
+            variant="outline-primary"
+            class="pull-right"
+            @click="goSubscribe"
+            >🔔 Subscribe</b-button
+          >
+          <div v-if="isSubscribedCottage">
+            🔔 You're subscribed!
+          </div></b-col
+        >
+      </b-row>
+      <b-row>
+        <p>
+          <small> {{ cottage.description }}</small
+          ><br />
+          📍 at {{ cottage.address }}<br />
+          {{ cottage.price }}$ per night<br />
+          {{ cottage.guestsNum }} 👤 in {{ cottage.roomNum }} rooms <br />
+          {{ cottage.rating }}⭐<br />
+          You'll have to respect the rules of the owner:<br />
+          {{ cottage.behaviourRules }}<br />
+        </p>
+        <b-table striped :items="items"></b-table>
+      </b-row>
     </b-col>
   </div>
 </template>
 
 
 <script>
+import { mapGetters } from "vuex";
+import { subscribeCottage } from "../../../api";
 export default {
-    name: "CottageDetailFisher",
-     props: ["cottage"],
+  name: "CottageDetailFisher",
+  props: ["cottage"],
   data() {
     return {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
@@ -44,6 +66,10 @@ export default {
     },
     prev: function () {
       this.currentNumber -= 1;
+    },
+    async goSubscribe() {
+      await subscribeCottage(this.cottage.cottageId);
+      this.$store.commit("cottages/setIsSubscribed", true);
     },
   },
 
@@ -68,11 +94,18 @@ export default {
 
       return items;
     },
+    isSubscribedCottage: {
+      ...mapGetters("cottages", { get: "getIsSubscribed" }),
+    },
   },
-}
+};
 </script>
 
 <style scoped>
+#subs-button {
+  margin-top: 0px;
+  margin-left: 40px;
+}
 .sticky {
   position: -webkit-sticky;
   position: sticky;

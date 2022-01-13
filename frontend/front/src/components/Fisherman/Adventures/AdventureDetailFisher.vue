@@ -11,6 +11,7 @@
     </b-col>
     <b-col class="details">
       <h1>{{ adventure.name }}</h1>
+
       <p>
         <small>{{ adventure.description }}</small
         ><br />
@@ -22,11 +23,28 @@
       <p v-if="adventure.cancelPolicy">
         If you cancel your reservation the owner keeps part of the money
       </p>
-      <p v-if="!adventure.cancelPolicy">You can cancel your reservation for free!</p>
-      <h3>
-        Instructor: {{ adventure.instructor.name }}
-        {{ adventure.instructor.surname }}
-      </h3>
+      <p v-if="!adventure.cancelPolicy">
+        You can cancel your reservation for free!
+      </p>
+      <b-row>
+        <b-col
+          ><h3>
+            Instructor: {{ adventure.instructor.name }}
+            {{ adventure.instructor.surname }}
+          </h3></b-col
+        >
+        <b-col>
+          <b-button
+            id="subs-button"
+            v-if="!isSubscribedInstructor"
+            variant="outline-primary"
+            class="pull-right"
+            @click="goSubscribe"
+            >🔔 Subscribe</b-button
+          >
+          <div v-if="isSubscribedInstructor">🔔 You're subscribed!</div></b-col
+        >
+      </b-row>
       <p>
         "{{ adventure.instructor.shortBio }}"<br />
         {{ adventure.instructor.rating }}⭐<br />
@@ -34,12 +52,14 @@
         And you'll have to respect his/her rules:<br />
         {{ adventure.behaviourRules }}<br />
       </p>
-       <b-table striped :items="items"></b-table>
+      <b-table striped :items="items"></b-table>
     </b-col>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { subscribeInstructor } from "../../../api";
 export default {
   name: "AdventureDetailFisher",
   props: ["adventure"],
@@ -57,6 +77,10 @@ export default {
     },
     prev: function () {
       this.currentNumber -= 1;
+    },
+    async goSubscribe() {
+      await subscribeInstructor(this.adventure.instructor.email);
+      this.$store.commit("adventures/setIsSubscribed", true);
     },
   },
 
@@ -81,12 +105,19 @@ export default {
 
       return items;
     },
+    isSubscribedInstructor: {
+      ...mapGetters("adventures", { get: "getIsSubscribed" }),
+    },
   },
 };
 </script>
 
 <style scoped>
-.sticky{
+#subs-button {
+  margin-top: 0px;
+  margin-left: 40px;
+}
+.sticky {
   font-size: 18px;
 }
 .details {
