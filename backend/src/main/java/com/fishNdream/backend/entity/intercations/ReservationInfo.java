@@ -26,10 +26,12 @@ public class ReservationInfo {
 	@JsonView(Views.ReservationView.class)
 	@NotNull(message="Date is mandatory")
  	@Future(message="Date has to be in the future")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime beginning; 
 	@JsonView(Views.ReservationView.class)
 	@NotNull(message="Date is mandatory")
  	@Future(message="Date has to be in the future")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime ending;
 	@JsonView(Views.ReservationView.class)
 	private int participantsNum;
@@ -38,8 +40,10 @@ public class ReservationInfo {
 	private boolean canceled;
 	private boolean actionRes;
 	@JsonView(Views.ActionInfo.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime actionStartTime;
 	@JsonView(Views.ActionInfo.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime actionEndTime;
 	private float percentageRevenue;
 

@@ -43,7 +43,7 @@
       </b-col>
     </b-row>
     <b-row
-      ><div class=" actions ui middle aligned divided list" v-if="actions">
+      ><div class="actions ui middle aligned divided list" v-if="actions">
         <h3>Are you interested in promotions?</h3>
         <div
           class="item"
@@ -55,22 +55,26 @@
           </div>
           <div class="content">
             <b-row>
-            <b-col>
-           <h4>  📅 {{ action.beginning }} to {{ action.ending }}<br /> </h4>
-             ONLY AVAILABLE UNTIL
-              {{ action.actionEndTime }} <br />
-              {{ action.price }}$ for {{ action.participantsNum }}👤 
-            </b-col>
-            <b-col>
-            <div v-if="action.additionalServices">
-              <div
-                v-for="service in action.additionalServices"
-                v-bind:key="service.serviceId"
-              >
-                {{ service.name }}
-              </div>
-            </div>
-            </b-col>
+              <b-col>
+                <h4>
+                  📅 {{ moment(action.beginning).format("YYYY-MM-DD") }} to
+                  {{ moment(action.ending).format("YYYY-MM-DD") }}<br />
+                </h4>
+                ONLY AVAILABLE UNTIL
+                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
+                <br />
+                {{ action.price }}$ for {{ action.participantsNum }}👤
+              </b-col>
+              <b-col>
+                <div v-if="action.additionalServices">
+                  <div
+                    v-for="service in action.additionalServices"
+                    v-bind:key="service.serviceId"
+                  >
+                    {{ service.name }}
+                  </div>
+                </div>
+              </b-col>
             </b-row>
           </div>
         </div>
@@ -84,6 +88,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { subscribeCottage } from "../../../api";
+import moment from "moment";
 export default {
   name: "CottageDetailFisher",
   props: ["cottage"],
@@ -106,6 +111,7 @@ export default {
       await subscribeCottage(this.cottage.cottageId);
       this.$store.commit("cottages/setIsSubscribed", true);
     },
+    moment,
   },
 
   computed: {
@@ -140,11 +146,11 @@ export default {
 </script>
 
 <style scoped>
-.actions{
+.actions {
   margin-left: 25px;
 }
-.resA-button{
-  margin-right: 100px
+.resA-button {
+  margin-right: 100px;
 }
 #subs-button {
   margin-top: 0px;

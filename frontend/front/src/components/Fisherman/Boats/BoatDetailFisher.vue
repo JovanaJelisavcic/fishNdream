@@ -2,14 +2,13 @@
   <div v-if="boat" class="sticky col-md-8">
     <b-row>
       <b-col>
-          <button @click="prev" id="prev">Previous</button>
-          <button @click="next" id="next">Next</button>
-          <transition-group name="fade" tag="div">
-            <div v-for="number in [currentNumber]" :key="number">
-              <img :src="currentImage" />
-            </div>
-          </transition-group>
- 
+        <button @click="prev" id="prev">Previous</button>
+        <button @click="next" id="next">Next</button>
+        <transition-group name="fade" tag="div">
+          <div v-for="number in [currentNumber]" :key="number">
+            <img :src="currentImage" />
+          </div>
+        </transition-group>
       </b-col>
 
       <b-col class="details">
@@ -60,44 +59,45 @@
       </b-col>
     </b-row>
     <b-row
-          ><div class="actions ui middle aligned divided list" v-if="actions">
-            <h3>Are you interested in promotions?</h3>
-            <div
-              class="item"
-              v-for="(action, reservationId) in actions"
-              :key="reservationId"
-            >
-              <div class="right floated content">
-                <div class="ui button resA-button">Reserve Promotion</div>
-              </div>
-              <div class="content">
-                <b-row>
-                  <b-col>
-                    <h4>
-                      📅 {{ action.beginning }} to {{ action.ending }}<br />
-                    </h4>
-                    ONLY AVAILABLE UNTIL
-                    {{ action.actionEndTime }} <br />
-                    {{ action.price }}$ for {{ action.participantsNum }}👤
-                  </b-col>
-                  <b-col>
-                    <div v-if="action.additionalServices">
-                      <div
-                        v-for="service in action.additionalServices"
-                        v-bind:key="service.serviceId"
-                      >
-                        {{ service.name }}
-                      </div>
-                    </div>
-                  </b-col>
-                </b-row>
-              </div>
-            </div>
+      ><div class="actions ui middle aligned divided list" v-if="actions">
+        <h3>Are you interested in promotions?</h3>
+        <div
+          class="item"
+          v-for="(action, reservationId) in actions"
+          :key="reservationId"
+        >
+          <div class="right floated content">
+            <div class="ui button resA-button">Reserve Promotion</div>
           </div>
-          <div v-if="!actions">
-            There are no active promotions for this boat
+          <div class="content">
+            <b-row>
+              <b-col>
+                <h4>
+                  📅
+                  {{ moment(action.beginning).format("YYYY-MM-DD HH:mm") }} to
+                  {{ moment(action.ending).format("YYYY-MM-DD HH:mm") }}<br />
+                </h4>
+                ONLY AVAILABLE UNTIL
+                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
+                <br />
+                {{ action.price }}$ for {{ action.participantsNum }}👤
+              </b-col>
+              <b-col>
+                <div v-if="action.additionalServices">
+                  <div
+                    v-for="service in action.additionalServices"
+                    v-bind:key="service.serviceId"
+                  >
+                    {{ service.name }}
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
           </div>
-        </b-row>
+        </div>
+      </div>
+      <div v-if="!actions">There are no active promotions for this boat</div>
+    </b-row>
     <b-row>
       <vue-cal
         class="vuecal--green-theme"
@@ -109,7 +109,7 @@
         events-on-month-view="true"
         :time-from="5 * 60"
         :time-to="23 * 60"
-        style="height: 500px; margin-top: 40px;"
+        style="height: 500px; margin-top: 40px"
       />
     </b-row>
   </div>
@@ -118,6 +118,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { subscribeBoat } from "../../../api";
+import moment from "moment";
 export default {
   name: "BoatDetailFisher",
   props: ["boat"],
@@ -141,6 +142,7 @@ export default {
       await subscribeBoat(this.boat.boatId);
       this.$store.commit("boats/setIsSubscribed", true);
     },
+    moment
   },
 
   computed: {

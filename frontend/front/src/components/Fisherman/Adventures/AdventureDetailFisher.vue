@@ -1,63 +1,65 @@
 <template>
   <div v-if="adventure" class="sticky col-md-8">
     <b-row>
-    <b-col>
-      <button @click="prev" id="prev">Previous</button>
-      <button @click="next" id="next">Next</button>
-      <transition-group name="fade" tag="div">
-        <div v-for="number in [currentNumber]" :key="number">
-          <img :src="currentImage" />
-        </div>
-      </transition-group>
-    </b-col>
-    <b-col class="details">
-      <h1>{{ adventure.name }}</h1>
+      <b-col>
+        <button @click="prev" id="prev">Previous</button>
+        <button @click="next" id="next">Next</button>
+        <transition-group name="fade" tag="div">
+          <div v-for="number in [currentNumber]" :key="number">
+            <img :src="currentImage" />
+          </div>
+        </transition-group>
+      </b-col>
+      <b-col class="details">
+        <h1>{{ adventure.name }}</h1>
 
-      <p>
-        <small>{{ adventure.description }}</small
-        ><br />
-        📍 at {{ adventure.address }}<br />
-        {{ adventure.price }}$ per hour<br />
-        {{ adventure.maxParticipants }} 👤
-        <br />
-      </p>
-      <p v-if="adventure.cancelPolicy">
-        If you cancel your reservation the owner keeps part of the money
-      </p>
-      <p v-if="!adventure.cancelPolicy">
-        You can cancel your reservation for free!
-      </p>
-      <b-row>
-        <b-col
-          ><h3>
-            Instructor: {{ adventure.instructor.name }}
-            {{ adventure.instructor.surname }}
-          </h3></b-col
-        >
-        <b-col>
-          <b-button
-            id="subs-button"
-            v-if="!isSubscribedInstructor"
-            variant="outline-primary"
-            class="pull-right"
-            @click="goSubscribe"
-            >🔔 Subscribe</b-button
+        <p>
+          <small>{{ adventure.description }}</small
+          ><br />
+          📍 at {{ adventure.address }}<br />
+          {{ adventure.price }}$ per hour<br />
+          {{ adventure.maxParticipants }} 👤
+          <br />
+        </p>
+        <p v-if="adventure.cancelPolicy">
+          If you cancel your reservation the owner keeps part of the money
+        </p>
+        <p v-if="!adventure.cancelPolicy">
+          You can cancel your reservation for free!
+        </p>
+        <b-row>
+          <b-col
+            ><h3>
+              Instructor: {{ adventure.instructor.name }}
+              {{ adventure.instructor.surname }}
+            </h3></b-col
           >
-          <div v-if="isSubscribedInstructor">🔔 You're subscribed!</div></b-col
-        >
-      </b-row>
-      <p>
-        "{{ adventure.instructor.shortBio }}"<br />
-        {{ adventure.instructor.rating }}⭐<br />
-        From {{ adventure.instructor.city }}<br />
-        And you'll have to respect his/her rules:<br />
-        {{ adventure.behaviourRules }}<br />
-      </p>
-      <b-table striped :items="items"></b-table>
-    </b-col>
+          <b-col>
+            <b-button
+              id="subs-button"
+              v-if="!isSubscribedInstructor"
+              variant="outline-primary"
+              class="pull-right"
+              @click="goSubscribe"
+              >🔔 Subscribe</b-button
+            >
+            <div v-if="isSubscribedInstructor">
+              🔔 You're subscribed!
+            </div></b-col
+          >
+        </b-row>
+        <p>
+          "{{ adventure.instructor.shortBio }}"<br />
+          {{ adventure.instructor.rating }}⭐<br />
+          From {{ adventure.instructor.city }}<br />
+          And you'll have to respect his/her rules:<br />
+          {{ adventure.behaviourRules }}<br />
+        </p>
+        <b-table striped :items="items"></b-table>
+      </b-col>
     </b-row>
     <b-row
-      ><div class=" actions ui middle aligned divided list" v-if="actions">
+      ><div class="actions ui middle aligned divided list" v-if="actions">
         <h3>Are you interested in promotions?</h3>
         <div
           class="item"
@@ -69,22 +71,27 @@
           </div>
           <div class="content">
             <b-row>
-            <b-col>
-           <h4>  📅 {{ action.beginning }} to {{ action.ending }}<br /> </h4>
-             ONLY AVAILABLE UNTIL
-              {{ action.actionEndTime }} <br />
-              {{ action.price }}$ for {{ action.participantsNum }}👤 
-            </b-col>
-            <b-col>
-            <div v-if="action.additionalServices">
-              <div
-                v-for="service in action.additionalServices"
-                v-bind:key="service.serviceId"
-              >
-                {{ service.name }}
-              </div>
-            </div>
-            </b-col>
+              <b-col>
+                <h4>
+                  📅
+                  {{ moment(action.beginning).format("YYYY-MM-DD HH:mm") }} to
+                  {{ moment(action.ending).format("YYYY-MM-DD HH:mm") }} <br />
+                </h4>
+                ONLY AVAILABLE UNTIL
+                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
+                <br />
+                {{ action.price }}$ for {{ action.participantsNum }}👤
+              </b-col>
+              <b-col>
+                <div v-if="action.additionalServices">
+                  <div
+                    v-for="service in action.additionalServices"
+                    v-bind:key="service.serviceId"
+                  >
+                    {{ service.name }}
+                  </div>
+                </div>
+              </b-col>
             </b-row>
           </div>
         </div>
@@ -97,6 +104,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { subscribeInstructor } from "../../../api";
+import moment from "moment";
 export default {
   name: "AdventureDetailFisher",
   props: ["adventure"],
@@ -119,6 +127,7 @@ export default {
       await subscribeInstructor(this.adventure.instructor.email);
       this.$store.commit("adventures/setIsSubscribed", true);
     },
+    moment
   },
 
   computed: {
@@ -153,11 +162,11 @@ export default {
 </script>
 
 <style scoped>
-.actions{
+.actions {
   margin-left: 25px;
 }
-.resA-button{
-  margin-right: 100px
+.resA-button {
+  margin-right: 100px;
 }
 #subs-button {
   margin-top: 0px;
