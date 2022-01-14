@@ -160,6 +160,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let role = localStorage.getItem('role');
   let accessToken = localStorage.getItem('token');
+  if(to.path=="/" && role=="FISHERMAN"){
+    router.push({path: '/fisher/explore'});
+  }
   if (to.meta.requiresAuth) {
     if (!role || !accessToken) {
       router.push({ path: '/login' });

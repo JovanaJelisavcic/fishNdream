@@ -7,13 +7,15 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import com.fishNdream.backend.util.OnInsert;
+
 public class ReservationDTO {
 	
 	@NotNull(message="Dates are mandatory")
- 	@Future(message="Date has to be in the future")
+ 	@Future(message="Date has to be in the future", groups = OnInsert.class)
 	private LocalDateTime beginning; 
 	@NotNull(message="Dates are mandatory")
- 	@Future(message="Date has to be in the future")
+ 	@Future(message="Date has to be in the future", groups = OnInsert.class)
 	private LocalDateTime ending;
 	private int participantsNum;
 	private int entityId;
@@ -29,7 +31,7 @@ public class ReservationDTO {
 		this.entityId = entityId;
 		this.servicesIds = servicesIds;
 	}
-	 @AssertTrue public boolean isValidRange() {
+	 @AssertTrue(groups = OnInsert.class) public boolean isValidRange() {
 		    return beginning.isBefore(ending);
 		  }
 	public LocalDateTime getBeginning() {

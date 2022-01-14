@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
+import com.fishNdream.backend.util.OnInsert;
 
 @MappedSuperclass
 public class ReservationInfo {
@@ -25,12 +26,12 @@ public class ReservationInfo {
 	private int reservationId;
 	@JsonView(Views.ReservationView.class)
 	@NotNull(message="Date is mandatory")
- 	@Future(message="Date has to be in the future")
+ 	@Future(message="Date has to be in the future", groups = OnInsert.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime beginning; 
 	@JsonView(Views.ReservationView.class)
 	@NotNull(message="Date is mandatory")
- 	@Future(message="Date has to be in the future")
+ 	@Future(message="Date has to be in the future", groups = OnInsert.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime ending;
 	@JsonView(Views.ReservationView.class)
@@ -60,7 +61,7 @@ public class ReservationInfo {
 		this.participantsNum = participantsNum;
 		this.price = price;
 	}
-	 @AssertTrue public boolean isValidRange() {
+	 @AssertTrue(groups=  OnInsert.class) public boolean isValidRange() {
 		    return beginning.isBefore(ending);
 		  }
 

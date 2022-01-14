@@ -1,5 +1,10 @@
 package com.fishNdream.backend.util;
 
+import java.util.Map;
+
+import javax.validation.Validator;
+
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,5 +26,18 @@ public class AppConfig
 
         return mapper;
     }
+
+@Bean
+public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(final Validator validator) {
+  return new HibernatePropertiesCustomizer() {
+
+    @Override
+    public void customize(Map<String, Object> hibernateProperties) {
+      @SuppressWarnings("rawtypes")
+      Class[] classes = {OnInsert.class};
+      hibernateProperties.put("javax.persistence.validation.group.pre-persist", classes);
+    }
+  };
+}
 
 }

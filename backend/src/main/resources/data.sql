@@ -377,7 +377,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,1);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (6, '2022-01-22T12:00:00', false, '2021-01-30T14:00:00', 5, 300, 1, null , true, '2021-11-19T14:00:00','2022-01-20T14:00:00', 10 );
+values (6, '2022-02-28T12:00:00', false, '2021-03-04T14:00:00', 5, 300, 1, null , true, '2021-11-19T14:00:00','2022-01-20T14:00:00', 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,1);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,2);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,5);

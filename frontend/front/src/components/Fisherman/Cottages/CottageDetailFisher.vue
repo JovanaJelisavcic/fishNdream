@@ -43,44 +43,20 @@
       </b-col>
     </b-row>
     <b-row
-      ><div class="actions ui middle aligned divided list" v-if="actions">
-        <h3>Are you interested in promotions?</h3>
-        <div
-          class="item"
+      >
+      <div class="actions ui middle aligned divided list" v-if="actions">
+          <ActionItemCottage
+          @notAvaiableAnymore="onActionConflicted"
+            class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
-        >
-          <div class="right floated content">
-            <div class="ui button resA-button">Reserve Promotion</div>
-          </div>
-          <div class="content">
-            <b-row>
-              <b-col>
-                <h4>
-                  📅 {{ moment(action.beginning).format("YYYY-MM-DD") }} to
-                  {{ moment(action.ending).format("YYYY-MM-DD") }}<br />
-                </h4>
-                ONLY AVAILABLE UNTIL
-                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
-                <br />
-                {{ action.price }}$ for {{ action.participantsNum }}👤
-              </b-col>
-              <b-col>
-                <div v-if="action.additionalServices">
-                  <div
-                    v-for="service in action.additionalServices"
-                    v-bind:key="service.serviceId"
-                  >
-                    {{ service.name }}
-                  </div>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
-        </div>
+          :action="action"
+          ></ActionItemCottage>
       </div>
+
       <div v-if="!actions">There are no active promotions for this cottage</div>
     </b-row>
+    <div class="reservation-part" v-if="showMainReserve"><button class="ui positive huge button" >Reserve</button> for dates you searched {{moment(beginDate).format("YYYY-MM-DD")}} to {{moment(endDate).format("YYYY-MM-DD")}}  </div>
   </div>
 </template>
 
@@ -88,9 +64,13 @@
 <script>
 import { mapGetters } from "vuex";
 import { subscribeCottage } from "../../../api";
+import ActionItemCottage from "./ActionItemCottage.vue"
 import moment from "moment";
 export default {
   name: "CottageDetailFisher",
+  components:{
+    ActionItemCottage
+  },
   props: ["cottage"],
   data() {
     return {
@@ -101,6 +81,9 @@ export default {
   },
 
   methods: {
+    onActionConflicted(){
+      this.showMainReserve=false;
+    },
     next: function () {
       this.currentNumber += 1;
     },
@@ -110,11 +93,14 @@ export default {
     async goSubscribe() {
       await subscribeCottage(this.cottage.cottageId);
       this.$store.commit("cottages/setIsSubscribed", true);
-    },
-    moment,
+    },moment
   },
 
   computed: {
+    showMainReserve() {
+      if(this.beginDate!=null) return true;
+      return false;
+    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -141,16 +127,22 @@ export default {
     actions: {
       ...mapGetters("cottages", { get: "getActionsRes" }),
     },
+    beginDate: {
+      ...mapGetters("cottages", { get: "getBeginDate" }),
+    },
+    endDate: {
+      ...mapGetters("cottages", { get: "getEndDate" }),
+    }
   },
 };
 </script>
 
 <style scoped>
+.reservation-part{
+  margin-top: 20px;
+}
 .actions {
   margin-left: 25px;
-}
-.resA-button {
-  margin-right: 100px;
 }
 #subs-button {
   margin-top: 0px;

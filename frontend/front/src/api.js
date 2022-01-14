@@ -104,3 +104,31 @@ export const getActionsAdventure = async (param) => {
   let { data } = await axios.get(`/reservationAdventure/actions/${param}`);
   return data;
 };
+
+
+export const reserveActionCottage = async (param) => {
+  let { data } = await axios.post(`/reservationCottage/actions/reserve/${param}`);
+  return data;
+};
+
+export const searchCottagesFisherman = async (params) => {
+  let { data } = await axios.post("/search/cottages/fisher", { ...params});
+  return data;
+};
+
+export const searchBoatsFisherman = async (params) => {
+  let { data } = await axios.post("/search/boats/fisher", { ...params});
+  return data;
+};
+
+export const searchAdventuresFisherman = async (params) => {
+  let { data } = await axios.post("/search/adventures/fisher", { ...params});
+  return data;
+};
+
+export const isStillFreeCottage = async (id, beginDate, endDate) => {
+  let { data } = await axios.get(`/cottage/${id}/stillFree/${beginDate}/${endDate}`);
+  return data;
+};
+
+

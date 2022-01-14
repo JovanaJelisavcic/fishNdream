@@ -43,14 +43,12 @@
       <select class="ui dropdown" @change="sort">
         <option value="">Sort by</option>
         <option
-          
           v-bind:class="[sortBy === 'name' ? sortDirection : '']"
           value="name"
         >
           name
         </option>
         <option
-      
           v-bind:class="[sortBy === 'rating' ? sortDirection : '']"
           value="rating"
         >
@@ -94,7 +92,7 @@
 </template>
 
 <script>
-import { searchCottages } from "../../api";
+import { searchCottages, searchCottagesFisherman } from "../../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchCottages",
@@ -158,14 +156,28 @@ export default {
       bs.setSeconds(0);
       bsa = bs.toISOString().split(".")[0].split("T");
       this.ending = bsa[0] + " " + bsa[1];
-      await searchCottages({
-        location: this.location,
-        guestsNum: this.guestsNum,
-        dateTime: this.beginning,
-        endTime: this.ending,
-      }).then((response) => {
-        this.$store.commit("cottages/setCottages", response);
-      });
+      let role = localStorage.getItem("role");
+      if (role == "FISHERMAN") {
+        await searchCottagesFisherman({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        }).then((response) => {
+          this.$store.commit("cottages/setCottages", response);
+          this.$store.commit("cottages/setBeginDate", this.beginning);
+          this.$store.commit("cottages/setEndDate", this.ending);
+        }).catch( this.$store.commit("cottages/setCottages", null));
+      } else {
+        await searchCottages({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        }).then((response) => {
+          this.$store.commit("cottages/setCottages", response);
+        }).catch( this.$store.commit("cottages/setCottages", null));
+      }
     },
   },
   computed: {
