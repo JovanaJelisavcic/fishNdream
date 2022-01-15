@@ -18,8 +18,8 @@ insert into FISHERMAN (email, address, city, name, surname, phone_num, state, de
 
 
 --admin
-insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe3@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
-insert into admin (EMAIL, ADDRESS, CITY, NAME, PHONE_NUM, STATE, SURNAME, deleted) values ('wvanmerwe1@ihg.com', 'Pandor Strase', 'Wien', 'Austria', 'Bjorn', '536-222-333', 'Helow', false);
+insert into admin (EMAIL, ADDRESS, CITY,STATE, NAME,  PHONE_NUM, SURNAME, deleted) values ('wvanmerwe3@ihg.com', 'Strum Strase', 'Wien', 'Austria', 'Ben', '536-385-333', 'Hellin', false);
+insert into admin (EMAIL, ADDRESS, CITY, STATE, NAME,  PHONE_NUM, SURNAME, deleted) values ('wvanmerwe1@ihg.com', 'Pandor Strase', 'Wien', 'Austria', 'Bjorn', '536-222-333', 'Helow', false);
 
 
 
@@ -586,7 +586,7 @@ insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing2.jpg'
 insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing3.jpg');
 
 insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (1, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 10, 500, 1, null, true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
+values (1, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 10, 500, 1, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,1);
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,2);
 
@@ -618,6 +618,7 @@ insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing9.jpg'
 
 insert into revenue_item(revenue_id, reservation_id, res_type, percentage_active, fisherman_price, revenue)
 values (1, 1, 'BOAT', 10, 90, 9);
+
 
 
 INSERT INTO roles(name) VALUES('FISHERMAN');

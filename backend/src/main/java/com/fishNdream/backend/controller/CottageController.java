@@ -2,7 +2,6 @@ package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,7 +114,7 @@ public class CottageController {
 	public boolean isStillFree(@PathVariable int id, @PathVariable LocalDateTime beginDate, @PathVariable LocalDateTime endDate  )  {	
 		Optional<Cottage> cottage =  cottagesRepo.findById(id);
 		if(cottage.isEmpty()) return false;
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+	//	DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 		//LocalDateTime begin = LocalDateTime.parse(beginDate, format);
 		// end = LocalDateTime.parse(endDate, format);
 		if(cottage.get().isAvailableAndFree(beginDate,endDate)) return true;

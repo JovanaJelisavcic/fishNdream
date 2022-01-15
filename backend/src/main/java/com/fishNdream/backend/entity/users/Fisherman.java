@@ -13,6 +13,7 @@ import org.hibernate.annotations.Where;
 import com.fishNdream.backend.entity.helper.ActionType;
 import com.fishNdream.backend.entity.helper.CanceledAction;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
+import com.fishNdream.backend.entity.helper.DeleteAccountRequest;
 import com.fishNdream.backend.entity.intercations.ReservationAdventure;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.ReservationCottage;
@@ -47,11 +48,35 @@ public class Fisherman extends UserInfo{
 	@OneToMany(mappedBy="fisherman")
 	private List<CanceledAction> canceledActions;
 
-	
+
+
+
 	public Fisherman(UserInfo user) {
 		super(user);
 	}
 	
+
+
+
+
+
+	public Fisherman(List<ReservationCottage> reservationCottages, List<ReservationBoat> reservationBoats,
+			List<ReservationAdventure> reservationAdventures, List<SubscriptionCottage> subscriptionCotagges,
+			List<SubscriptionBoat> subsriptionsBoats, List<SubscriptionInstructor> subscriptionInstructors,
+			List<CanceledAction> canceledActions, List<DeleteAccountRequest> deleteRqs) {
+		super();
+		this.reservationCottages = reservationCottages;
+		this.reservationBoats = reservationBoats;
+		this.reservationAdventures = reservationAdventures;
+		this.subscriptionCotagges = subscriptionCotagges;
+		this.subsriptionsBoats = subsriptionsBoats;
+		this.subscriptionInstructors = subscriptionInstructors;
+		this.canceledActions = canceledActions;
+	}
+
+
+
+
 
 
 	public List<CanceledAction> getCanceledActions() {

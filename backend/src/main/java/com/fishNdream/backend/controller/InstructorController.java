@@ -109,7 +109,7 @@ public class InstructorController {
 	
 	@JsonView(Views.InstructorProfile.class)
 	@GetMapping("/all")
-	@PreAuthorize("hasAuthority('FISHERMAN')")
+	@PreAuthorize("hasAuthority('FISHERMAN') or hasAuthority('SYS_ADMIN') ")
 	public ResponseEntity<?> allBoatsFisher( )  {	
 		List<Adventure> instructor =  adventureRepo.findAll();
 		if(instructor.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);

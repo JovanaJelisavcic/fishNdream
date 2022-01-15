@@ -8,7 +8,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -45,11 +44,9 @@ public class UserInfo {
 		private String phoneNum;
 		@Transient
 		@JsonInclude(JsonInclude.Include.NON_NULL)
-		 @Size(min = 6, max = 15)
 		private String password;
 		@Transient
 		@JsonInclude(JsonInclude.Include.NON_NULL)
-		 @Size(min = 6, max = 15)
 		private String confirmPassword;
 		
 		private boolean deleted = Boolean.FALSE;

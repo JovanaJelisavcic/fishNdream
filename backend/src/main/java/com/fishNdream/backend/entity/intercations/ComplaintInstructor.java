@@ -26,7 +26,7 @@ public class ComplaintInstructor {
 	@JsonView(Views.UnauthoInstuctors.class)
 	private Instructor instructor;
 	@ManyToOne
-	 @JoinColumn(name="email")
+	@JoinColumn(name="fisherman", referencedColumnName="email")
 	@JsonView(Views.UserInfo.class)
 	private Fisherman fisherman;
 	@JsonView(Views.Complaint.class)

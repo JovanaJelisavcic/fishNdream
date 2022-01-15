@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import store from "../store"
 import Homepage from "../components/Homepage.vue"
 import HomepageFisher from "../components/HomepageFisher.vue"
-import HomepageAdmin from "../components/HomepageAdmin.vue"
+import HomepageAdmin from "../views/admin/HomepageAdmin.vue"
 import HomepageOwner from "../components/HomepageOwner.vue"
 import NotFoundComponent from "../components/NotFoundComponent.vue"
 import MyProfile from "../components/Fisherman/MyProfile.vue"
@@ -17,6 +17,13 @@ import AdventuresFisher from "../components/Fisherman/Adventures/AdventuresFishe
 import Cottages from "../views/Cottages.vue"
 import Boats from "../views/Boats.vue"
 import Instructors from "../views/Instructors.vue"
+import AdminRequests from "../views/admin/AdminRequests.vue";
+import AdminSettings from "../views/admin/AdminSettings.vue";
+import AdminRegistration from "../views/admin/AdminRegistration.vue";
+import AdminEntityOverview from "../views/admin/AdminEntityOverview.vue";
+import AdminReports from "../views/admin/AdminReports.vue";
+import AdminComplaints from "../views/admin/AdminComplaints.vue";
+import AdminReservations from "../views/admin/AdminReservations.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -118,7 +125,8 @@ const routes = [
       adminAuth: false,
       userAuth: true,
     }
-  }, {
+  },
+  {
     path: "/admin",
     name: "HomepageAdmin",
     component: HomepageAdmin,
@@ -127,6 +135,78 @@ const routes = [
       adminAuth: true,
       userAuth: false,
     },
+    children: [
+      {
+        path: "/admin/requests",
+        name: "adminRequests",
+        component: AdminRequests,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/settings",
+        name: "adminSettings",
+        component: AdminSettings,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/admin-registration",
+        name: "adminRegistration",
+        component: AdminRegistration,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/entity-overview",
+        name: "adminEntityOverview",
+        component: AdminEntityOverview,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/reports",
+        name: "adminReport",
+        component: AdminReports,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/complaints",
+        name: "adminComplaints",
+        component: AdminComplaints,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+      {
+        path: "/admin/reservations",
+        name: "adminReservations",
+        component: AdminReservations,
+        meta: {
+          requiresAuth: true,
+          adminAuth: true,
+          userAuth: false,
+        },
+      },
+    ],
   }, {
     path: "/owner",
     name: "HomepageOwner",

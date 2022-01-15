@@ -237,7 +237,7 @@ public class SysAdminController {
 	
 	@PostMapping("/gain")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> gain(@RequestBody float newPrc){
+	public ResponseEntity<?> gain(@RequestBody String newPrc){
 	
 		System.setProperty("app.percentage", String.valueOf(newPrc));
 		return new ResponseEntity<>(HttpStatus.OK);		

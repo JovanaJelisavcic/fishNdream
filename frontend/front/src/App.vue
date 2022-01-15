@@ -11,4 +11,8 @@ export default {
 </script>
 
 <style>
+table tbody tr,
+td {
+  vertical-align: middle;
+}
 </style>

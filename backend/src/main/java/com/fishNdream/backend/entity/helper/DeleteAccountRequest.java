@@ -1,11 +1,12 @@
 package com.fishNdream.backend.entity.helper;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.basic.Views;
@@ -18,10 +19,12 @@ public class DeleteAccountRequest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonView(Views.DeleteRq.class)
 	private int requestId;
-	@OneToOne
-    @JoinColumn(name="email", nullable=false)
+
+	@JoinColumn(name="email",nullable = false)
+	 @ManyToOne(fetch = FetchType.LAZY)
 	@JsonView(Views.UserInfo.class)
 	private Fisherman fisherman;
+
 	@JsonView(Views.DeleteRq.class)
 	private String requestText;
 	private String response;
