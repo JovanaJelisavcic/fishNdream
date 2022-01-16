@@ -24,7 +24,7 @@
               <span class="text-black">Requests</span>
             </router-link>
           </b-nav-item>
-          <b-nav-item>
+          <b-nav-item v-if="superAdmin==='wvanmerwe3@ihg.com'">
             <router-link
               to="/admin/admin-registration"
               class="admin-header-item"
@@ -100,6 +100,15 @@
 <script>
 export default {
   methods: {
+      data(){
+    return{
+        superAdmin:null,
+    }
+  },
+  created(){
+this.superAdmin=localStorage.getItem("username");
+
+  },
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("role");

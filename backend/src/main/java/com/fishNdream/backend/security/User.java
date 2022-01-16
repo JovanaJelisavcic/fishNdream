@@ -44,7 +44,7 @@ public class User {
 	
 	private boolean enabled;
 	private boolean deleted = Boolean.FALSE;
-	
+	private boolean firstLogin = Boolean.TRUE;
 	
 	
 
@@ -115,5 +115,13 @@ public class User {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 }

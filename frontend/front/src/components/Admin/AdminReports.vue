@@ -50,9 +50,6 @@ export default {
           this.reports = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
         });
     },
   },

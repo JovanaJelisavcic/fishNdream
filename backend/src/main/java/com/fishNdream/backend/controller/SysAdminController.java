@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Boat;
 import com.fishNdream.backend.entity.basic.Cottage;
 import com.fishNdream.backend.entity.basic.Views;
@@ -39,6 +40,7 @@ import com.fishNdream.backend.repository.CottageOwnerRepository;
 import com.fishNdream.backend.repository.CottageRepository;
 import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.InstructorRepository;
+import com.fishNdream.backend.repository.ReservationAdventureRepository;
 import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.repository.ReservationCottageRepository;
 import com.fishNdream.backend.repository.RevenueRepository;
@@ -69,6 +71,8 @@ public class SysAdminController {
 	ReservationCottageRepository ctgResRepo;
 	@Autowired
 	ReservationBoatRepository btResRepo;
+	@Autowired
+	ReservationAdventureRepository advResRepo;
 	@Autowired
 	CottageRepository cottagesRepo;
 	@Autowired
@@ -194,6 +198,23 @@ public class SysAdminController {
 		            .status(HttpStatus.FORBIDDEN)
 		            .body("You can't delete boat that still has reservations");		
 		boatRepo.deleteById(boat.get().getBoatId());
+		return new ResponseEntity<>(HttpStatus.OK);		
+	}
+	
+	@PostMapping("/delete/adventure/{advId}")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public ResponseEntity<?> advDel(@PathVariable int advId){
+		Optional<Adventure> adv = adventureRepo.findById(advId);
+		if(adv.isEmpty()) 
+			return ResponseEntity
+		            .status(HttpStatus.NOT_FOUND)
+		            .body("It doesn't exist");	
+		int i = advResRepo.hasOccupiedFuture(Arrays.asList(adv.get().getAdventureId()));
+		if(i!=0) 
+			return ResponseEntity
+		            .status(HttpStatus.FORBIDDEN)
+		            .body("You can't delete adventure that still has reservations");		
+		adventureRepo.deleteById(adv.get().getAdventureId());
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 	

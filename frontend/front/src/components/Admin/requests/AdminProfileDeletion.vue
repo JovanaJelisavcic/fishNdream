@@ -5,7 +5,7 @@
       :items="items"
       :fields="fields"
       show-empty
-      :empty-text="'No registration requests'"
+      :empty-text="'No deletion requests'"
     >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
@@ -101,7 +101,6 @@ export default {
           this.items = response;
         })
         .catch(() => {
-          alert("An error has occured while fetching deletion requests");
         });
     },
   },

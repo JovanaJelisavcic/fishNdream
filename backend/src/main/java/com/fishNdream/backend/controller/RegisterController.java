@@ -2,7 +2,6 @@ package com.fishNdream.backend.controller;
 
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +21,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -105,14 +103,10 @@ public class RegisterController {
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-		if(service.isAdminsFirst(loginRequest.getUsername())) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add("Location", "/changePassword.vue");
-			headers.add("Authorization", jwt);
-			return new ResponseEntity<String>(headers,HttpStatus.OK);
-		}
+		boolean isFirst = userDetails.isFirst();
+		boolean isSuperAdmin = System.getProperty("app.superadmin").toString().equals(loginRequest.getUsername())? true : false;
 		return ResponseEntity.ok(new JwtResponse(jwt,
-												 loginRequest.getUsername(), roles));
+												 loginRequest.getUsername(), roles, isFirst , isSuperAdmin  ));
 	}
 	
 	
@@ -272,11 +266,10 @@ public class RegisterController {
 			       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			    }
 			    service.changeUserPassword(user, passwordChange.getPassword());
-			    HttpHeaders headers = new HttpHeaders();
-				headers.setLocation(new URI("/signin"));   
-				return new ResponseEntity<>(headers,HttpStatus.OK);
+				return new ResponseEntity<>(HttpStatus.OK);
 				
 		}
+	 
 
 }
 	 

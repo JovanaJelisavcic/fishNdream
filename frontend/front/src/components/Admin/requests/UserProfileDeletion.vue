@@ -101,7 +101,6 @@ export default {
           this.items = response;
         })
         .catch(() => {
-          alert("An error has occured while fetching deletion requests");
         });
     },
   },

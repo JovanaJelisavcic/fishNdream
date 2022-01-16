@@ -18,9 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -70,28 +70,11 @@ public class AccountController {
 	@Autowired
 	DeteleRequestARepository requestAdminRepository;
 
-	@PostMapping("/request")
-	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String token, @RequestBody String rqText)
-			throws UnsupportedEncodingException, URISyntaxException {
-		String username = jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
-		if (requestRepository.findByEmailAndProcessed(username) != 0)
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You already filed a request");
-		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
-
-		DeleteAccountRequest req = new DeleteAccountRequest();
-		req.setFisherman(fisherman.get());
-		req.setProcessed(false);
-		req.setPermited(false);
-		req.setRequestText(rqText);
-		req.setResponse(null);
-		requestRepository.save(req);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	
 
 	@PostMapping("/accept/{requestId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> acceptRq(@PathVariable int requestId, @RequestBody String resp)
+	public ResponseEntity<?> acceptRq(@PathVariable int requestId, @RequestParam String resp)
 			throws UnsupportedEncodingException, MessagingException {
 		Optional<DeleteAccountRequest> req = requestRepository.findById(requestId);
 		if (req.isEmpty())
@@ -113,7 +96,7 @@ public class AccountController {
 
 	@PostMapping("/refuse/{requestId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> refuseRq(@PathVariable int requestId, @RequestBody String resp)
+	public ResponseEntity<?> refuseRq(@PathVariable int requestId, @RequestParam String resp)
 			throws UnsupportedEncodingException, MessagingException {
 		Optional<DeleteAccountRequest> req = requestRepository.findById(requestId);
 		if (req.isEmpty())
@@ -126,21 +109,29 @@ public class AccountController {
 		mailUtil.sendDeletionResponse(req.get());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-	@JsonView(Views.DeleteRq.class)
-	@GetMapping("/requests")
-	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> myProfile(@RequestHeader("Authorization") String token) throws ExpiredJwtException,
-			UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
-		List<DeleteAccountRequest> list = requestRepository.getByProcessed();
-		if (list.isEmpty())
-			return ResponseEntity.notFound().build();
-		return new ResponseEntity<>(list, HttpStatus.OK);
+	
+	@PostMapping("/request")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String token, @RequestParam String reason)
+			throws UnsupportedEncodingException, URISyntaxException {
+		String username = jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		if (requestRepository.findByEmailAndProcessed(username) != 0)
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You already filed a request");
+		Optional<Fisherman> fisherman = fishermanRepo.findById(username);
+		System.out.println(username);
+		DeleteAccountRequest req = new DeleteAccountRequest();
+		req.setFisherman(fisherman.get());
+		req.setProcessed(false);
+		req.setPermited(false);
+		req.setRequestText(reason);
+		req.setResponse(null);
+		requestRepository.save(req);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/admin/request")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> deleteSA(@RequestHeader("Authorization") String token, @RequestBody String rqText)
+	public ResponseEntity<?> deleteSA(@RequestHeader("Authorization") String token, @RequestParam String reason)
 			throws UnsupportedEncodingException, URISyntaxException {
 		String username = jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		if (requestAdminRepository.findByEmailAndProcessed(username) != 0)
@@ -151,7 +142,7 @@ public class AccountController {
 		req.setAdmin(admin.get());
 		req.setProcessed(false);
 		req.setPermited(false);
-		req.setRequestText(rqText);
+		req.setRequestText(reason);
 		req.setResponse(null);
 		requestAdminRepository.save(req);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -159,7 +150,7 @@ public class AccountController {
 
 	@PostMapping("/admin/accept/{requestId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> acceptAdmin(@PathVariable int requestId, @RequestBody String resp,
+	public ResponseEntity<?> acceptAdmin(@PathVariable int requestId, @RequestParam String resp,
 			@RequestHeader("Authorization") String token) throws UnsupportedEncodingException, MessagingException {
 		Optional<DeleteAccountRequestAdmin> req = requestAdminRepository.findById(requestId);
 		if (req.isEmpty())
@@ -186,7 +177,7 @@ public class AccountController {
 
 	@PostMapping("/admin/refuse/{requestId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> refuseAdmin(@PathVariable int requestId, @RequestBody String resp,
+	public ResponseEntity<?> refuseAdmin(@PathVariable int requestId, @RequestParam String resp,
 			@RequestHeader("Authorization") String token) throws UnsupportedEncodingException, MessagingException {
 		Optional<DeleteAccountRequestAdmin> req = requestAdminRepository.findById(requestId);
 		if (req.isEmpty())
@@ -209,6 +200,17 @@ public class AccountController {
 	public ResponseEntity<?> adminrqs(@RequestHeader("Authorization") String token) throws ExpiredJwtException,
 			UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
 		List<DeleteAccountRequestAdmin> list = requestAdminRepository.getByProcessed();
+		if (list.isEmpty())
+			return ResponseEntity.notFound().build();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.DeleteRq.class)
+	@GetMapping("/requests")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public ResponseEntity<?> myProfile(@RequestHeader("Authorization") String token) throws ExpiredJwtException,
+			UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException {
+		List<DeleteAccountRequest> list = requestRepository.getByProcessed();
 		if (list.isEmpty())
 			return ResponseEntity.notFound().build();
 		return new ResponseEntity<>(list, HttpStatus.OK);

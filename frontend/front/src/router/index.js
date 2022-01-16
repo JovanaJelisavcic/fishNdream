@@ -243,6 +243,9 @@ router.beforeEach((to, from, next) => {
   if(to.path=="/" && role=="FISHERMAN"){
     router.push({path: '/fisher/explore'});
   }
+  if(to.path=="/" && role=="SYS_ADMIN"){
+    router.push({path: '/admin'});
+  }
   if (to.meta.requiresAuth) {
     if (!role || !accessToken) {
       router.push({ path: '/login' });

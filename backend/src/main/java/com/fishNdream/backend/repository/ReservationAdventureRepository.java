@@ -18,6 +18,10 @@ public interface ReservationAdventureRepository extends JpaRepository<Reservatio
 	List<ReservationAdventure> findUnrevenued();
 
 	
+	@Query(value="Select COUNT(adventure_id) from reservation_adventure where adventure_id in (?1) and ending > NOW() and NOT canceled and email IS NOT NULL", nativeQuery=true)
+	int hasOccupiedFuture(List<Integer> asList);
+
+	
 	
 
 	

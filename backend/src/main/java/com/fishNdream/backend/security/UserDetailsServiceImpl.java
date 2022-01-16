@@ -68,8 +68,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	    
 	    String randomCode = RandomString.make(64);
 	    user.setVerificationCode(randomCode);
-	    user.setEnabled(false);
-	     
+	    user.setEnabled(false); 
 	    userRepository.save(user);
 	     
 	    sendVerificationEmail(user, siteURL);
@@ -110,21 +109,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	public void changeUserPassword(UserDetails user, String password) {
 		User old =userRepository.findByUsername(user.getUsername()).get();
-		old.setPassword(passwordEncoder.encode(password));
-		if(old.getVerificationCode()==null) userRepository.save(old);
-		if(old.getVerificationCode()!=null && old.getVerificationCode().equals("initial")) {
-			old.setVerificationCode(null);
-			 userRepository.save(old);
-		}
-		
-		
+		old.setPassword(passwordEncoder.encode(password));	
+		if(old.isFirstLogin()) old.setFirstLogin(false);
+		userRepository.save(old);
 	}
+	
+
 
 	public void registerAdmin(User user) {
 		 String encodedPassword = passwordEncoder.encode(user.getPassword());
 		    user.setPassword(encodedPassword);
-		    user.setVerificationCode("initial");
-		    user.setEnabled(true);		     
+		    user.setVerificationCode(null);
+		    user.setEnabled(true);	
+		    user.setFirstLogin(true);
 		    userRepository.save(user);
 	}
 
@@ -186,14 +183,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		    mailUtil.sendRefuseRegistrationMail(request, reason);
 		    return true;   
 	    }
-	}
-
-	public boolean isAdminsFirst(String username) {
-		 Optional<User> user = userRepository.findByUsername(username);
-		     if(user.get().getVerificationCode()==null) return false;
-			 if(user.get().getVerificationCode().equals("initial"))
-				 return true;
-		return false;
 	}
 
 

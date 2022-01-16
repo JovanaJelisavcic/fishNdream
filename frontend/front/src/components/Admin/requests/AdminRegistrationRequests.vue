@@ -101,9 +101,6 @@ export default {
           this.items = response;
         })
         .catch(() => {
-          alert(
-            "Doslo je do greske prilikom dobavljanja zahteva za registraciju"
-          );
         });
     },
   },

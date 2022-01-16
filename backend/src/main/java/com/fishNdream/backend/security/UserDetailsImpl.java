@@ -22,6 +22,7 @@ public class UserDetailsImpl implements UserDetails {
 	private String username;
 
 	private boolean enabled;
+	private boolean isFirst;
 
 	@JsonIgnore
 	private String password;
@@ -29,12 +30,13 @@ public class UserDetailsImpl implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String username, boolean b, String password,
-			Collection<? extends GrantedAuthority> authorities) {
+			Collection<? extends GrantedAuthority> authorities, boolean isFirst) {
 		this.id = id;
 		this.username = username;
 		this.enabled = b;
 		this.password = password;
 		this.authorities = authorities;
+		this.isFirst = isFirst;
 	}
 
 	public static UserDetailsImpl build(User user) {
@@ -47,7 +49,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getUsername(), 
 				user.isEnabled(),
 				user.getPassword(), 
-				authorities);
+				authorities, user.isFirstLogin());
 	}
 
 	@Override
@@ -98,6 +100,14 @@ public class UserDetailsImpl implements UserDetails {
 			return false;
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
+	}
+
+	public boolean isFirst() {
+		return isFirst;
+	}
+
+	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst;
 	}
 
 }

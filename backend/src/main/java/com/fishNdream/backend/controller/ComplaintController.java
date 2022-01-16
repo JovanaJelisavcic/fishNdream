@@ -13,9 +13,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -70,7 +70,7 @@ public class ComplaintController {
 	
 	@PostMapping("/file/cottage/{cottageId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> fileCottage(@RequestHeader("Authorization") String token,@PathVariable int cottageId,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> fileCottage(@RequestHeader("Authorization") String token,@PathVariable int cottageId,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<Cottage> cottage =  cottagesRepo.findById(cottageId);
 		if(cottage.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
@@ -86,7 +86,7 @@ public class ComplaintController {
             .status(HttpStatus.FORBIDDEN)
             .body("You already filed a complaint");
 		ComplaintCottage complaint = new ComplaintCottage();
-		complaint.setComplaintText(text);
+		complaint.setComplaintText(reason);
 		complaint.setCottage(cottage.get());
 		complaint.setFisherman(fisherman.get());
 		complaint.setResponse(null);
@@ -98,7 +98,7 @@ public class ComplaintController {
 	
 	@PostMapping("/file/boat/{boatId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> fileBoat(@RequestHeader("Authorization") String token,@PathVariable int boatId,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> fileBoat(@RequestHeader("Authorization") String token,@PathVariable int boatId,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<Boat> boat =  boatRepo.findById(boatId);
 		if(boat.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
@@ -115,7 +115,7 @@ public class ComplaintController {
             .status(HttpStatus.FORBIDDEN)
             .body("You already filed a complaint");
 		ComplaintBoat complaint = new ComplaintBoat();
-		complaint.setComplaintText(text);
+		complaint.setComplaintText(reason);
 		complaint.setBoat(boat.get());
 		complaint.setFisherman(fisherman.get());
 		complaint.setResponse(null);
@@ -126,7 +126,7 @@ public class ComplaintController {
 	
 	@PostMapping("/file/instructor/{email}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> fileInstructor(@RequestHeader("Authorization") String token,@PathVariable String email,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> fileInstructor(@RequestHeader("Authorization") String token,@PathVariable String email,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<Instructor> instr =  instructorRepo.findById(email);
 		if(instr.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
@@ -142,7 +142,7 @@ public class ComplaintController {
             .status(HttpStatus.FORBIDDEN)
             .body("You already filed a complaint");
 		ComplaintInstructor complaint = new ComplaintInstructor();
-		complaint.setComplaintText(text);
+		complaint.setComplaintText(reason);
 		complaint.setInstructor(instr.get());
 		complaint.setFisherman(fisherman.get());
 		complaint.setResponse(null);
@@ -154,12 +154,12 @@ public class ComplaintController {
 	
 	@PostMapping("/respond/cottage/{complaintId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> respondCottage(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> respondCottage(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<ComplaintCottage> complaint =  cottageComplRepo.findById(complaintId);
 		if(complaint.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Complaint not found");
-		complaint.get().setResponse(text);
+		complaint.get().setResponse(reason);
 		cottageComplRepo.save(complaint.get());
 		mailUtil.sendComplainResponseC(complaint.get());
 		return ResponseEntity.ok().build();
@@ -167,12 +167,12 @@ public class ComplaintController {
 	
 	@PostMapping("/respond/boat/{complaintId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> respondBoat(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> respondBoat(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<ComplaintBoat> complaint =  boatComplRepo.findById(complaintId);
 		if(complaint.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Complaint not found");
-		complaint.get().setResponse(text);
+		complaint.get().setResponse(reason);
 		boatComplRepo.save(complaint.get());
 		mailUtil.sendComplainResponseB(complaint.get());
 		return ResponseEntity.ok().build();
@@ -181,12 +181,12 @@ public class ComplaintController {
 	
 	@PostMapping("/respond/instructor/{complaintId}")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")
-	public ResponseEntity<?> respondAdventure(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestBody String text) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
+	public ResponseEntity<?> respondAdventure(@RequestHeader("Authorization") String token,@PathVariable int complaintId,@RequestParam String reason) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException, MessagingException  {	
 		Optional<ComplaintInstructor> complaint =  instrComplRepo.findById(complaintId);
 		if(complaint.isEmpty()) return ResponseEntity
 	            .status(HttpStatus.NOT_FOUND)
 	            .body("Complaint not found");
-		complaint.get().setResponse(text);
+		complaint.get().setResponse(reason);
 		instrComplRepo.save(complaint.get());
 		mailUtil.sendComplainResponseI(complaint.get());
 		return ResponseEntity.ok().build();

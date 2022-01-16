@@ -8,11 +8,15 @@ public class JwtResponse {
 	private String type = "Bearer";
 	private String username;
 	private List<String> roles;
+	private boolean isFirst;
+	private boolean isSuperAdmin;
 
-	public JwtResponse(String accessToken, String username, List<String> roles) {
+	public JwtResponse(String accessToken, String username, List<String> roles, boolean isFirst, boolean isSuperAdmin) {
 		this.token = accessToken;
 		this.username = username;
 		this.roles = roles;
+		this.setFirst(isFirst);
+		this.setSuperAdmin(isSuperAdmin);
 	}
 
 	public String getAccessToken() {
@@ -41,5 +45,21 @@ public class JwtResponse {
 
 	public List<String> getRoles() {
 		return roles;
+	}
+
+	public boolean isFirst() {
+		return isFirst;
+	}
+
+	public void setFirst(boolean isFirst) {
+		this.isFirst = isFirst;
+	}
+
+	public boolean isSuperAdmin() {
+		return isSuperAdmin;
+	}
+
+	public void setSuperAdmin(boolean isSuperAdmin) {
+		this.isSuperAdmin = isSuperAdmin;
 	}
 }

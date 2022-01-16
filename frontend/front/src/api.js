@@ -269,3 +269,41 @@ export const deleteAdventureByID = async (id) => {
   let { data } = await axios.post(`admin/delete/adventure/${id}`);
   return data;
 };
+
+
+export const registerNewAdmin = async (params) => {
+  let { data } = await axios.post("register/admin", { ...params });
+  return data;
+};
+
+
+export const getInstructorComplaints = async () => {
+  let { data } = await axios.get("/complaint/instructors");
+  return data;
+
+};
+
+export const getCottageComplaints = async () => {
+  let { data } = await axios.get("/complaint/cottages");
+  return data;
+
+};
+
+export const getBoatComplaints = async () => {
+  let { data } = await axios.get("/complaint/boats");
+  return data;
+
+};
+
+export const respondToInstructorComplaint = async (params) => {
+  let { data } = await axios.post(`/complaint/respond/instructor/${params.complaintId}?reason=${params.reason}`);
+  return data;
+};
+export const respondToCottageComplaint = async (params) => {
+  let { data } = await axios.post(`/complaint/respond/cottage/${params.complaintId}?reason=${params.reason}`);
+  return data;
+};
+export const respondToBoatComplaint = async (params) => {
+  let { data } = await axios.post(`/complaint/respond/boat/${params.complaintId}?reason=${params.reason}`);
+  return data;
+};

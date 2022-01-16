@@ -1,14 +1,14 @@
 --fisherman
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('opiscopo0@storify.com', '186 Goodland Drive', 'Sendangagung', 'Oliver', 'Piscopo', '246-585-5287', 'Indonesia', true);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('lrymmer1@merriam-webster.com', '9 Summerview Hill', 'Masis', 'Leann', 'Rymmer', '496-617-2168', 'Armenia', true);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('rtownsend2@nba.com', '8 Northland Point', 'Sadao', 'Raimundo', 'Townsend', '469-987-4411', 'Thailand', true);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('opiscopo0@storify.com', '186 Goodland Drive', 'Sendangagung', 'Oliver', 'Piscopo', '246-585-5287', 'Indonesia', false);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('lrymmer1@merriam-webster.com', '9 Summerview Hill', 'Masis', 'Leann', 'Rymmer', '496-617-2168', 'Armenia', false);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('rtownsend2@nba.com', '8 Northland Point', 'Sadao', 'Raimundo', 'Townsend', '469-987-4411', 'Thailand', false);
 insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('bsallnow3@goo.ne.jp', '89 Dorton Avenue', 'As Sūq al Jadīd', 'Bondie', 'Sallnow', '559-858-1453', 'Yemen', false);
 insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('taddy4@bbb.org', '4 Scofield Crossing', 'Ichnya', 'Travis', 'Addy', '858-402-4531', 'Ukraine', false);
 insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('mgiottini5@51.la', '8 Upham Avenue', 'Shiojiri', 'Melisent', 'Giottini', '908-562-4535', 'Japan', false);
 insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('ebeardmore6@netvibes.com', '84267 Vidon Road', 'Södertälje', 'Elianore', 'Beardmore', '322-513-0524', 'Sweden', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('kbotten7@foxnews.com', '63 Utah Terrace', 'Mafraq', 'Karrie', 'Botten', '342-822-7835', 'Jordan', true);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('kbotten7@foxnews.com', '63 Utah Terrace', 'Mafraq', 'Karrie', 'Botten', '342-822-7835', 'Jordan', false);
 insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('cfleeming8@ucla.edu', '946 Glacier Hill Pass', 'Florentino Ameghino', 'Ced', 'Fleeming', '908-406-4991', 'Argentina', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('glodder9@last.fm', '5 Dorton Road', 'Fanzeres', 'Glen', 'Lodder', '255-182-5161', 'Portugal', true);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('glodder9@last.fm', '5 Dorton Road', 'Fanzeres', 'Glen', 'Lodder', '255-182-5161', 'Portugal', false);
 
 
 
@@ -629,26 +629,26 @@ INSERT INTO roles(name) VALUES('INSTRUCTOR');
 
 
 
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (1, 'opiscopo0@storify.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (2, 'lrymmer1@merriam-webster.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (3, 'rtownsend2@nba.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (4, 'bsallnow3@goo.ne.jp', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (5, 'taddy4@bbb.org', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (6, 'mgiottini5@51.la', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (7, 'ebeardmore6@netvibes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (8, 'kbotten7@foxnews.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (9, 'cfleeming8@ucla.edu', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (10, 'glodder9@last.fm', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (11, 'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (12, 'wvanmerwe1@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (13, 'nelson@verizon.net', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (14, 'jimtopo@cloudscredit.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (15, 'xjpzll@littlefarmhouserecipes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (16, 'sowsowabdel@bookj.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (17, 'acretney7@businessinsider.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (18, 'bobacott@codw.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (19, 'lgorch3@cnn.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
-insert into USERS (user_id, username, password, enabled, deleted, verification_code) values (20, 'ulago4@vimeo.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code, FIRST_LOGIN) values (1, 'opiscopo0@storify.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (2, 'lrymmer1@merriam-webster.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (3, 'rtownsend2@nba.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (4, 'bsallnow3@goo.ne.jp', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (5, 'taddy4@bbb.org', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (6, 'mgiottini5@51.la', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (7, 'ebeardmore6@netvibes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (8, 'kbotten7@foxnews.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (9, 'cfleeming8@ucla.edu', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (10, 'glodder9@last.fm', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (11, 'wvanmerwe3@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (12, 'wvanmerwe1@ihg.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (13, 'nelson@verizon.net', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (14, 'jimtopo@cloudscredit.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (15, 'xjpzll@littlefarmhouserecipes.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (16, 'sowsowabdel@bookj.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (17, 'acretney7@businessinsider.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (18, 'bobacott@codw.site', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (19, 'lgorch3@cnn.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
+insert into USERS (user_id, username, password, enabled, deleted, verification_code,FIRST_LOGIN) values (20, 'ulago4@vimeo.com', '$2a$10$Fh4qeAY.sD6A/BdTBl8g6e5iYh8scygIZcAbT1iUpisI.qHhYdgR2',true, false, null, false);
 
 
 
