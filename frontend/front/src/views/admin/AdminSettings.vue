@@ -1,5 +1,6 @@
 <template>
-  <div>
+    <b-tabs >
+      <b-tab title="Admin information" active>       
     <b-form-group label="Email address:" label-for="email">
       <b-form-input
         disabled
@@ -61,11 +62,52 @@
     <b-button class="mt-3" @click="onSubmit()" variant="primary"
       >Submit changes</b-button
     >
-  </div>
+      </b-tab>
+      <b-tab title="Change password" active>
+    
+        <form @submit.prevent="changePassword">
+          <b-form-group label="Current password:" >
+            <b-form-input
+            style="width:30%"
+             placeholder="Current password"
+              name="password"
+              v-model="password"
+            >
+           </b-form-input>
+          </b-form-group>
+
+          <b-form-group label="New password:">
+            <b-form-input
+               style="width:30%"
+              placeholder="New password"
+              name="newPassword"
+              v-model="newPassword"
+            ></b-form-input>
+           
+          </b-form-group>
+
+           <b-form-group label="Confirm new password:" >
+            <b-form-input   
+            style="width:30%"         
+              placeholder="Confirm new password"           
+              name="confirmPassword"
+              v-model="repeatPassword"
+            ></b-form-input>
+           
+           </b-form-group>
+
+          <b-button class="mt-3 btn btn-danger" type="submit">
+            Update password
+          </b-button>
+        </form>
+      </b-tab>
+     </b-tabs>
+  
 </template>
 
 <script>
 import { getAdminData, updateAdminData } from "../../api";
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -77,12 +119,18 @@ export default {
         city: null,
         state: null,
         phoneNum: null,
+      
       },
+       password: null,
+       newPassword: null,
+       repeatPassword:null
     };
   },
   async mounted() {
     await this.fetchAdminData();
   },
+    computed: {},
+
   methods: {
     async onSubmit() {
       await updateAdminData(this.form)
@@ -110,8 +158,47 @@ export default {
           alert("An error has occured while fetching admin data");
         });
     },
+     changePassword() {
+          axios
+        .post(
+          `/register/changePassword`,
+          {
+             password : this.newPassword,
+              oldPassword : this.password,
+              confirmPassword :this.repeatPassword
+          
+          },
+          
+        )
+        .then(() => {
+       
+          this.password = "";
+   
+            alert(
+            "Password has been successfully changed! Please login again with your new password."
+          );
+                 
+  localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      this.$router.push("/");
+
+        })
+        .catch(() => {
+          // clear form inputs
+          this.password = this.newPassword = this.repeatPassword= "";
+             alert(
+            "Please try again."
+          );
+
+         
+        });
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+a.nav-link{
+   color:#8c55aa!important;
+   font-weight: bold;
+}</style>

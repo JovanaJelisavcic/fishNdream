@@ -137,4 +137,9 @@ export default {
   color: black;
   text-decoration: underline;
 }
+.admin-header-item:hover{
+  background-color:#C19FD4;
+  border-radius:0.2rem;
+  box-shadow: 1px 1px #D9C3E5;
+}
 </style>

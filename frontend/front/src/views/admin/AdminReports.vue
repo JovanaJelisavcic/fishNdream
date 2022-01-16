@@ -1,9 +1,14 @@
 <template>
-  <div></div>
+   <AdminReports></AdminReports>
 </template>
 
 <script>
-export default {};
+import AdminReports from "../../components/Admin/AdminReports.vue";
+export default {
+   components: {
+     AdminReports
+     }
+     };
 </script>
 
 <style></style>

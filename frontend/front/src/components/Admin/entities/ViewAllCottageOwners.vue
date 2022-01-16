@@ -1,0 +1,94 @@
+<template>
+  <div>
+      <b-table bordered striped hover :items="cottageOwners" :fields="fields">
+           <template v-slot:cell(options)="{ item }">
+        <b-row class="m-0 p-2">
+          <b-button @click="deleteCottageOwner(item.email)" variant="danger"
+            >Delete</b-button
+          >
+        </b-row>
+      
+      </template>
+      </b-table>
+  </div>
+</template>
+
+<script>
+import { getAllCottageOwners,deleteCottageOwnerByEmail } from "../../../api";
+export default {
+  data() {
+    return {
+      cottageOwners: [],
+       email:null,
+      fields:[
+        {
+          key: "address",
+          label: "Address",
+        },
+        {
+          key: "city",
+          label: "City",
+        },
+        {
+          key: "email",
+          label: "Email",
+        },
+        {
+          key: "name",
+          label: "Name",
+        },
+        {
+          key: "phoneNum",
+          label: "Number",
+        },
+        {
+          key: "state",
+          label: "State",
+        },
+        {
+          key: "cottages",
+          label: "Cottages",
+        },
+         {
+          key: "rating",
+          label: "Rating",
+        },
+         {
+          key: "surname",
+          label: "Surname",
+        },
+        {
+          key: "options",
+          label: "Options",
+        },
+      ],
+       
+       
+    };
+  },
+  computed: {},
+  async mounted() {
+    await this.fetchAllCottageOwners();
+  },
+  methods: {
+    async fetchAllCottageOwners() {
+      await getAllCottageOwners()
+        .then((response) => {
+          this.cottageOwners = response;
+        })
+        .catch(() => {
+          alert(
+            "Error has been made. Please check your credentials again"
+          );
+        });
+    },
+         async deleteCottageOwner(email) {
+      await deleteCottageOwnerByEmail(email).then(() => {
+        this.fetchAllCottageOwners();
+      });
+    },
+  },
+};
+</script>
+
+<style></style>

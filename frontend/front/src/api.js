@@ -193,3 +193,79 @@ export const rejectUserDeletionRequest = async (params) => {
   let { data } = await axios.post(`/deleteAccount/refuse/${params.requestId}?reason=${params.reason}`);
   return data;
 };
+
+
+
+export const getAllReportsForAdmin = async () => {
+  let { data } = await axios.get("/admin/revenue");
+  return data;
+
+};
+
+export const getAllBoats = async () => {
+  let { data } = await axios.get("/unautho/boats");
+  return data;
+
+};
+export const getAllBoatOwners = async () => {
+  let { data } = await axios.get("/admin/boatOwners");
+  return data;
+
+};
+
+export const getAllCottages = async () => {
+  let { data } = await axios.get("/unautho/cottages");
+  return data;
+
+};
+export const getAllCottageOwners = async () => {
+  let { data } = await axios.get("/admin/cottageOwners");
+  return data;
+
+};
+export const getAllFisherman = async () => {
+  let { data } = await axios.get("/admin/fishermen");
+  return data;
+
+};
+export const getAllAdvantures = async () => {
+  let { data } = await axios.get("/instructor/all");
+  return data;
+
+};
+export const getAllInstructors = async () => {
+  let { data } = await axios.get("/unautho/instructors/");
+  return data;
+
+};
+export const deleteInstructorByID = async (email) => {
+  let { data } = await axios.post(`/admin/delete/instructor/${email}`);
+  return data;
+};
+export const deleteFishermanByEmail = async (email) => {
+  let { data } = await axios.post(`/admin/delete/fisherman/${email}`);
+  return data;
+};
+export const deleteBoatByID = async (id) => {
+  let { data } = await axios.post(`/admin/delete/boat/${id}`);
+  return data;
+};
+export const deleteCottageByID = async (id) => {
+  let { data } = await axios.post(`/admin/delete/cottage/${id}`);
+  return data;
+};
+
+export const deleteBoatOwnerByEmail = async (email) => {
+  let { data } = await axios.post(`/admin/delete/boatowner/${email}`);
+  return data;
+};
+export const deleteCottageOwnerByEmail = async (email) => {
+  let { data } = await axios.post(`/admin/delete/cottageowner/${email}`);
+  return data;
+};
+
+
+export const deleteAdventureByID = async (id) => {
+  let { data } = await axios.post(`admin/delete/adventure/${id}`);
+  return data;
+};
