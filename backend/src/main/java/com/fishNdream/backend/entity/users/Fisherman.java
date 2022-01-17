@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fishNdream.backend.entity.basic.Views;
 import com.fishNdream.backend.entity.helper.ActionType;
 import com.fishNdream.backend.entity.helper.CanceledAction;
 import com.fishNdream.backend.entity.helper.ChangeInfoDTO;
@@ -25,6 +27,9 @@ import com.fishNdream.backend.entity.intercations.SubscriptionInstructor;
 @SQLDelete(sql = "UPDATE fisherman SET deleted = true WHERE email=?")
 @Where(clause = "deleted=false")
 public class Fisherman extends UserInfo{
+	
+	@JsonView(Views.UserInfo.class)
+	private int penalties;
 	
 	@OneToMany(mappedBy="fisherman", orphanRemoval=false)
 	private List<ReservationCottage> reservationCottages;
@@ -365,6 +370,24 @@ public class Fisherman extends UserInfo{
 		subsriptionsBoats.forEach(a-> a.setFisherman(null));
 		
 		
+	}
+
+
+
+
+
+
+	public int getPenalties() {
+		return penalties;
+	}
+
+
+
+
+
+
+	public void setPenalties(int penalties) {
+		this.penalties = penalties;
 	}
 	
 }

@@ -131,19 +131,6 @@ export const isStillFreeCottage = async (id, beginDate, endDate) => {
   return data;
 };
 
-
-export const getAdminData = async () => {
-  let { data } = await axios.get("/admin/myprofile");
-  return data;
-};
-
-
-export const updateAdminData = async (params) => {
-  let { data } = await axios.put("/admin/update", { ...params });
-  return data;
-};
-
-
 export const getRegisterRequests = async () => {
     let { data } = await axios.get("/register/requests");
     return data;
@@ -316,5 +303,37 @@ export const deleteAdminProfile = async (params) => {
   let { data } = await axios.post(
     `/deleteAccount/admin/request?reason=${params.reason}`
   );
+  return data;
+};
+
+
+export const getAdminData = async () => {
+  let { data } = await axios.get("/admin/myprofile");
+  return data;
+};
+
+
+export const updateAdminData = async (params) => {
+  let { data } = await axios.put("/admin/update", { ...params });
+  return data;
+};
+
+
+export const deleteFishermanProfile = async (params) => {
+  let { data } = await axios.post(
+    `/deleteAccount/request?reason=${params.reason}`
+  );
+  return data;
+};
+
+
+export const getFishermanData = async () => {
+  let { data } = await axios.get("/fisherman/myprofile");
+  return data;
+};
+
+
+export const updateFishermanData = async (params) => {
+  let { data } = await axios.put("/fisherman/update", { ...params });
   return data;
 };

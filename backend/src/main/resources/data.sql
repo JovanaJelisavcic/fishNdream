@@ -1,14 +1,14 @@
 --fisherman
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('opiscopo0@storify.com', '186 Goodland Drive', 'Sendangagung', 'Oliver', 'Piscopo', '246-585-5287', 'Indonesia', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('lrymmer1@merriam-webster.com', '9 Summerview Hill', 'Masis', 'Leann', 'Rymmer', '496-617-2168', 'Armenia', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('rtownsend2@nba.com', '8 Northland Point', 'Sadao', 'Raimundo', 'Townsend', '469-987-4411', 'Thailand', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('bsallnow3@goo.ne.jp', '89 Dorton Avenue', 'As Sūq al Jadīd', 'Bondie', 'Sallnow', '559-858-1453', 'Yemen', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('taddy4@bbb.org', '4 Scofield Crossing', 'Ichnya', 'Travis', 'Addy', '858-402-4531', 'Ukraine', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('mgiottini5@51.la', '8 Upham Avenue', 'Shiojiri', 'Melisent', 'Giottini', '908-562-4535', 'Japan', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('ebeardmore6@netvibes.com', '84267 Vidon Road', 'Södertälje', 'Elianore', 'Beardmore', '322-513-0524', 'Sweden', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('kbotten7@foxnews.com', '63 Utah Terrace', 'Mafraq', 'Karrie', 'Botten', '342-822-7835', 'Jordan', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('cfleeming8@ucla.edu', '946 Glacier Hill Pass', 'Florentino Ameghino', 'Ced', 'Fleeming', '908-406-4991', 'Argentina', false);
-insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted) values ('glodder9@last.fm', '5 Dorton Road', 'Fanzeres', 'Glen', 'Lodder', '255-182-5161', 'Portugal', false);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('opiscopo0@storify.com', '186 Goodland Drive', 'Sendangagung', 'Oliver', 'Piscopo', '246-585-5287', 'Indonesia', false,1);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('lrymmer1@merriam-webster.com', '9 Summerview Hill', 'Masis', 'Leann', 'Rymmer', '496-617-2168', 'Armenia', false,1);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('rtownsend2@nba.com', '8 Northland Point', 'Sadao', 'Raimundo', 'Townsend', '469-987-4411', 'Thailand', false,2);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('bsallnow3@goo.ne.jp', '89 Dorton Avenue', 'As Sūq al Jadīd', 'Bondie', 'Sallnow', '559-858-1453', 'Yemen', false,2);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('taddy4@bbb.org', '4 Scofield Crossing', 'Ichnya', 'Travis', 'Addy', '858-402-4531', 'Ukraine', false,2);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('mgiottini5@51.la', '8 Upham Avenue', 'Shiojiri', 'Melisent', 'Giottini', '908-562-4535', 'Japan', false,2);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('ebeardmore6@netvibes.com', '84267 Vidon Road', 'Södertälje', 'Elianore', 'Beardmore', '322-513-0524', 'Sweden', false,1);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('kbotten7@foxnews.com', '63 Utah Terrace', 'Mafraq', 'Karrie', 'Botten', '342-822-7835', 'Jordan', false,1);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('cfleeming8@ucla.edu', '946 Glacier Hill Pass', 'Florentino Ameghino', 'Ced', 'Fleeming', '908-406-4991', 'Argentina', false,1);
+insert into FISHERMAN (email, address, city, name, surname, phone_num, state, deleted, penalties) values ('glodder9@last.fm', '5 Dorton Road', 'Fanzeres', 'Glen', 'Lodder', '255-182-5161', 'Portugal', false,1);
 
 
 
