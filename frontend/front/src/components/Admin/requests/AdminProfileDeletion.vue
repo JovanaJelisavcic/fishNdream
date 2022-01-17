@@ -9,7 +9,7 @@
     >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
-          <b-button @click="acceptRequest(item.requestId)" variant="success"
+          <b-button @click="showAcceptModal(item.requestId)" variant="success"
             >Accept</b-button
           >
         </b-row>
@@ -28,6 +28,14 @@
       <span>Explanation</span>
       <textarea class="w-100" v-model="rejectText"> </textarea>
     </b-modal>
+    <b-modal
+      id="acceptModalAdmin"
+      title="Accept request"
+      @ok.prevent="acceptRegistration()"
+    >
+      <span>Explanation</span>
+      <textarea class="w-100" v-model="acceptText"> </textarea>
+    </b-modal>
   </div>
 </template>
 
@@ -41,6 +49,7 @@ export default {
   data() {
     return {
       rejectText: null,
+      acceptText: null,
       requestId: null,
       fields: [
         {
@@ -79,6 +88,11 @@ export default {
       this.requestId = requestId;
       this.$bvModal.show("rejectModalAdmin");
     },
+    showAcceptModal(requestId) {
+      this.acceptText = null;
+      this.requestId = requestId;
+      this.$bvModal.show("acceptModalAdmin");
+    },
     async rejectRegistration() {
       await rejectAdminDeletionRequest({
         requestId: this.requestId,
@@ -90,9 +104,15 @@ export default {
         this.$bvModal.hide("rejectModalAdmin");
       });
     },
-    async acceptRequest(requestId) {
-      await acceptAdminDeletionRequest(requestId).then(() => {
+    async acceptRegistration() {
+      await acceptAdminDeletionRequest({
+        id: this.requestId,
+        reason: this.acceptText,
+      }).then(() => {
+        this.requestId = null;
+        this.acceptText = null;
         this.fetchRegisterRequests();
+        this.$bvModal.hide("acceptModalAdmin");
       });
     },
     async fetchRegisterRequests() {
@@ -101,6 +121,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
+          this.items = null;
         });
     },
   },

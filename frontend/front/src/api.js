@@ -155,7 +155,7 @@ export const acceptRegistration = async (email) => {
 };
 export const rejectRegistration = async (params) => {
   let { data } = await axios.post(
-    `/register/register/refuse?email=${params.email}&reason=${params.reason}`
+    `/register/refuse?email=${params.email}&reason=${params.reason}`
   );
   return data;
 };
@@ -166,31 +166,31 @@ export const getAdminDeletionRequests = async () => {
 };
 
 
-export const acceptAdminDeletionRequest = async (id) => {
-  let { data } = await axios.post(`/deleteAccount/admin/accept/${id}`);
+export const acceptAdminDeletionRequest = async (params) => {
+  let { data } = await axios.post(`/deleteAccount/admin/accept/${params.id}?resp=${params.reason}`);
   return data;
 };
 
 export const rejectAdminDeletionRequest = async (params) => {
   let { data } = await axios.post(
-    `deleteAccount/admin/refuse/${params.requestId}?reason=${params.reason}`
+    `deleteAccount/admin/refuse/${params.requestId}?resp=${params.reason}`
   );
   return data;
 };
 
 export const getUserDeletionRequests = async () => {
-  let { data } = await axios.get("deleteAccount/admin/requests");
+  let { data } = await axios.get("deleteAccount/requests");
   return data;
 
 };
 
-export const acceptUserDeletionRequest = async (id) => {
-  let { data } = await axios.post(`/deleteAccount/accept/${id}`);
+export const acceptUserDeletionRequest = async (params) => {
+  let { data } = await axios.post(`/deleteAccount/accept/${params.id}?resp=${params.reason}`);
   return data;
 };
 
 export const rejectUserDeletionRequest = async (params) => {
-  let { data } = await axios.post(`/deleteAccount/refuse/${params.requestId}?reason=${params.reason}`);
+  let { data } = await axios.post(`/deleteAccount/refuse/${params.requestId}?resp=${params.reason}`);
   return data;
 };
 
@@ -305,5 +305,16 @@ export const respondToCottageComplaint = async (params) => {
 };
 export const respondToBoatComplaint = async (params) => {
   let { data } = await axios.post(`/complaint/respond/boat/${params.complaintId}?reason=${params.reason}`);
+  return data;
+};
+
+export const changeSystemGain = async (params) => {
+  let { data } = await axios.post("/admin/gain", { ...params });
+  return data;
+};
+export const deleteAdminProfile = async (params) => {
+  let { data } = await axios.post(
+    `/deleteAccount/admin/request?reason=${params.reason}`
+  );
   return data;
 };

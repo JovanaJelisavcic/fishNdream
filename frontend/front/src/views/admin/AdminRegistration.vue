@@ -59,30 +59,6 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group label="Set password :" label-for="password">
-        <b-form-input
-          id="password"
-          v-model="form.password"
-          placeholder="Set password"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Confirm password:" label-for="confirmPassword">
-        <b-form-input
-          id="confirmPassword"
-          v-model="form.confirmPassword"
-          placeholder="Confirm password"
-          required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Explanation :" label-for="explanation">
-        <b-form-input
-          id="explanation"
-          v-model="form.explanation"
-          placeholder="Explanation"
-          required
-        ></b-form-input>
-      </b-form-group>
       <b-button class="mt-3" @click="onSubmit()" variant="primary"
         >Submit changes</b-button
       >
@@ -118,7 +94,7 @@ export default {
           this.form = "";
         })
         .catch(() => {
-          alert("An error has occured while adding new admin.");
+          alert("User with this username already exists");
           this.form = "";
         });
     },

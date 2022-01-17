@@ -29,13 +29,15 @@ export default {
       state.status = "FIRST_LOGIN";
     },
     loginSuccess(state, data) {
-      const { token, username, role } = data;
+      const { token, username, role, first, isSuperAdmin } = data;
       state.username = username;
       state.token = token;
       state.role = role;
       localStorage.setItem("token", state.token);
       localStorage.setItem("username", state.username);
       localStorage.setItem("role", state.role);
+      localStorage.setItem("first", first);
+      localStorage.setItem("isSuperAdmin", isSuperAdmin);
       axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
       state.isRegisteredUser = true;
     },
@@ -50,6 +52,8 @@ export default {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
+      localStorage.removeItem("first");
+      localStorage.removeItem("isSuperAdmin");
       state.isRegisteredUser = false;
       state.username = null;
       state.token = null;
@@ -73,7 +77,7 @@ export default {
           if (response.accessToken) {
             commit("loginSuccess", {
               token: response.accessToken ? response.accessToken : null,
-              username: email, role: response.roles[0]
+              username: email, role: response.roles[0], first : response.first, isSuperAdmin: response.superAdmin
             });
             return true;
           }

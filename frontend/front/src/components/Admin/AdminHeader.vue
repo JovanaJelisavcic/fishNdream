@@ -24,7 +24,7 @@
               <span class="text-black">Requests</span>
             </router-link>
           </b-nav-item>
-          <b-nav-item v-if="superAdmin==='wvanmerwe3@ihg.com'">
+          <b-nav-item v-if="superAdmin == 'true'">
             <router-link
               to="/admin/admin-registration"
               class="admin-header-item"
@@ -64,16 +64,6 @@
               <span class="text-black">Complaints</span>
             </router-link></b-nav-item
           >
-          <b-nav-item>
-            <router-link
-              to="/admin/reservations"
-              class="admin-header-item"
-              active-class="admin-header-item-active"
-              exact-active-class="admin-header-item-active"
-            >
-              <span class="text-black">Reservations</span>
-            </router-link></b-nav-item
-          >
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
@@ -99,21 +89,19 @@
 
 <script>
 export default {
+  data() {
+    return {
+      superAdmin: null,
+    };
+  },
   methods: {
-      data(){
-    return{
-        superAdmin:null,
-    }
-  },
-  created(){
-this.superAdmin=localStorage.getItem("username");
-
-  },
     logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
+      this.$store.dispatch("login/logout");
       this.$router.push("/");
     },
+  },
+  created() {
+    this.superAdmin = localStorage.getItem("isSuperAdmin");
   },
 };
 </script>
@@ -146,9 +134,9 @@ this.superAdmin=localStorage.getItem("username");
   color: black;
   text-decoration: underline;
 }
-.admin-header-item:hover{
-  background-color:#C19FD4;
-  border-radius:0.2rem;
-  box-shadow: 1px 1px #D9C3E5;
+.admin-header-item:hover {
+  background-color: #c19fd4;
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px #d9c3e5;
 }
 </style>

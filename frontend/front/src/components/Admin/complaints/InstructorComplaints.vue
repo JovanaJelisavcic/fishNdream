@@ -1,11 +1,12 @@
 <template>
   <div>
-      <b-table bordered striped hover :items="instructorComplaints"  :fields="fields" >
+      <b-table bordered striped hover :items="instructorComplaints"  :fields="fields"  show-empty
+      :empty-text="'No comlaints'" >
 
          <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
          <textarea class="w-100" v-model="respondText"> </textarea>
-          <b-button @click="respondToInstructorComplaint(item.complaintId,respondText)" variant="danger"
+          <b-button @click="respondToInstructorComplaint(item.complaintId,respondText)" variant="success"
             >Respond</b-button
           >
         </b-row>
@@ -62,13 +63,14 @@ export default {
           this.instructorComplaints = response;
         })
         .catch(() => {
+           this.instructorComplaints = null;
         });
     
     },
-      async respondToInstructorComplaint() {
+      async respondToInstructorComplaint(id, text) {
       await respondToInstructorComplaint({
-        complaintId: this.complaintId,
-        reason: this.respondText,
+        complaintId: id,
+        reason: text,
       }).then(() => {
         this.complaintId = null;
         this.respondText = null;

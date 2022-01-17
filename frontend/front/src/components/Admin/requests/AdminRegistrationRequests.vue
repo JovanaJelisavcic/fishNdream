@@ -101,6 +101,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
+            this.items = null;
         });
     },
   },

@@ -23,7 +23,6 @@ import AdminRegistration from "../views/admin/AdminRegistration.vue";
 import AdminEntityOverview from "../views/admin/AdminEntityOverview.vue";
 import AdminReports from "../views/admin/AdminReports.vue";
 import AdminComplaints from "../views/admin/AdminComplaints.vue";
-import AdminReservations from "../views/admin/AdminReservations.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -190,16 +189,6 @@ const routes = [
         path: "/admin/complaints",
         name: "adminComplaints",
         component: AdminComplaints,
-        meta: {
-          requiresAuth: true,
-          adminAuth: true,
-          userAuth: false,
-        },
-      },
-      {
-        path: "/admin/reservations",
-        name: "adminReservations",
-        component: AdminReservations,
         meta: {
           requiresAuth: true,
           adminAuth: true,
