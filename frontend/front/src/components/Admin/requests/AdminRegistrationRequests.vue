@@ -47,6 +47,7 @@ export default {
         {
           key: "email",
           label: "Email",
+           class: "text-center",
         },
         {
           key: "regType",
@@ -56,10 +57,12 @@ export default {
         {
           key: "explanation",
           label: "Description",
+           class: "text-center",
         },
         {
           key: "options",
           label: "Options",
+           class: "text-center",
         },
       ],
       items: [],

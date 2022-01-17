@@ -371,5 +371,45 @@ export const unsubscribeInstructorByEmail = async (boatId) => {
   return data;
 };
 
+export const getPossibleBoatsComplain = async () => {
+  let { data } = await axios.get(`/complaint/possible/boats`);
+  return data;
+};
+
+
+export const complainBoat = async (params) => {
+  let { data } = await axios.post(
+    `/complaint/file/boat/${params.id}?reason=${params.reason}`
+  );
+  return data;
+};
+
+export const getPossibleCottagesComplain = async () => {
+  let { data } = await axios.get(`/complaint/possible/cottages`);
+  return data;
+};
+
+
+export const complainCottage = async (params) => {
+  let { data } = await axios.post(
+    `/complaint/file/cottage/${params.id}?reason=${params.reason}`
+  );
+  return data;
+};
+
+
+export const getPossibleInstructorsComplain = async () => {
+  let { data } = await axios.get(`/complaint/possible/instructors`);
+  return data;
+};
+
+
+export const complainInstructor = async (params) => {
+  let { data } = await axios.post(
+    `/complaint/file/instructor/${params.email}?reason=${params.reason}`
+  );
+  return data;
+};
+
 
  

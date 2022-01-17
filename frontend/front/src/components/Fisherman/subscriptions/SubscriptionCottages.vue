@@ -37,22 +37,27 @@ export default {
         {
           key: "cottage.name",
           label: "Name",
+           class: "text-center",
         },
         {
           key: "cottage.address",
           label: "Address",
+           class: "text-center",
         },
         {
           key: "cottage.description",
           label: "Description",
+           class: "text-center",
         },
         {
           key: "cottage.rating",
           label: "Rating",
+           class: "text-center",
         },
         {
           key: "options",
           label: "Options",
+           class: "text-center",
         },
       ],
     };

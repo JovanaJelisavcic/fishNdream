@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fishNdream.backend.entity.basic.Adventure;
 import com.fishNdream.backend.entity.basic.Boat;
 import com.fishNdream.backend.entity.basic.Cottage;
+import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.users.Instructor;
+import com.fishNdream.backend.repository.ReservationBoatRepository;
 
 @Component
 public class FilteringUtil {
+	
+	@Autowired
+	ReservationBoatRepository resBRepo;
 	//private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RegisterController.class);
 	
 	public FilteringUtil() {}
@@ -106,5 +112,42 @@ public class FilteringUtil {
 		
 		return result;
 	}
+
+	public List<Cottage> onlyPossibleCottageComplaints(List<Cottage> cottages, String username) {
+		List<Cottage> result = new ArrayList<>();
+		for(Cottage c : cottages) {
+			if(c.atLeastOnceReserved(username) && !c.alreadyComplained(username)) { 
+				result.add(c);
+				}
+			}
+
+		return result;
+	}
+
+	public List<Boat> onlyPossibleBoatComplaints(List<Boat> boats, String username) {
+		List<Boat> result = new ArrayList<>();
+		for(Boat c : boats) {
+			if(!c.alreadyComplained(username)) { 
+				List<ReservationBoat> r = resBRepo.findByBoatIdAndEmail(c.getBoatId(), username);
+				if(!r.isEmpty()) {result.add(c);}
+				
+				}
+			}
+
+		return result;
+	}
+
+	public List<Instructor> onlyPossibleInstructorComplaints(List<Instructor> instrs, String username) {
+		List<Instructor> result = new ArrayList<>();
+		for(Instructor c : instrs) {
+			if(c.atLeastOnceReserved(username) && !c.alreadyComplained(username)) { 
+				result.add(c);
+				}
+			}
+
+		return result;
+	}
+
+
 
 }

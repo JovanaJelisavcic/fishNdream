@@ -59,6 +59,7 @@ export default {
         {
           key: "price",
           label: "Price",
+
         },
         {
           key: "options",

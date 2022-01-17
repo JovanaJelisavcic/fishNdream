@@ -37,6 +37,7 @@ import com.fishNdream.backend.repository.FishermanRepository;
 import com.fishNdream.backend.repository.InstructorRepository;
 import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.security.JwtUtils;
+import com.fishNdream.backend.util.FilteringUtil;
 import com.fishNdream.backend.util.MailUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -67,6 +68,8 @@ public class ComplaintController {
 	private ComplaintBRepository boatComplRepo;
 	@Autowired
 	private ComplaintIRepository instrComplRepo;
+	@Autowired
+	private FilteringUtil filterUtil;
 	
 	@PostMapping("/file/cottage/{cottageId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
@@ -105,7 +108,7 @@ public class ComplaintController {
 	            .body("Boat not found");
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		Optional<Fisherman> fisherman = fishermanRepo.findByEmail(username);
-		Optional<ReservationBoat> r = resBRepo.findByBoatIdAndEmail(boatId, fisherman.get().getEmail());
+		List<ReservationBoat> r = resBRepo.findByBoatIdAndEmail(boatId, fisherman.get().getEmail());
 		if(r.isEmpty())
 			return ResponseEntity
 					.status(HttpStatus.FORBIDDEN)
@@ -220,6 +223,52 @@ public class ComplaintController {
 		if(instr.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(instr, HttpStatus.OK);
 	}
+	
+	
+	@JsonView(Views.UnauthoCottages.class)
+	@GetMapping("/possible/cottages")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> freeBoatsC(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException  {	
+		List<Cottage> cottages =  cottagesRepo.findAll();
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<Cottage> filtered =filterUtil.onlyPossibleCottageComplaints(cottages, username);
+		if(filtered.isEmpty())
+			return (ResponseEntity<?>) ResponseEntity
+            .status(HttpStatus.NOT_FOUND);
+		
+		 return new ResponseEntity<>(filtered, HttpStatus.OK);
+	}
+	
+	
+	@JsonView(Views.UnauthoBoats.class)
+	@GetMapping("/possible/boats")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> complBoatsB(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException  {	
+		List<Boat> boats =  boatRepo.findAll();
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<Boat> filtered =filterUtil.onlyPossibleBoatComplaints(boats, username);
+		if(filtered.isEmpty())
+			return (ResponseEntity<?>) ResponseEntity
+            .status(HttpStatus.NOT_FOUND);
+		
+		 return new ResponseEntity<>(filtered, HttpStatus.OK);
+	}
+	
+	@JsonView(Views.UnauthoInstuctors.class)
+	@GetMapping("/possible/instructors")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> complInstrI(@RequestHeader("Authorization") String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, IllegalArgumentException, UnsupportedEncodingException  {	
+		List<Instructor> instrs =  instructorRepo.findAll();
+		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
+		List<Instructor> filtered =filterUtil.onlyPossibleInstructorComplaints(instrs, username);
+		if(filtered.isEmpty())
+			return (ResponseEntity<?>) ResponseEntity
+            .status(HttpStatus.NOT_FOUND);
+		
+		 return new ResponseEntity<>(filtered, HttpStatus.OK);
+	}
+	
+	
 	
 	
 }

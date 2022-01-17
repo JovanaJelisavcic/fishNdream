@@ -70,10 +70,12 @@ export default {
         {
           key: "requestText",
           label: "Description",
+           class: "text-center",
         },
         {
           key: "options",
           label: "Options",
+           class: "text-center",
         },
       ],
       items: [],

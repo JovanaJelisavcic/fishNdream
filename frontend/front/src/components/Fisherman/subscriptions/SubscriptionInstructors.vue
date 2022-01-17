@@ -25,24 +25,30 @@ export default {
         {
           key: "instructor.name",
           label: "Name",
+           class: "text-center",
         },
         {
           key: "instructor.surname",
           label: "Surname",
+           class: "text-center",
         },
         {
           key: "instructor.city",
           label: "City",
+           class: "text-center",
         },{
           key: "instructor.shortBio",
           label: "Bio",
+           class: "text-center",
         },{
           key: "instructor.rating",
           label: "Rating",
+           class: "text-center",
         },
         {
           key: "options",
           label: "Options",
+           class: "text-center",
         },
       ],
        

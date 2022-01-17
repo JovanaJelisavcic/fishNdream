@@ -25,22 +25,27 @@ export default {
         {
           key: "boat.name",
           label: "Name",
+           class: "text-center",
         },
         {
           key: "boat.address",
           label: "Address",
+           class: "text-center",
         },
         {
           key: "boat.description",
           label: "Description",
+           class: "text-center",
         },
         {
           key: "boat.rating",
           label: "Rating",
+           class: "text-center",
         },
         {
           key: "options",
           label: "Options",
+           class: "text-center",
         },
       ],
        

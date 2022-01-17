@@ -15,7 +15,7 @@ public interface ReservationBoatRepository extends JpaRepository<ReservationBoat
 	Optional<ReservationBoat> findByReservationIdAndActionRes(int actionId, boolean b);
 
 	@Query(value="SELECT * FROM reservation_boat u WHERE u.boat_id = ?1 and u.email = ?2 and u.ending < NOW()", nativeQuery=true)
-	Optional<ReservationBoat> findByBoatIdAndEmail(int boatId, String email);
+	List<ReservationBoat> findByBoatIdAndEmail(int boatId, String email);
 
 	@Query(value="Select COUNT(boat_id) from reservation_boat where boat_id in (?1) and ending > NOW() and NOT canceled and email IS NOT NULL", nativeQuery=true)
 	int hasOccupiedFuture(List<Integer> boatsIds);

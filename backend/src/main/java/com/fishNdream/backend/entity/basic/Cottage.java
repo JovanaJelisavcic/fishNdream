@@ -326,8 +326,10 @@ public class Cottage {
 
 	public boolean atLeastOnceReserved(String email) {
 		for(ReservationCottage r : reservations) {
+			if(r.getFisherman()!=null) {
 			if(r.getFisherman().getEmail().equals(email) && !r.isCanceled() && r.getEnding().toLocalDate().isBefore(LocalDate.now())) {
 				return true;
+			}
 			}
 		}
 		return false;
