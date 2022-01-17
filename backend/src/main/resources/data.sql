@@ -62,7 +62,7 @@ values (5, '2021-12-26T12:00:00', false, '2021-12-26T14:00:00', 2,100 , 1, null,
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,3);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (6, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 10, 500, 1, null, true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
+values (6, '2022-02-25T12:00:00', false, '2022-02-28T14:00:00', 10, 500, 1, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,3);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,2);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,1);
@@ -100,7 +100,7 @@ values (11, '2021-12-26T12:00:00', false, '2021-12-26T14:00:00', 2, 75 , 2, null
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(11,4);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (12, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 10, 300, 2, 'opiscopo0@storify.com' , true, '2021-11-17T14:00:00', '2021-12-25T14:00:00',10);
+values (12, '2022-01-19T12:00:00', false, '2022-01-23T14:00:00', 10, 300, 2, 'opiscopo0@storify.com' , true, '2021-11-17T14:00:00', '2021-12-25T14:00:00',10);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(12,4);
 
 
@@ -362,7 +362,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (4, '2021-12-25T12:00:00', false, '2021-12-29T14:00:00', 4, 190, 1, 'opiscopo0@storify.com' , false, null,null, 10 );
+values (4, '2022-02-25T12:00:00', false, '2022-02-28T14:00:00', 4, 190, 1, 'opiscopo0@storify.com' , false, null,null, 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,1);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,2);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,3);
@@ -533,7 +533,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(20,24);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (21, '2021-12-22T12:00:00', false, '2021-12-24T14:00:00', 7, 203, 4,'opiscopo0@storify.com' , false, null,null, 10 );
+values (21, '2022-01-19T12:00:00', false, '2022-01-24T14:00:00', 7, 203, 4,'opiscopo0@storify.com' , false, null,null, 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,23);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,21);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(21,19);
@@ -586,7 +586,7 @@ insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing2.jpg'
 insert into adventure_pics(adventure_id,adventure_pics) values(1, 'fishing3.jpg');
 
 insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (1, '2021-12-31T12:00:00', false, '2022-01-01T14:00:00', 10, 500, 1, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
+values (1, '2022-12-28T12:00:00', false, '2022-12-30T14:00:00', 10, 500, 1, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,1);
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,2);
 
@@ -611,6 +611,10 @@ insert into AVAILABILITY_PERIOD_ADVENTURES  (PERIOD_ID, BEGGINING, ENDING,ADVENT
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing7.jpg');
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing8.jpg');
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing9.jpg');
+
+
+insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (2, '2022-01-19T12:00:00', false, '2022-01-22T14:00:00', 10, 500, 2, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 
 
 

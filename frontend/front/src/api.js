@@ -412,4 +412,89 @@ export const complainInstructor = async (params) => {
 };
 
 
+export const getAllPastAdventureReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/adventure/past`
+  );
+  return data;
+};
+
+export const getAllPastCottageReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/cottage/past`
+  );
+  return data;
+};
+export const getAllPastBoatReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/boat/past`
+  );
+  return data;
+};
+
+
+export const getAllFutureAdventureReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/adventure/future`
+  );
+  return data;
+};
+
+export const getAllFutureCottageReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/cottage/future`
+  );
+  return data;
+};
+export const getAllFutureBoatReservations = async () => {
+  let { data } = await axios.get(
+    `/fisherman/reservations/boat/future`
+  );
+  return data;
+};
+
+export const cancelResCottage = async (id) => {
+  let { data } = await axios.post(
+    `/reservationCottage/cancel/${id}`
+  );
+  return data;
+};
+
+export const cancelResBoat = async (id) => {
+  let { data } = await axios.post(
+    `/reservationBoat/cancel/${id}`
+  );
+  return data;
+};
+
+export const cancelResAvdenture = async (id) => {
+  let { data } = await axios.post(
+    `/reservationAdventure/cancel/${id}`
+  );
+  return data;
+};
+
+
+export const cancelActionResCottage = async (id) => {
+  let { data } = await axios.post(
+    `/reservationCottage/actions/cancel/${id}`
+  );
+  return data;
+};
+
+export const cancelActionResBoat = async (id) => {
+  let { data } = await axios.post(
+    `/reservationBoat/actions/cancel/${id}`
+  );
+  return data;
+};
+
+export const cancelActionResAvdenture = async (id) => {
+  let { data } = await axios.post(
+    `/reservationAdventure/actions/cancel/${id}`
+  );
+  return data;
+};
+
+
  

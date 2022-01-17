@@ -39,6 +39,7 @@ public class ReservationInfo {
 	@JsonView(Views.ReservationView.class)
 	private float price;
 	private boolean canceled;
+	@JsonView(Views.ReservationView.class)
 	private boolean actionRes;
 	@JsonView(Views.ActionInfo.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")

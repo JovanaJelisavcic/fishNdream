@@ -106,7 +106,7 @@
           class="mt-3"
           @click="showDeleteFishermanProfileModal()"
           variant="danger"
-          >Delete fisherman profile</b-button
+          >Delete my account</b-button
         >
         <b-modal
           id="deleteFishermanProfile"

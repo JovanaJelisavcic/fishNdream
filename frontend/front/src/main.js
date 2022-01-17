@@ -5,7 +5,9 @@ import App from './App';
 import store from './store';
 import router from './router';
 import axios from "./config/axios";
-import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 import VueCompositionAPI from '@vue/composition-api'
@@ -21,7 +23,7 @@ Vue.config.productionTip = false;
 
 Vue.use(VueCompositionAPI);
 Vue.use(BootstrapVue);
-Vue.use(BootstrapVueIcons);
+Vue.use(IconsPlugin);
 Vue.use(SimpleVueValidation);
 Vue.component('vue-cal',VueCal);
 Vue.component('vue-date-picker',VueCtkDateTimePicker);
