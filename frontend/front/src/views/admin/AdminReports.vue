@@ -1,6 +1,16 @@
 <template>
   <div>
-          <b-table bordered striped hover :items="reports" :fields="fields"></b-table>
+    <b-table bordered striped hover :items="reports" :fields="fields">
+      <template v-slot:cell(fishermanPrice)="{ item }">
+        <b-row class="m-0 p-2"> {{ item.fishermanPrice }}$ </b-row>
+      </template>
+      <template v-slot:cell(revenue)="{ item }">
+        <b-row class="m-0 p-2"> {{ item.revenue }}$ </b-row>
+      </template>
+       <template v-slot:cell(percentageActive)="{ item }">
+        <b-row class="m-0 p-2"> {{ item.percentageActive }}% </b-row>
+      </template>
+    </b-table>
   </div>
 </template>
 
@@ -10,7 +20,7 @@ export default {
   data() {
     return {
       reports: [],
-       fields: [
+      fields: [
         {
           key: "revenueId",
           label: "Revenue ID",
@@ -32,8 +42,8 @@ export default {
           key: "revenue",
           label: "Revenue",
         },
-         {
-          key: "percentageActive" ,
+        {
+          key: "percentageActive",
           label: "Active percentage",
         },
       ],
@@ -49,8 +59,7 @@ export default {
         .then((response) => {
           this.reports = response;
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
   },
 };

@@ -45,7 +45,7 @@ export default {
         },
         {
           key: "options",
-          label: "Respond",
+          label: "Options",
         },
       ],
       complaintId:null,

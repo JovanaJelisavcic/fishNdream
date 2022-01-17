@@ -1,26 +1,28 @@
 <template>
   <div>
-      <b-table bordered striped hover :items="instructors" :fields="fields" >
-         <template v-slot:cell(options)="{ item }">
+    <b-table bordered striped hover :items="instructors" :fields="fields">
+      <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteInstructor(item.email)" variant="danger"
             >Delete</b-button
           >
         </b-row>
-      
       </template>
-      </b-table>
+      <template v-slot:cell(rating)="{ item }">
+        <b-row class="m-0 p-2"> {{ item.rating }} ⭐ </b-row>
+      </template>
+    </b-table>
   </div>
 </template>
 
 <script>
-import { getAllInstructors,deleteInstructorByID } from "../../../api";
+import { getAllInstructors, deleteInstructorByID } from "../../../api";
 export default {
   data() {
     return {
       instructors: [],
-      email:null,
-       fields:[
+      email: null,
+      fields: [
         {
           key: "address",
           label: "Address",
@@ -62,7 +64,6 @@ export default {
           label: "Options",
         },
       ],
-       
     };
   },
   computed: {},
@@ -75,11 +76,9 @@ export default {
         .then((response) => {
           this.instructors = response;
         })
-        .catch(() => {
-
-        });
+        .catch(() => {});
     },
-      async deleteInstructor(email) {
+    async deleteInstructor(email) {
       await deleteInstructorByID(email).then(() => {
         this.fetchAllInstructors();
       });

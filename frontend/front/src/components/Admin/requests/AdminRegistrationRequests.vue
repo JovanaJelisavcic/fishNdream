@@ -50,6 +50,36 @@ export default {
            class: "text-center",
         },
         {
+          key: "name",
+          label: "Name",
+           class: "text-center",
+        },
+        {
+          key: "surname",
+          label: "Surname",
+           class: "text-center",
+        },
+        {
+          key: "address",
+          label: "Address",
+           class: "text-center",
+        },
+        {
+          key: "city",
+          label: "City",
+           class: "text-center",
+        },
+        {
+          key: "state",
+          label: "State",
+           class: "text-center",
+        },
+        {
+          key: "phoneNum",
+          label: "Phone Number",
+           class: "text-center",
+        },
+        {
           key: "regType",
           label: "Registration type",
           class: "text-center",

@@ -4,7 +4,7 @@
       <b-tab title="Registration" active>
         <AdminRegistrationRequests></AdminRegistrationRequests>
       </b-tab>
-      <b-tab title="Profile deletion">
+      <b-tab title="Account deletion">
         <b-tabs class="mt-3">
           <b-tab title="Admin" active>
             <AdminProfileDeletion></AdminProfileDeletion>

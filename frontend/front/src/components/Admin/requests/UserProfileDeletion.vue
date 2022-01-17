@@ -115,6 +115,11 @@ export default {
         this.acceptText = null;
         this.fetchRegisterRequests();
         this.$bvModal.hide("acceptModalUser");
+      }).catch(()=>{
+        this.requestId = null;
+        this.acceptText = null;
+        this.$bvModal.hide("acceptModalUser");
+        alert("User still has reservation, it is not recommended to allow deletion!");
       });
     },
     async fetchRegisterRequests() {

@@ -1,26 +1,28 @@
 <template>
   <div>
-      <b-table bordered striped hover :items="cottageOwners" :fields="fields">
-           <template v-slot:cell(options)="{ item }">
+    <b-table bordered striped hover :items="cottageOwners" :fields="fields">
+      <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteCottageOwner(item.email)" variant="danger"
             >Delete</b-button
           >
         </b-row>
-      
       </template>
-      </b-table>
+      <template v-slot:cell(rating)="{ item }">
+        <b-row class="m-0 p-2"> {{ item.rating }} ⭐ </b-row>
+      </template>
+    </b-table>
   </div>
 </template>
 
 <script>
-import { getAllCottageOwners,deleteCottageOwnerByEmail } from "../../../api";
+import { getAllCottageOwners, deleteCottageOwnerByEmail } from "../../../api";
 export default {
   data() {
     return {
       cottageOwners: [],
-       email:null,
-      fields:[
+      email: null,
+      fields: [
         {
           key: "address",
           label: "Address",
@@ -49,11 +51,11 @@ export default {
           key: "cottages",
           label: "Cottages",
         },
-         {
+        {
           key: "rating",
           label: "Rating",
         },
-         {
+        {
           key: "surname",
           label: "Surname",
         },
@@ -62,8 +64,6 @@ export default {
           label: "Options",
         },
       ],
-       
-       
     };
   },
   computed: {},
@@ -76,11 +76,9 @@ export default {
         .then((response) => {
           this.cottageOwners = response;
         })
-        .catch(() => {
-
-        });
+        .catch(() => {});
     },
-         async deleteCottageOwner(email) {
+    async deleteCottageOwner(email) {
       await deleteCottageOwnerByEmail(email).then(() => {
         this.fetchAllCottageOwners();
       });

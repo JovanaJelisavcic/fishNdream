@@ -99,7 +99,7 @@
           class="mt-3"
           @click="showDeleteAdminProfileModal()"
           variant="danger"
-          >Delete admin profile</b-button
+          >Delete my account</b-button
         >
         <b-modal
           id="deleteAdminProfile"
