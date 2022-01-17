@@ -10,9 +10,9 @@
 
 
 <script>
-import SearchAdventures from "../components/Adventures/SearchAdventures.vue";
-import AdventuresList from "../components/Adventures/AdventruesList.vue";
-import AdventureDetail from "../components/Adventures/AdventureDetail.vue"
+import SearchAdventures from "./SearchAdventures.vue";
+import AdventuresList from "./AdventruesList.vue";
+import AdventureDetail from "./AdventureDetail.vue"
 export default {
   name: "Adventures",
   components: {

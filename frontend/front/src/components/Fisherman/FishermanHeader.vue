@@ -1,5 +1,5 @@
 <template>
-  <div>
+     <div>
     <b-navbar
       toggleable="lg"
       class="p-3"
@@ -16,52 +16,42 @@
         <b-navbar-nav>
           <b-nav-item>
             <router-link
-              to="/admin/requests"
+              to="/fisher/explore"
               class="admin-header-item"
               active-class="admin-header-item-active"
               exact-active-class="admin-header-item-active"
             >
-              <span class="text-black">Requests</span>
+              <span class="text-black">Explore</span>
             </router-link>
           </b-nav-item>
-          <b-nav-item v-if="superAdmin == 'true'">
+          <b-nav-item>
             <router-link
-              to="/admin/admin-registration"
+             to="/fisher/myreservations"
               class="admin-header-item"
               active-class="admin-header-item-active"
               exact-active-class="admin-header-item-active"
             >
-              <span class="text-black">Admin registration</span>
+              <span class="text-black">My Reservations</span>
             </router-link></b-nav-item
           >
           <b-nav-item>
             <router-link
-              to="/admin/entity-overview"
+               to="/fisher/subscriptions"
               class="admin-header-item"
               active-class="admin-header-item-active"
               exact-active-class="admin-header-item-active"
             >
-              <span class="text-black">Entity overview</span>
+              <span class="text-black">Subscriptions</span>
             </router-link></b-nav-item
           >
           <b-nav-item>
             <router-link
-              to="/admin/reports"
+              to="/fisher/complaint"
               class="admin-header-item"
               active-class="admin-header-item-active"
               exact-active-class="admin-header-item-active"
             >
-              <span class="text-black">Reports</span>
-            </router-link></b-nav-item
-          >
-          <b-nav-item>
-            <router-link
-              to="/admin/complaints"
-              class="admin-header-item"
-              active-class="admin-header-item-active"
-              exact-active-class="admin-header-item-active"
-            >
-              <span class="text-black">Complaints</span>
+              <span class="text-black">File Complaint</span>
             </router-link></b-nav-item
           >
         </b-navbar-nav>
@@ -71,12 +61,12 @@
             <template #button-content> Options </template>
             <b-dropdown-item>
               <router-link
-                to="/admin/settings"
+                to="/fisher/myprofile"
                 class="admin-header-sub-item"
                 active-class="admin-header-sub-item-active"
                 exact-active-class="admin-header-sub-item-active"
               >
-                <span class="">Settings</span>
+                <span class="">My Profile</span>
               </router-link></b-dropdown-item
             >
             <b-dropdown-item @click="logout()">Logout</b-dropdown-item>
@@ -89,25 +79,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-      superAdmin: null,
-    };
-  },
-  methods: {
+     methods: {
     logout() {
       this.$store.dispatch("login/logout");
       this.$router.push("/");
     },
   },
-  mounted() {
-      const path = `/admin/requests`;
+  async mounted() {
+    const path = `/fisher/explore/cottages`;
     if (this.$route.path !== path) {
-      this.$router.push("/admin/requests");
+      this.$router.push("/fisher/explore/cottages");
     }
-    this.superAdmin = localStorage.getItem("isSuperAdmin");
   },
-};
+}
 </script>
 
 <style>

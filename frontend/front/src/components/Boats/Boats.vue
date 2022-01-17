@@ -10,9 +10,9 @@
 
 
 <script>
-import SearchBoats from "../components/Boats/SearchBoats.vue";
-import BoatsList from "../components/Boats/BoatsList.vue";
-import BoatDetail from "../components/Boats/BoatDetail.vue";
+import SearchBoats from "./SearchBoats.vue";
+import BoatsList from "./BoatsList.vue";
+import BoatDetail from "./BoatDetail.vue";
 export default {
   name: "Boats",
   components: {

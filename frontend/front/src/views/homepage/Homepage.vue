@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div id="top"
+    <div
       class="ui top fixed secondary menu"
       style="background-color: rgb(140, 85, 170)"
     >
       <div class="header item">
+        <h1><img src="@/assets/logo.png" />fishNdream</h1>
+
         <router-link
-          to="/fisher/explore/cottages"
+          to="/cottages"
           class="item"
           active-class="active"
           exact-active-class="active"
@@ -14,7 +16,7 @@
           Cottages
         </router-link>
         <router-link
-          to="/fisher/explore/boats"
+          to="/boats"
           class="item"
           active-class="active"
           exact-active-class="active"
@@ -22,13 +24,21 @@
           Boats
         </router-link>
         <router-link
-          to="/fisher/explore/instructors"
+          to="/instructors"
           class="item"
           active-class="active"
           exact-active-class="active"
         >
           Instructors
         </router-link>
+      </div>
+      <div class="right menu">
+        <div class="item">
+          <div class="ui primary button" @click="goRegister">Sign up</div>
+        </div>
+        <div class="item">
+          <a @click="goLogin" class="ui button"> Login </a>
+        </div>
       </div>
     </div>
     <div class="content">
@@ -38,17 +48,25 @@
 </template>
 
 <script>
-import { allCottagesFisher, allBoatsFisher, allAdventuresFisher } from "../../api";
+import { allCottages, allBoats, allAdventures } from "../../api";
 export default {
-  name: "Explore",
-   async mounted() {
-    const response = await allCottagesFisher();
+  name: "Homepage",
+  methods: {
+    goLogin() {
+      this.$router.push("/login");
+    },
+    goRegister() {
+      this.$router.push("/register");
+    }
+  },
+  async mounted() {
+    const response = await allCottages();
     this.$store.commit("cottages/setCottages", response);
-    const path = `fisher/explore/cottages`;
-    if (this.$route.path !== path) this.$router.push("/fisher/explore/cottages");
-    const responseB = await allBoatsFisher();
+    const path = `/cottages`;
+    if (this.$route.path !== path) this.$router.push("/cottages");
+    const responseB = await allBoats();
     this.$store.commit("boats/setBoats", responseB);
-    const responseA = await allAdventuresFisher();
+    const responseA = await allAdventures();
     this.$store.commit("adventures/setAdventures", responseA);
     
   },
@@ -57,13 +75,10 @@ export default {
 
 <style scoped>
 .content {
-  height: calc(100%-300px);
-  margin-top: 200px;
+  height: calc(100%-150px);
+  margin-top: 150px;
 }
 .macolor {
   background-color: rgb(140, 85, 170);
-}
-#top{
-    margin-top: 90px;
 }
 </style>

@@ -15,9 +15,9 @@
 
 
 <script>
-import SearchCottages from "../components/Cottages/SearchCottages.vue";
-import CottagesList from "../components/Cottages/CottagesList.vue";
-import CottageDetail from "../components/Cottages/CottageDetail.vue";
+import SearchCottages from "./SearchCottages.vue";
+import CottagesList from "./CottagesList.vue";
+import CottageDetail from "./CottageDetail.vue";
 export default {
   name: "Cottages",
   components: {
