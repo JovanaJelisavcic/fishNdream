@@ -80,9 +80,6 @@ export default {
           this.adventures = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
         });
     },
             async deleteAdventure(adventureId) {

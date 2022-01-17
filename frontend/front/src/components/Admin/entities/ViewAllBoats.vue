@@ -79,9 +79,6 @@ export default {
           this.boats = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
         });
     },
          async deleteBoat(boatId) {

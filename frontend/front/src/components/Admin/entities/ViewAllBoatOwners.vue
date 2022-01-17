@@ -77,9 +77,7 @@ export default {
           this.boatOwners = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
+  
         });
     },
         async deleteBoatOwner(email) {

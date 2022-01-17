@@ -337,3 +337,39 @@ export const updateFishermanData = async (params) => {
   let { data } = await axios.put("/fisherman/update", { ...params });
   return data;
 };
+
+
+export const getAllBoatSubscriptions = async () => {
+  let { data } = await axios.get("/fisherman/myBoatSubscriptions");
+  return data;
+};
+
+export const getAllCottageSubscriptions = async () => {
+  let { data } = await axios.get("/fisherman/myCottageSubscriptions");
+  return data;
+};
+
+export const getAllInstructorSubscriptions = async () => {
+  let { data } = await axios.get("/fisherman/myInstructorSubscriptions");
+  return data;
+};
+
+
+export const unsubscribeBoatByID = async (boatId) => {
+  let { data } = await axios.post(`/boat/unsubscribe/${boatId}`);
+  return data;
+};
+
+
+export const unsubscribeCottageByID = async (boatId) => {
+  let { data } = await axios.post(`/cottage/unsubscribe/${boatId}`);
+  return data;
+};
+
+export const unsubscribeInstructorByEmail = async (boatId) => {
+  let { data } = await axios.post(`/instructor/unsubscribe/${boatId}`);
+  return data;
+};
+
+
+ 

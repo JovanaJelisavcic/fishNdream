@@ -76,9 +76,7 @@ export default {
           this.instructors = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
+
         });
     },
       async deleteInstructor(email) {

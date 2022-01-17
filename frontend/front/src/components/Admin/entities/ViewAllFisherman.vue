@@ -68,9 +68,7 @@ export default {
           this.fisherman = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
+        
         });
     },
       async deleteFisherman(email) {

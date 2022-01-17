@@ -74,9 +74,7 @@ export default {
           this.cottages = response;
         })
         .catch(() => {
-          alert(
-            "Error has been made. Please check your credentials again"
-          );
+      
         });
     },
         async deleteCottage(cottageId) {
