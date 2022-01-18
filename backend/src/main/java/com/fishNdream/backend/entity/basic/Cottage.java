@@ -73,7 +73,7 @@ public class Cottage {
 	private List<AdditionalServicesCottage> additionalServices;
 	@OneToMany(
 	        mappedBy = "cottage",
-	        cascade = CascadeType.ALL,
+	        cascade = CascadeType.PERSIST,
 	        orphanRemoval = true
 	    )
 	private List<ReservationCottage> reservations;

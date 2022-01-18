@@ -95,7 +95,7 @@ public class Boat {
 
 	@OneToMany(
 	        mappedBy = "boat",
-	        cascade = CascadeType.ALL,
+	        cascade = CascadeType.PERSIST,
 	        		fetch=FetchType.EAGER,
 	        orphanRemoval = true
 	    )

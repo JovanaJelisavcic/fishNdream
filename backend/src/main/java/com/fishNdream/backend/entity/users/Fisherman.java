@@ -362,9 +362,6 @@ public class Fisherman extends UserInfo{
 
 	public void removeFK() {
 		canceledActions.forEach(a-> a.setFisherman(null));
-		reservationAdventures.forEach(a->a.setFisherman(null));
-		reservationBoats.forEach(a-> a.setFisherman(null));
-		reservationCottages.forEach(a->a.setFisherman(null));
 		subscriptionCotagges.forEach(a-> a.setFisherman(null));
 		subscriptionInstructors.forEach(a-> a.setFisherman(null));
 		subsriptionsBoats.forEach(a-> a.setFisherman(null));
@@ -388,6 +385,21 @@ public class Fisherman extends UserInfo{
 
 	public void setPenalties(int penalties) {
 		this.penalties = penalties;
+	}
+
+
+
+
+
+
+	public boolean hasFutureReservations() {
+		if(reservationAdventures.stream().anyMatch(r
+                -> (r.getBeginning().isAfter(LocalDateTime.now()) && !r.isCanceled()))
+				|| reservationBoats.stream().anyMatch(r
+		                -> (r.getBeginning().isAfter(LocalDateTime.now()) && !r.isCanceled() )) || reservationCottages.stream().anyMatch(r
+		                        -> (r.getBeginning().isAfter(LocalDateTime.now())&& !r.isCanceled()))) 
+			return true;
+		return false;
 	}
 	
 }

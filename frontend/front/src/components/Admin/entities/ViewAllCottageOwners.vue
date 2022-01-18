@@ -76,12 +76,12 @@ export default {
         .then((response) => {
           this.cottageOwners = response;
         })
-        .catch(() => {});
+        .catch(() => {this.cottageOwners=null});
     },
     async deleteCottageOwner(email) {
       await deleteCottageOwnerByEmail(email).then(() => {
         this.fetchAllCottageOwners();
-      });
+      }).catch(()=> {alert("You can't delete entity with future reservations")});
     },
   },
 };

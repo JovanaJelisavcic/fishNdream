@@ -84,12 +84,12 @@ export default {
         .then((response) => {
           this.adventures = response;
         })
-        .catch(() => {});
+        .catch(() => {this.adventures=null});
     },
     async deleteAdventure(adventureId) {
       await deleteAdventureByID(adventureId).then(() => {
         this.fetchAllAdventures();
-      });
+      }).catch(()=> {alert("You can't delete entity with future reservations")});
     },
   },
 };

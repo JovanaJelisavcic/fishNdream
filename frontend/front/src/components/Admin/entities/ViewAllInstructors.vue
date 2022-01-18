@@ -81,7 +81,7 @@ export default {
     async deleteInstructor(email) {
       await deleteInstructorByID(email).then(() => {
         this.fetchAllInstructors();
-      });
+      }).catch(()=> {alert("You can't delete entity with future reservations")});
     },
   },
 };

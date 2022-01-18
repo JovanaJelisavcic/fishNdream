@@ -81,6 +81,8 @@ public class AccountController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("It doesn't exist");
 		if (req.get().isProcessed())
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't process processed request");
+		if(fishermanRepo.getById(req.get().getFisherman().getEmail()).hasFutureReservations())
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Still has reservations");
 		req.get().setPermited(true);
 		req.get().setProcessed(true);
 		req.get().setResponse(resp);

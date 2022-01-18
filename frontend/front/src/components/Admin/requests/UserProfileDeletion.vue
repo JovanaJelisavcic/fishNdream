@@ -28,7 +28,7 @@
       <span>Explanation</span>
       <textarea class="w-100" v-model="rejectText"> </textarea>
     </b-modal>
-      <b-modal
+    <b-modal
       id="acceptModalUser"
       title="Accept request"
       @ok.prevent="acceptRegistration()"
@@ -70,12 +70,12 @@ export default {
         {
           key: "requestText",
           label: "Description",
-           class: "text-center",
+          class: "text-center",
         },
         {
           key: "options",
           label: "Options",
-           class: "text-center",
+          class: "text-center",
         },
       ],
       items: [],
@@ -110,17 +110,21 @@ export default {
       await acceptUserDeletionRequest({
         id: this.requestId,
         reason: this.acceptText,
-      }).then(() => {
-        this.requestId = null;
-        this.acceptText = null;
-        this.fetchRegisterRequests();
-        this.$bvModal.hide("acceptModalUser");
-      }).catch(()=>{
-        this.requestId = null;
-        this.acceptText = null;
-        this.$bvModal.hide("acceptModalUser");
-        alert("User still has reservation, it is not recommended to allow deletion!");
-      });
+      })
+        .then(() => {
+          this.requestId = null;
+          this.acceptText = null;
+          this.fetchRegisterRequests();
+          this.$bvModal.hide("acceptModalUser");
+        })
+        .catch(() => {
+          this.$bvModal.hide("acceptModalUser");
+          this.requestId = null;
+          this.acceptText = null;
+          alert(
+            "User still has reservations, can't be deleted!"
+          );
+        });
     },
     async fetchRegisterRequests() {
       await getUserDeletionRequests()
@@ -128,7 +132,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
-            this.items = null;
+          this.items = null;
         });
     },
   },

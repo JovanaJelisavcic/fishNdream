@@ -14,7 +14,7 @@ public interface ReservationAdventureRepository extends JpaRepository<Reservatio
 
 	Optional<ReservationAdventure> findByReservationIdAndActionRes(int actionId, boolean b);
 	
-	@Query(value="Select * from reservation_adventure where reservation_id NOT IN (SELECT reservation_id FROM revenue_item where res_type='ADVENTURE') and NOT canceled and email IS NOT NULL ", nativeQuery=true)
+	@Query(value="Select * from reservation_adventure where reservation_id NOT IN (SELECT reservation_id FROM revenue_item where res_type='ADVENTURE') and NOT canceled and email IS NOT NULL and ending<= NOW() ", nativeQuery=true)
 	List<ReservationAdventure> findUnrevenued();
 
 	

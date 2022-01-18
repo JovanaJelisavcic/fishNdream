@@ -72,12 +72,12 @@ export default {
         .then((response) => {
           this.boatOwners = response;
         })
-        .catch(() => {});
+        .catch(() => {this.boatOwners=null});
     },
     async deleteBoatOwner(email) {
       await deleteBoatOwnerByEmail(email).then(() => {
         this.fetchAllBoatOwners();
-      });
+      }).catch(()=> {alert("You can't delete entity with future reservations")});
     },
   },
 };

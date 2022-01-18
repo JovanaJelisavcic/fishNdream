@@ -601,6 +601,11 @@ insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing4.jpg'
 insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing5.jpg');
 insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing6.jpg');
 
+
+insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (2, '2022-01-19T12:00:00', false, '2022-01-22T14:00:00', 10, 500, 2, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
+
+
 insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868', 'My grandfather gave me the love for fishing', false, 4.2);
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (3, 'Uvac', 'ALways return the fish', false, 'We start from sjenicko jezero and continue towards peak', 5, 'Beloglavi supovi', 'ulago4@vimeo.com', 5.0);
@@ -612,9 +617,6 @@ insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing7.jpg'
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing8.jpg');
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing9.jpg');
 
-
-insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (2, '2022-01-19T12:00:00', false, '2022-01-22T14:00:00', 10, 500, 2, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 
 
 

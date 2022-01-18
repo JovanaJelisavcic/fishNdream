@@ -1,26 +1,25 @@
 <template>
   <div>
-      <b-table bordered striped hover :items="fisherman" :fields="fields" >
-          <template v-slot:cell(options)="{ item }">
+    <b-table bordered striped hover :items="fisherman" :fields="fields">
+      <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteFisherman(item.email)" variant="danger"
             >Delete</b-button
           >
         </b-row>
-      
       </template>
-      </b-table>
+    </b-table>
   </div>
 </template>
 
 <script>
-import { getAllFisherman,deleteFishermanByEmail } from "../../../api";
+import { getAllFisherman, deleteFishermanByEmail } from "../../../api";
 export default {
   data() {
     return {
       fisherman: [],
-      email:null,
-       fields:[
+      email: null,
+      fields: [
         {
           key: "address",
           label: "Address",
@@ -54,7 +53,6 @@ export default {
           label: "Options",
         },
       ],
-       
     };
   },
   computed: {},
@@ -67,14 +65,16 @@ export default {
         .then((response) => {
           this.fisherman = response;
         })
-        .catch(() => {
-        
-        });
+        .catch(() => {this.fisherman=null});
     },
-      async deleteFisherman(email) {
-      await deleteFishermanByEmail(email).then(() => {
-        this.fetchAllFisherman();
-      });
+    async deleteFisherman(email) {
+      await deleteFishermanByEmail(email)
+        .then(() => {
+          this.fetchAllFisherman();
+        })
+        .catch(() => {
+          alert("You can't delete entity with future reservations");
+        });
     },
   },
 };

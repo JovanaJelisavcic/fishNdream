@@ -45,6 +45,8 @@ import com.fishNdream.backend.repository.ReservationBoatRepository;
 import com.fishNdream.backend.repository.ReservationCottageRepository;
 import com.fishNdream.backend.repository.RevenueRepository;
 import com.fishNdream.backend.security.JwtUtils;
+import com.fishNdream.backend.security.User;
+import com.fishNdream.backend.security.UserRepository;
 import com.fishNdream.backend.util.RevenueUtil;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -83,6 +85,8 @@ public class SysAdminController {
 	RevenueRepository revenueRepo;
 	@Autowired
 	RevenueUtil revenueUtil;
+	@Autowired
+	UserRepository userRepository;
 	
 	@JsonView(Views.UserInfo.class)
 	@GetMapping("/myprofile")
@@ -252,6 +256,10 @@ public class SysAdminController {
 			return ResponseEntity
 		            .status(HttpStatus.FORBIDDEN)
 		            .body("You can't delete fisherman who still has reservations");		
+		
+		Optional<User> user = userRepository.findByUsername(email);
+		userRepository.deleteById(user.get().getId());
+		owner.get().removeFK();
 		fishermanRepo.deleteById(owner.get().getEmail());
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}

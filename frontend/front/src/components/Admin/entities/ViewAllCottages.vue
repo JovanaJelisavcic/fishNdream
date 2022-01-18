@@ -85,12 +85,12 @@ export default {
         .then((response) => {
           this.cottages = response;
         })
-        .catch(() => {});
+        .catch(() => {this.cottages=null});
     },
     async deleteCottage(cottageId) {
       await deleteCottageByID(cottageId).then(() => {
         this.fetchAllCottages();
-      });
+      }).catch(()=> {alert("You can't delete entity with future reservations")});
     },
   },
 };

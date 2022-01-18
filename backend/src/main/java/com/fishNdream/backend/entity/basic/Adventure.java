@@ -55,7 +55,7 @@ public class Adventure {
 	private List<AvailabilityPeriodAdventures> availablePeriods;
 	@OneToMany(
 	        mappedBy = "adventure",
-	        cascade = CascadeType.ALL,
+	        cascade = CascadeType.PERSIST,
 	        orphanRemoval = true
 	    )
 	private List<ReservationAdventure> reservations;

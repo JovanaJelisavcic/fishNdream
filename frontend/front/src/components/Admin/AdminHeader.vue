@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import {getAllReportsForAdmin} from "../../api"
 export default {
   data() {
     return {
@@ -100,7 +101,10 @@ export default {
       this.$router.push("/");
     },
   },
-  mounted() {
+ async mounted() {
+    await getAllReportsForAdmin()
+        .then(() => {
+        });
       const path = `/admin/requests`;
     if (this.$route.path !== path) {
       this.$router.push("/admin/requests");
