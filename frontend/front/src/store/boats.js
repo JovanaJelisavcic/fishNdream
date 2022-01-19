@@ -5,7 +5,9 @@ export default {
     filtered: [],
     boatId: null,
     isSubscribed: true,
-    actionsRes: null
+    actionsRes: null,
+    beginDate: null,
+    endDate: null
   },
   mutations: {
     sort(state, by, dir) {
@@ -38,6 +40,12 @@ export default {
     ,
     setActionsRes(state, data) {
       state.actionsRes = data;
+    },
+    setBeginDate(state, data) {
+      state.beginDate = data;
+    },
+    setEndDate(state, data) {
+      state.endDate = data;
     }
   },
   actions: {
@@ -53,6 +61,10 @@ export default {
       return state.isSubscribed;
     }, getActionsRes(state) {
       return state.actionsRes;
+    },getBeginDate(state) {
+      return state.beginDate;
+    },getEndDate(state) {
+      return state.endDate;
     }
   
   }

@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -109,15 +111,12 @@ public class CottageController {
 		 return  cottagesRepo.findAll();
 	}
 	
-	@GetMapping("/{id}/stillFree/{beginDate}/{endDate}")
+	@GetMapping("/{id}/stillFree")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public boolean isStillFree(@PathVariable int id, @PathVariable LocalDateTime beginDate, @PathVariable LocalDateTime endDate  )  {	
+	public boolean isStillFree(@PathVariable int id, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime begin, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end  )  {	
 		Optional<Cottage> cottage =  cottagesRepo.findById(id);
 		if(cottage.isEmpty()) return false;
-	//	DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-		//LocalDateTime begin = LocalDateTime.parse(beginDate, format);
-		// end = LocalDateTime.parse(endDate, format);
-		if(cottage.get().isAvailableAndFree(beginDate,endDate)) return true;
+		if(cottage.get().isAvailableAndFree(begin,end)) return true;
 		return false;
 	}
 	

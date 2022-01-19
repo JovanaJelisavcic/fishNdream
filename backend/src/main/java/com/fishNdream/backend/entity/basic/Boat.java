@@ -396,7 +396,9 @@ public class Boat {
 		List<ReservationBoat> res = new ArrayList<>();
 		for(ReservationBoat reservation : reservations) {
 				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()==null)
-					res.add(reservation);
+				{
+					
+					res.add(reservation);}
 		}
 		return res;
 	}

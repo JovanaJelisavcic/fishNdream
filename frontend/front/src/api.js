@@ -111,6 +111,16 @@ export const reserveActionCottage = async (param) => {
   return data;
 };
 
+export const reserveActionBoat = async (param) => {
+  let { data } = await axios.post(`/reservationBoat/actions/reserve/${param}`);
+  return data;
+};
+
+export const reserveActionAdventure = async (param) => {
+  let { data } = await axios.post(`/reservationAdventure/actions/reserve/${param}`);
+  return data;
+};
+
 export const searchCottagesFisherman = async (params) => {
   let { data } = await axios.post("/search/cottages/fisher", { ...params });
   return data;
@@ -127,7 +137,17 @@ export const searchAdventuresFisherman = async (params) => {
 };
 
 export const isStillFreeCottage = async (id, beginDate, endDate) => {
-  let { data } = await axios.get(`/cottage/${id}/stillFree/${beginDate}/${endDate}`);
+  let { data } = await axios.get(`/cottage/${id}/stillFree?begin=${beginDate}&end=${endDate}`);
+  return data;
+};
+
+export const isStillFreeBoat = async (id, beginDate, endDate) => {
+  let { data } = await axios.get(`/boat/${id}/stillFree?begin=${beginDate}&end=${endDate}`);
+  return data;
+};
+
+export const isStillFreeAdventure = async (id, beginDate, endDate) => {
+  let { data } = await axios.get(`/instructor/${id}/stillFree?begin=${beginDate}&end=${endDate}`);
   return data;
 };
 

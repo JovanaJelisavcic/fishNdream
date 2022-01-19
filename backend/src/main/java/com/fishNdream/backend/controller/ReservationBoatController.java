@@ -117,6 +117,13 @@ public class ReservationBoatController {
 		fisherman.get().addReservationBoat(action.get());
 		action.get().getBoat().changeActionRes(action.get().getReservationId(), fisherman.get());
 		
+		boolean containsCapetain =action.get().getAdditionalServices().stream().anyMatch(a
+                -> (a.getName().equals("Capetain")));
+		
+		
+		
+		action.get().getBoat().removeAction(action.get().getBeginning(),action.get().getEnding(), containsCapetain );
+		
 		fishermanRepo.save(fisherman.get());
 		boatRepo.save(action.get().getBoat());
 

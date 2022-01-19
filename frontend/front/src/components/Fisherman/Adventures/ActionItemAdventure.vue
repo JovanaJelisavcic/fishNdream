@@ -14,13 +14,13 @@
       <b-row>
         <b-col>
           <h4>
-            📅 {{ moment(action.beginning).format("YYYY-MM-DD") }} to
-            {{ moment(action.ending).format("YYYY-MM-DD") }}<br />
+            📅 {{ moment(action.beginning).format("YYYY-MM-DD HH:mm") }} to
+            {{ moment(action.ending).format("YYYY-MM-DD HH:mm") }}<br />
           </h4>
           ONLY AVAILABLE UNTIL
           {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
           <br />
-          <h6>{{ action.price }}$ for {{ action.participantsNum }}👤 for {{action.duration}} nights </h6>
+          <h6>{{ action.price }}$ for {{ action.participantsNum }}👤 for {{action.duration}} hours </h6>
           <small>{{action.discount.toFixed(2)}}% discount from {{action.originalPrice}}$</small>
         </b-col>
         <b-col>
@@ -41,10 +41,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { isStillFreeCottage, reserveActionCottage } from "../../../api";
+import { isStillFreeAdventure, reserveActionAdventure } from "../../../api";
 import moment from "moment";
 export default {
-  name: "ActionItemCottage",
+  name: "ActionItemAdventure",
   props: ["action"],
   data() {
     return {
@@ -54,13 +54,13 @@ export default {
   },
   methods: {
     async reserveAction(e, reservationId) {
-       await reserveActionCottage(reservationId).catch(()=>alert("You already canceled this reservation"));
+       await reserveActionAdventure(reservationId).catch(()=>alert("You already canceled this reservation"));
       this.showReserved=true;
       this.showButton=false;
       if(this.beginDate!=null){
-       let b= await isStillFreeCottage(this.action.cottage.cottageId,new Date(this.beginDate).toISOString(),new Date(this.endDate).toISOString());
+       let b= await isStillFreeAdventure(this.action.adventure.adventureId,this.beginDate,this.endDate);
            if(!b){
-               this.$emit("notAvaiableAnymore", this.action.cottage.cottageId);
+               this.$emit("notAvaiableAnymore", this.action.adventure.adventureId);
            }
       }
      
@@ -69,10 +69,10 @@ export default {
   },
   computed:{
     beginDate: {
-      ...mapGetters("cottages", { get: "getBeginDate" }),
+      ...mapGetters("adventures", { get: "getBeginDate" }),
     },
     endDate: {
-      ...mapGetters("cottages", { get: "getEndDate" }),
+      ...mapGetters("adventures", { get: "getEndDate" }),
     }
   }
 };

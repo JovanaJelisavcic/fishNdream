@@ -44,12 +44,19 @@ export default {
    async mounted() {
     const response = await allCottagesFisher();
     this.$store.commit("cottages/setCottages", response);
-    const path = `fisher/explore/cottages`;
-    if (this.$route.path !== path) this.$router.push("/fisher/explore/cottages");
     const responseB = await allBoatsFisher();
     this.$store.commit("boats/setBoats", responseB);
     const responseA = await allAdventuresFisher();
     this.$store.commit("adventures/setAdventures", responseA);
+
+    this.$store.commit("adventures/setBeginDate", null);
+    this.$store.commit("cottages/setBeginDate", null);
+    this.$store.commit("boats/setBeginDate", null);
+
+    
+    this.$store.commit("adventures/setEndDate", null);
+    this.$store.commit("cottages/setEndDate", null);
+    this.$store.commit("boats/setEndDate", null);
     
   },
 };

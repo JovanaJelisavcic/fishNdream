@@ -58,46 +58,24 @@
         <b-table striped :items="items"></b-table>
       </b-col>
     </b-row>
-    <b-row
-      ><div class="actions ui middle aligned divided list" v-if="actions">
-        <h3>Are you interested in promotions?</h3>
-        <div
+    <b-row>
+      <div class="actions ui middle aligned divided list" v-if="actions">
+        <ActionItemBoat
+          @notAvaiableAnymore="onActionConflicted"
           class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
-        >
-          <div class="right floated content">
-            <div class="ui button resA-button">Reserve Promotion</div>
-          </div>
-          <div class="content">
-            <b-row>
-              <b-col>
-                <h4>
-                  📅
-                  {{ moment(action.beginning).format("YYYY-MM-DD HH:mm") }} to
-                  {{ moment(action.ending).format("YYYY-MM-DD HH:mm") }}<br />
-                </h4>
-                ONLY AVAILABLE UNTIL
-                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
-                <br />
-                {{ action.price }}$ for {{ action.participantsNum }}👤
-              </b-col>
-              <b-col>
-                <div v-if="action.additionalServices">
-                  <div
-                    v-for="service in action.additionalServices"
-                    v-bind:key="service.serviceId"
-                  >
-                    {{ service.name }}
-                  </div>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
-        </div>
+          :action="action"
+          @reserved="onActionReserved"
+        ></ActionItemBoat>
       </div>
       <div v-if="!actions">There are no active promotions for this boat</div>
     </b-row>
+    <div class="reservation-part" v-if="showMainReserve">
+      <button class="ui positive huge button">Reserve</button> for dates you
+      searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
+      {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
+    </div>
     <b-row>
       <vue-cal
         class="vuecal--green-theme"
@@ -117,10 +95,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { subscribeBoat } from "../../../api";
+import { getActionsBoat, subscribeBoat } from "../../../api";
 import moment from "moment";
+import ActionItemBoat from "./ActionItemBoat.vue";
 export default {
   name: "BoatDetailFisher",
+  components: {
+    ActionItemBoat,
+  },
   props: ["boat"],
   data() {
     return {
@@ -128,10 +110,22 @@ export default {
       currentNumber: 0,
       timer: null,
       currentDate: new Date(),
+      boatNoShow: [0],
+      actions: [],
     };
+  },
+  async mounted() {
+    await this.getAllActions(this.boat.boatId);
   },
 
   methods: {
+    onActionReserved(id) {
+      console.log(id);
+      this.getAllActions(id);
+    },
+    onActionConflicted(id) {
+      this.boatNoShow.push(id);
+    },
     next: function () {
       this.currentNumber += 1;
     },
@@ -142,10 +136,23 @@ export default {
       await subscribeBoat(this.boat.boatId);
       this.$store.commit("boats/setIsSubscribed", true);
     },
-    moment
+    moment,
+    async getAllActions(id) {
+      console.log(id);
+      this.actions = await getActionsBoat(id).catch(
+        () => (this.actions = null)
+      );
+    },
   },
 
   computed: {
+    showMainReserve() {
+      let includes = this.boatNoShow
+        ? this.boatNoShow.includes(this.boat.boatId)
+        : false;
+      if (includes || this.beginDate == null) return false;
+      return true;
+    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -180,19 +187,22 @@ export default {
     isSubscribedBoat: {
       ...mapGetters("boats", { get: "getIsSubscribed" }),
     },
-    actions: {
-      ...mapGetters("boats", { get: "getActionsRes" }),
+    beginDate: {
+      ...mapGetters("boats", { get: "getBeginDate" }),
+    },
+    endDate: {
+      ...mapGetters("boats", { get: "getEndDate" }),
     },
   },
 };
 </script>
 
 <style scoped>
+.reservation-part {
+  margin-top: 20px;
+}
 .actions {
   margin-left: 25px;
-}
-.resA-button {
-  margin-right: 100px;
 }
 #subs-button {
   margin-top: 0px;

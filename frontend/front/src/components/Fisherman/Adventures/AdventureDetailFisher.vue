@@ -58,46 +58,25 @@
         <b-table striped :items="items"></b-table>
       </b-col>
     </b-row>
-    <b-row
-      ><div class="actions ui middle aligned divided list" v-if="actions">
-        <h3>Are you interested in promotions?</h3>
-        <div
+    <b-row>
+      <div class="actions ui middle aligned divided list" v-if="actions">
+        <ActionItemAdventure
+          @notAvaiableAnymore="onActionConflicted"
           class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
-        >
-          <div class="right floated content">
-            <div class="ui button resA-button">Reserve Promotion</div>
-          </div>
-          <div class="content">
-            <b-row>
-              <b-col>
-                <h4>
-                  📅
-                  {{ moment(action.beginning).format("YYYY-MM-DD HH:mm") }} to
-                  {{ moment(action.ending).format("YYYY-MM-DD HH:mm") }} <br />
-                </h4>
-                ONLY AVAILABLE UNTIL
-                {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
-                <br />
-                {{ action.price }}$ for {{ action.participantsNum }}👤
-              </b-col>
-              <b-col>
-                <div v-if="action.additionalServices">
-                  <div
-                    v-for="service in action.additionalServices"
-                    v-bind:key="service.serviceId"
-                  >
-                    {{ service.name }}
-                  </div>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
-        </div>
+          :action="action"
+        ></ActionItemAdventure>
       </div>
-      <div v-if="!actions">There are no active promotions for this cottage</div>
+      <div v-if="!actions">
+        There are no active promotions for this adventure
+      </div>
     </b-row>
+    <div class="reservation-part" v-if="showMainReserve">
+      <button class="ui positive huge button">Reserve</button> for dates you
+      searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
+      {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
+    </div>
   </div>
 </template>
 
@@ -105,18 +84,26 @@
 import { mapGetters } from "vuex";
 import { subscribeInstructor } from "../../../api";
 import moment from "moment";
+import ActionItemAdventure from "./ActionItemAdventure.vue";
 export default {
   name: "AdventureDetailFisher",
   props: ["adventure"],
+  components: {
+    ActionItemAdventure,
+  },
   data() {
     return {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
       currentNumber: 0,
       timer: null,
+      adventureNoShow: [0],
     };
   },
 
   methods: {
+    onActionConflicted(id) {
+      this.adventureNoShow.push(id);
+    },
     next: function () {
       this.currentNumber += 1;
     },
@@ -127,10 +114,17 @@ export default {
       await subscribeInstructor(this.adventure.instructor.email);
       this.$store.commit("adventures/setIsSubscribed", true);
     },
-    moment
+    moment,
   },
 
   computed: {
+    showMainReserve() {
+      let includes = this.adventureNoShow
+        ? this.adventureNoShow.includes(this.adventure.adventureId)
+        : false;
+      if (includes || this.beginDate == null) return false;
+      return true;
+    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -157,16 +151,22 @@ export default {
     actions: {
       ...mapGetters("adventures", { get: "getActionsRes" }),
     },
+    beginDate: {
+      ...mapGetters("adventures", { get: "getBeginDate" }),
+    },
+    endDate: {
+      ...mapGetters("adventures", { get: "getEndDate" }),
+    },
   },
 };
 </script>
 
 <style scoped>
+.reservation-part{
+  margin-top: 20px;
+}
 .actions {
   margin-left: 25px;
-}
-.resA-button {
-  margin-right: 100px;
 }
 #subs-button {
   margin-top: 0px;

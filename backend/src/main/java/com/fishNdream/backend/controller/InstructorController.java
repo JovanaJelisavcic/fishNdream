@@ -1,12 +1,14 @@
 package com.fishNdream.backend.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -116,5 +119,13 @@ public class InstructorController {
 		 return new ResponseEntity<>(instructor, HttpStatus.OK);
 	}
 	
+	@GetMapping("/{id}/stillFree")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public boolean isStillFree(@PathVariable int id, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime begin, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end  )  {	
+		Optional<Adventure> adv =  adventureRepo.findById(id);
+		if(adv.isEmpty()) return false;
+		if(adv.get().isAvailableAndFree(begin,end)) return true;
+		return false;
+	}
 }
 

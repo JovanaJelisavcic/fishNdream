@@ -58,7 +58,7 @@ insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
 values (4, '2021-12-30T18:00:00', false, '2021-12-30T19:00:00', 4, 45, 1,'glodder9@last.fm' , false, null, null,10);
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
-values (5, '2021-12-26T12:00:00', false, '2021-12-26T14:00:00', 2,100 , 1, null, true, '2021-11-20T14:00:00', '2021-12-24T15:00:00', 10);
+values (5, '2022-08-25T12:00:00', false, '2022-08-25T14:00:00', 2,80 , 1, null, true, '2021-11-20T14:00:00', '2022-12-24T15:00:00', 10);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,3);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
@@ -96,7 +96,7 @@ insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
 values (10, '2021-12-30T18:00:00', false, '2021-12-30T19:00:00', 4, 45, 2, 'lrymmer1@merriam-webster.com' , false, null, null,10);
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE)
-values (11, '2021-12-26T12:00:00', false, '2021-12-26T14:00:00', 2, 75 , 2, null, true, '2021-11-20T14:00:00', '2021-12-24T15:00:00', 10);
+values (11, '2022-08-25T12:00:00', false, '2022-08-25T14:00:00', 2, 75 , 2, null, true, '2021-11-20T14:00:00', '2022-12-24T15:00:00', 10);
 insert into reservation_boat_additional_services(RESERVATION_BOAT_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(11,4);
 
 insert into reservation_boat (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, BOAT_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
@@ -377,7 +377,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,1);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (6, '2022-02-28T12:00:00', false, '2021-03-04T14:00:00', 5, 300, 1, null , true, '2021-11-19T14:00:00','2022-01-20T14:00:00', 10 );
+values (6, '2022-02-28T12:00:00', false, '2022-03-04T14:00:00', 5, 200, 1, null , true, '2021-11-19T14:00:00','2022-01-20T14:00:00', 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,1);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,2);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(6,5);
@@ -603,7 +603,7 @@ insert into adventure_pics(adventure_id,adventure_pics) values(2, 'fishing6.jpg'
 
 
 insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
-values (2, '2022-01-19T12:00:00', false, '2022-01-22T14:00:00', 10, 500, 2, 'opiscopo0@storify.com', true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
+values (2, '2022-08-20T12:00:00', false, '2022-08-22T14:00:00', 10, 400, 2, null, true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 
 
 insert into instructor (name, surname, email, address, city, state, phone_num, short_bio, deleted, rating) values ('Ursula', 'Lago', 'ulago4@vimeo.com', '70075 Dwight Center', 'Rabat', 'Morocco', '110-752-9868', 'My grandfather gave me the love for fishing', false, 4.2);

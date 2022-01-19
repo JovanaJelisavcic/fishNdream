@@ -59,7 +59,7 @@
           name
         </option>
         <option
-        value="rating"
+          value="rating"
           v-bind:class="[sortBy === 'rating' ? sortDirection : '']"
         >
           rating
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { searchAdventures } from "../../api";
+import { searchAdventures, searchAdventuresFisherman } from "../../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchAdventures",
@@ -143,18 +143,37 @@ export default {
       }
     },
     async callSearch() {
-      var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
-      this.beginning = bsa[0] + " " + bsa[1];
-      bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
-      this.ending = bsa[0] + " " + bsa[1];
-      await searchAdventures({
-        location: this.location,
-        guestsNum: this.guestsNum,
-        dateTime: this.beginning,
-        endTime: this.ending,
-      }).then((response) => {
-        this.$store.commit("adventures/setAdventures", response);
-      });
+      var bsa = this.startDate.split("T");
+      this.beginning = bsa[0] + " " + bsa[1]+ ":00";
+      bsa = this.endDate.split("T");
+      this.ending = bsa[0] + " " + bsa[1]+ ":00";
+
+      let role = localStorage.getItem("role");
+      if (role == "FISHERMAN") {
+        await searchAdventuresFisherman({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        })
+          .then((response) => {
+            this.$store.commit("adventures/setAdventures", response);
+            this.$store.commit("adventures/setBeginDate", this.startDate);
+            this.$store.commit("adventures/setEndDate", this.endDate);
+          })
+          .catch(this.$store.commit("adventures/setAdventures", null));
+      } else {
+        await searchAdventures({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        })
+          .then((response) => {
+            this.$store.commit("adventures/setAdventures", response);
+          })
+          .catch(this.$store.commit("boats/setAdventures", null));
+      }
     },
     priceFilterChanged() {
       this.$emit("searchSubmitted");
@@ -180,7 +199,7 @@ export default {
       var minDate = new Date(this.startDate);
       minDate.setHours(minDate.getHours() + 8);
       return minDate.toISOString();
-    }
+    },
   },
 };
 </script>

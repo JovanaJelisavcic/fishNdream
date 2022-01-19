@@ -41,18 +41,17 @@ public class ReservationCottage extends ReservationInfo {
 	
 	@PostLoad
     public void doStuff(){
-		duration = ChronoUnit.DAYS.between(super.getBeginning(), super.getEnding());
-		//koliko je procenata od cene ovo e pa onda 100-to
-		discount = 100-calculateDiscountPricePrc();
+		this.duration = ChronoUnit.DAYS.between(super.getBeginning(), super.getEnding());
+		this.discount = 100-calculateDiscountPricePrc();
     }
 	
 	private float calculateDiscountPricePrc() {
-		float original=cottage.getPrice()*duration;
-		for(AdditionalServicesCottage s : additionalServices) {
+		float original=this.cottage.getPrice()*this.duration;
+		for(AdditionalServicesCottage s : this.additionalServices) {
 			original+=s.getPrice();
 		}
 		this.originalPrice=original;
-		return super.getPrice()*100/original;
+		return super.getPrice()*100/this.originalPrice;
 		
 	}
 

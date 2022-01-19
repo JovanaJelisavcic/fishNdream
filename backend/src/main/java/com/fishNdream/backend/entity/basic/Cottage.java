@@ -279,7 +279,9 @@ public class Cottage {
 		List<ReservationCottage> res = new ArrayList<>();
 		for(ReservationCottage reservation : reservations) {
 				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()==null)
-					res.add(reservation);
+					{
+				
+					res.add(reservation);}
 		}
 		return res;
 	}

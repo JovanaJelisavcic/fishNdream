@@ -49,9 +49,24 @@
     <b-col class="sort-panel">
       <select class="ui dropdown pull-right" @change="sort">
         <option value="">Sort by</option>
-        <option v-bind:class="[sortBy === 'name' ? sortDirection : '']" value="name">name</option>
-        <option  v-bind:class="[sortBy === 'rating' ? sortDirection : '']" value="rating">rating</option>
-        <option v-bind:class="[sortBy === 'address' ? sortDirection : '']" value="address">location</option>
+        <option
+          v-bind:class="[sortBy === 'name' ? sortDirection : '']"
+          value="name"
+        >
+          name
+        </option>
+        <option
+          v-bind:class="[sortBy === 'rating' ? sortDirection : '']"
+          value="rating"
+        >
+          rating
+        </option>
+        <option
+          v-bind:class="[sortBy === 'address' ? sortDirection : '']"
+          value="address"
+        >
+          location
+        </option>
       </select>
     </b-col>
     <b-col>
@@ -82,7 +97,7 @@
 </template>
 
 <script>
-import { searchBoats } from "../../api";
+import { searchBoats, searchBoatsFisherman } from "../../api";
 import Slider from "@vueform/slider/dist/slider.vue2.js";
 export default {
   name: "SearchBoats",
@@ -125,18 +140,38 @@ export default {
       }
     },
     async callSearch() {
-      var bsa = new Date(this.startDate).toISOString().split(".")[0].split("T");
-      this.beginning = bsa[0] + " " + bsa[1];
-      bsa = new Date(this.endDate).toISOString().split(".")[0].split("T");
-      this.ending = bsa[0] + " " + bsa[1];
-      await searchBoats({
-        location: this.location,
-        guestsNum: this.guestsNum,
-        dateTime: this.beginning,
-        endTime: this.ending,
-      }).then((response) => {
-        this.$store.commit("boats/setBoats", response);
-      });
+      var bsa = this.startDate.split("T");
+      this.beginning = bsa[0] + " " + bsa[1]+ ":00";
+      bsa = this.endDate.split("T");
+      this.ending = bsa[0] + " " + bsa[1]+ ":00";
+
+      let role = localStorage.getItem("role");
+      if (role == "FISHERMAN") {
+        await searchBoatsFisherman({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        })
+          .then((response) => {
+            console.log(this.startDate, this.endDate, this.beginning, this.ending);
+            this.$store.commit("boats/setBoats", response);
+            this.$store.commit("boats/setBeginDate", this.startDate);
+            this.$store.commit("boats/setEndDate", this.endDate);
+          })
+          .catch(this.$store.commit("boats/setBoats", null));
+      } else {
+        await searchBoats({
+          location: this.location,
+          guestsNum: this.guestsNum,
+          dateTime: this.beginning,
+          endTime: this.ending,
+        })
+          .then((response) => {
+            this.$store.commit("boats/setBoats", response);
+          })
+          .catch(this.$store.commit("boats/setBoats", null));
+      }
     },
     priceFilterChanged() {
       this.$emit("searchSubmitted");
@@ -157,7 +192,7 @@ export default {
       var minDate = new Date(this.startDate);
       minDate.setHours(minDate.getHours() + 1);
       return minDate.toISOString();
-    }
+    },
   },
 };
 </script>
@@ -264,12 +299,12 @@ export default {
 .sort-panel {
   margin-left: 1000px;
 }
-.asc:after{
-            content: "\25B2"
-        }
+.asc:after {
+  content: "\25B2";
+}
 
-        .desc:after{
-            content: "\25BC"
-        }
+.desc:after {
+  content: "\25BC";
+}
 </style>
 

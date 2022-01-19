@@ -207,7 +207,9 @@ public class Adventure {
 		List<ReservationAdventure> res = new ArrayList<>();
 		for(ReservationAdventure reservation : reservations) {
 				if(reservation.isActionRes() && reservation.getActionStartTime().isBefore(LocalDateTime.now()) && reservation.getActionEndTime().isAfter(LocalDateTime.now()) && reservation.getFisherman()==null)
-					res.add(reservation);
+				{
+				
+					res.add(reservation);}
 		}
 		return res;
 	}

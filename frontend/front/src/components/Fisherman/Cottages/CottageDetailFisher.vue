@@ -77,12 +77,12 @@ export default {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
       currentNumber: 0,
       timer: null,
+      cottageNoShow: [0],
     };
   },
-
   methods: {
-    onActionConflicted(){
-      this.showMainReserve=false;
+    onActionConflicted(id){
+     this.cottageNoShow.push(id);
     },
     next: function () {
       this.currentNumber += 1;
@@ -97,9 +97,10 @@ export default {
   },
 
   computed: {
-    showMainReserve() {
-      if(this.beginDate!=null) return true;
-      return false;
+    showMainReserve(){
+      let includes = this.cottageNoShow? this.cottageNoShow.includes(this.cottage.cottageId) : false;
+      if( includes || this.beginDate==null ) return false; 
+       return true;
     },
     currentImage: function () {
       return this.computeImgArray[

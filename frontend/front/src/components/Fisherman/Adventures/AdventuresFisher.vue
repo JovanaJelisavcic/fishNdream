@@ -3,7 +3,7 @@
     <b-row><SearchAdventures @searchSubmitted="onSearchSubmitted" /></b-row>
     <b-row>
       <AdventuresList @adventureSelect="onAdventureSelect" class="seconrow" />
-      <AdventureDetailFisher :adventure="selectedAdventure" />
+      <AdventureDetailFisher v-if="selectedAdventure" :adventure="selectedAdventure" />
     </b-row>
   </div>
 </template>

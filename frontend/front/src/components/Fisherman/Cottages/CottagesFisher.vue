@@ -6,7 +6,7 @@
     <b-row>
       <CottagesList @cottageSelect="onCottageSelect" class="seconrow" />
 
-      <CottageDetailFisher :cottage="selectedCottage" />
+      <CottageDetailFisher v-if="selectedCottage" :cottage="selectedCottage" />
     </b-row>
   </div>
 </template>
