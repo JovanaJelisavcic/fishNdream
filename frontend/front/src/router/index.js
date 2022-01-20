@@ -23,6 +23,7 @@ import AdminRegistration from "../views/admin/AdminRegistration.vue";
 import AdminEntityOverview from "../views/admin/AdminEntityOverview.vue";
 import AdminReports from "../views/admin/AdminReports.vue";
 import AdminComplaints from "../views/admin/AdminComplaints.vue";
+import ChangePassword from "../components/Admin/ChangePassword.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -215,6 +216,16 @@ const routes = [
       userAuth: false,
     },
   },
+  {
+    path: "/changePass",
+    name: "ChangePassword",
+    component: ChangePassword,
+    meta: {
+      requiresAuth: true,
+      adminAuth: true,
+      userAuth: false,
+    },
+  },
 ];
 
 store.commit("login/fillState");
@@ -229,11 +240,14 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let role = localStorage.getItem('role');
   let accessToken = localStorage.getItem('token');
+  let first = localStorage.getItem('first');
   if(to.path=="/" && role=="FISHERMAN"){
     router.push({path: '/fisher/explore'});
   }
-  if(to.path=="/" && role=="SYS_ADMIN"){
+  if(to.path=="/" && role=="SYS_ADMIN" && first=="false"){
     router.push({path: '/admin'});
+  }else if((to.path=="/" || to.path=="/admin" )&& role=="SYS_ADMIN" && first=="true"){
+    router.push({path: '/changePass'});
   }
   if (to.meta.requiresAuth) {
     if (!role || !accessToken) {

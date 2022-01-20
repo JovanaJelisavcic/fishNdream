@@ -1,4 +1,5 @@
 <template>
+<div>
   <form @submit.prevent="changePassword">
     <b-form-group label="Current password:">
       <b-form-input
@@ -35,6 +36,7 @@
       Update password
     </b-button>
   </form>
+</div>
 </template>
 
 <script>

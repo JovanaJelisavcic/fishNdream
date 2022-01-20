@@ -5,9 +5,10 @@ export default {
     filtered: [],
     adventureId: null,
     isSubscribed: true,
-    actionsRes : null,
+    actionsRes: null,
     beginDate: null,
-    endDate: null
+    endDate: null,
+    isReservable: null
   },
   mutations: {
     sort(state, by, dir) {
@@ -36,7 +37,7 @@ export default {
     },
     setIsSubscribed(state, data) {
       state.isSubscribed = data;
-    }, 
+    },
     setActionsRes(state, data) {
       state.actionsRes = data;
     },
@@ -45,7 +46,9 @@ export default {
     },
     setEndDate(state, data) {
       state.endDate = data;
-    }
+    }, setIsReservable(state, data) {
+      state.isReservable = data;
+    },
   },
   actions: {
 
@@ -60,10 +63,12 @@ export default {
       return state.isSubscribed;
     }, getActionsRes(state) {
       return state.actionsRes;
-    },getBeginDate(state) {
+    }, getBeginDate(state) {
       return state.beginDate;
-    },getEndDate(state) {
+    }, getEndDate(state) {
       return state.endDate;
+    }, getIsReservable(state) {
+      return state.isReservable;
     }
   }
 };

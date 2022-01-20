@@ -42,21 +42,23 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-row
-      >
+    <b-row>
       <div class="actions ui middle aligned divided list" v-if="actions">
-          <ActionItemCottage
-          @notAvaiableAnymore="onActionConflicted"
-            class="item"
+        <ActionItemCottage
+          class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
           :action="action"
-          ></ActionItemCottage>
+        ></ActionItemCottage>
       </div>
 
       <div v-if="!actions">There are no active promotions for this cottage</div>
     </b-row>
-    <div class="reservation-part" v-if="showMainReserve"><button class="ui positive huge button" >Reserve</button> for dates you searched {{moment(beginDate).format("YYYY-MM-DD")}} to {{moment(endDate).format("YYYY-MM-DD")}}  </div>
+    <div class="reservation-part" v-if="reservable">
+      <button class="ui positive huge button">Reserve</button> for dates you
+      searched {{ moment(beginDate).format("YYYY-MM-DD") }} to
+      {{ moment(endDate).format("YYYY-MM-DD") }}
+    </div>
   </div>
 </template>
 
@@ -64,12 +66,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { subscribeCottage } from "../../../api";
-import ActionItemCottage from "./ActionItemCottage.vue"
+import ActionItemCottage from "./ActionItemCottage.vue";
 import moment from "moment";
 export default {
   name: "CottageDetailFisher",
-  components:{
-    ActionItemCottage
+  components: {
+    ActionItemCottage,
   },
   props: ["cottage"],
   data() {
@@ -77,13 +79,9 @@ export default {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
       currentNumber: 0,
       timer: null,
-      cottageNoShow: [0],
     };
   },
   methods: {
-    onActionConflicted(id){
-     this.cottageNoShow.push(id);
-    },
     next: function () {
       this.currentNumber += 1;
     },
@@ -93,15 +91,11 @@ export default {
     async goSubscribe() {
       await subscribeCottage(this.cottage.cottageId);
       this.$store.commit("cottages/setIsSubscribed", true);
-    },moment
+    },
+    moment,
   },
 
   computed: {
-    showMainReserve(){
-      let includes = this.cottageNoShow? this.cottageNoShow.includes(this.cottage.cottageId) : false;
-      if( includes || this.beginDate==null ) return false; 
-       return true;
-    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -133,13 +127,16 @@ export default {
     },
     endDate: {
       ...mapGetters("cottages", { get: "getEndDate" }),
-    }
+    },
+    reservable: {
+      ...mapGetters("cottages", { get: "getIsReservable" }),
+    },
   },
 };
 </script>
 
 <style scoped>
-.reservation-part{
+.reservation-part {
   margin-top: 20px;
 }
 .actions {

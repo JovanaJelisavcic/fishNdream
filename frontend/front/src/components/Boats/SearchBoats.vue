@@ -154,7 +154,6 @@ export default {
           endTime: this.ending,
         })
           .then((response) => {
-            console.log(this.startDate, this.endDate, this.beginning, this.ending);
             this.$store.commit("boats/setBoats", response);
             this.$store.commit("boats/setBeginDate", this.startDate);
             this.$store.commit("boats/setEndDate", this.endDate);

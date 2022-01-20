@@ -61,17 +61,15 @@
     <b-row>
       <div class="actions ui middle aligned divided list" v-if="actions">
         <ActionItemBoat
-          @notAvaiableAnymore="onActionConflicted"
           class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
           :action="action"
-          @reserved="onActionReserved"
         ></ActionItemBoat>
       </div>
       <div v-if="!actions">There are no active promotions for this boat</div>
     </b-row>
-    <div class="reservation-part" v-if="showMainReserve">
+    <div class="reservation-part" v-if="reservable">
       <button class="ui positive huge button">Reserve</button> for dates you
       searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
       {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
@@ -95,7 +93,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getActionsBoat, subscribeBoat } from "../../../api";
+import { subscribeBoat } from "../../../api";
 import moment from "moment";
 import ActionItemBoat from "./ActionItemBoat.vue";
 export default {
@@ -110,22 +108,11 @@ export default {
       currentNumber: 0,
       timer: null,
       currentDate: new Date(),
-      boatNoShow: [0],
-      actions: [],
     };
-  },
-  async mounted() {
-    await this.getAllActions(this.boat.boatId);
   },
 
   methods: {
-    onActionReserved(id) {
-      console.log(id);
-      this.getAllActions(id);
-    },
-    onActionConflicted(id) {
-      this.boatNoShow.push(id);
-    },
+
     next: function () {
       this.currentNumber += 1;
     },
@@ -137,22 +124,9 @@ export default {
       this.$store.commit("boats/setIsSubscribed", true);
     },
     moment,
-    async getAllActions(id) {
-      console.log(id);
-      this.actions = await getActionsBoat(id).catch(
-        () => (this.actions = null)
-      );
-    },
   },
 
   computed: {
-    showMainReserve() {
-      let includes = this.boatNoShow
-        ? this.boatNoShow.includes(this.boat.boatId)
-        : false;
-      if (includes || this.beginDate == null) return false;
-      return true;
-    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -192,6 +166,12 @@ export default {
     },
     endDate: {
       ...mapGetters("boats", { get: "getEndDate" }),
+    },
+    actions: {
+      ...mapGetters("boats", { get: "getActionsRes" }),
+    },
+    reservable: {
+      ...mapGetters("boats", { get: "getIsReservable" }),
     },
   },
 };

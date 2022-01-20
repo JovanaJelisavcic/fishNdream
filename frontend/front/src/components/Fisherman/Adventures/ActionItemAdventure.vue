@@ -2,13 +2,11 @@
   <div>
     <div class="right floated content">
       <button
-        v-if="showButton"
         class="ui button purple resA-button"
         @click="reserveAction($event, action.reservationId)"
       >
         Reserve Promotion
       </button>
-        <p class="resA-button" v-if="showReserved">Reserved!</p>
     </div>
     <div class="content">
       <b-row>
@@ -20,8 +18,14 @@
           ONLY AVAILABLE UNTIL
           {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
           <br />
-          <h6>{{ action.price }}$ for {{ action.participantsNum }}👤 for {{action.duration}} hours </h6>
-          <small>{{action.discount.toFixed(2)}}% discount from {{action.originalPrice}}$</small>
+          <h6>
+            {{ action.price }}$ for {{ action.participantsNum }}👤 for
+            {{ action.duration }} hours
+          </h6>
+          <small
+            >{{ action.discount.toFixed(2) }}% discount from
+            {{ action.originalPrice }}$</small
+          >
         </b-col>
         <b-col>
           <div v-if="action.additionalServices">
@@ -41,40 +45,49 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { isStillFreeAdventure, reserveActionAdventure } from "../../../api";
+import {
+  getActionsAdventure,
+  reserveActionAdventure,
+  isStillFreeAdventure,
+} from "../../../api";
 import moment from "moment";
 export default {
   name: "ActionItemAdventure",
   props: ["action"],
   data() {
-    return {
-        showButton: true,
-        showReserved: false
-    };
+    return {};
   },
   methods: {
     async reserveAction(e, reservationId) {
-       await reserveActionAdventure(reservationId).catch(()=>alert("You already canceled this reservation"));
-      this.showReserved=true;
-      this.showButton=false;
-      if(this.beginDate!=null){
-       let b= await isStillFreeAdventure(this.action.adventure.adventureId,this.beginDate,this.endDate);
-           if(!b){
-               this.$emit("notAvaiableAnymore", this.action.adventure.adventureId);
-           }
+      await reserveActionAdventure(reservationId)
+        .then(() => {
+          alert("Successfully reserved");
+        })
+        .catch(() => alert("You already canceled this reservation once"));
+
+      await getActionsAdventure(this.action.adventure.adventureId)
+        .then((res) => this.$store.commit("adventures/setActionsRes", res))
+        .catch(() => this.$store.commit("adventures/setActionsRes", null));
+
+      if (this.beginDate != null) {
+        let b = await isStillFreeAdventure(
+          this.action.adventure.adventureId,
+          this.beginDate,
+          this.endDate
+        );
+        this.$store.commit("adventures/setIsReservable", b);
       }
-     
     },
     moment,
   },
-  computed:{
+  computed: {
     beginDate: {
       ...mapGetters("adventures", { get: "getBeginDate" }),
     },
     endDate: {
       ...mapGetters("adventures", { get: "getEndDate" }),
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -165,8 +165,8 @@ export default {
           endTime: this.ending,
         }).then((response) => {
           this.$store.commit("cottages/setCottages", response);
-          this.$store.commit("cottages/setBeginDate", this.beginning);
-          this.$store.commit("cottages/setEndDate", this.ending);
+          this.$store.commit("cottages/setBeginDate", this.date.start);
+          this.$store.commit("cottages/setEndDate", this.date.end);
         }).catch( this.$store.commit("cottages/setCottages", null));
       } else {
         await searchCottages({

@@ -2,13 +2,11 @@
   <div>
     <div class="right floated content">
       <button
-        v-if="showButton"
         class="ui button purple resA-button"
         @click="reserveAction($event, action.reservationId)"
       >
         Reserve Promotion
       </button>
-        <p class="resA-button" v-if="showReserved">Reserved!</p>
     </div>
     <div class="content">
       <b-row>
@@ -20,8 +18,14 @@
           ONLY AVAILABLE UNTIL
           {{ moment(action.actionEndTime).format("YYYY-MM-DD HH:mm") }}
           <br />
-          <h6>{{ action.price }}$ for {{ action.participantsNum }}👤 for {{action.duration}} nights </h6>
-          <small>{{action.discount.toFixed(2)}}% discount from {{action.originalPrice}}$</small>
+          <h6>
+            {{ action.price }}$ for {{ action.participantsNum }}👤 for
+            {{ action.duration }} nights
+          </h6>
+          <small
+            >{{ action.discount.toFixed(2) }}% discount from
+            {{ action.originalPrice }}$</small
+          >
         </b-col>
         <b-col>
           <div v-if="action.additionalServices">
@@ -41,40 +45,45 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { isStillFreeCottage, reserveActionCottage } from "../../../api";
+import { reserveActionCottage, getActionsCottage, isStillFreeCottage } from "../../../api";
 import moment from "moment";
 export default {
   name: "ActionItemCottage",
   props: ["action"],
   data() {
-    return {
-        showButton: true,
-        showReserved: false
-    };
+    return {};
   },
   methods: {
     async reserveAction(e, reservationId) {
-       await reserveActionCottage(reservationId).catch(()=>alert("You already canceled this reservation"));
-      this.showReserved=true;
-      this.showButton=false;
-      if(this.beginDate!=null){
-       let b= await isStillFreeCottage(this.action.cottage.cottageId,new Date(this.beginDate).toISOString(),new Date(this.endDate).toISOString());
-           if(!b){
-               this.$emit("notAvaiableAnymore", this.action.cottage.cottageId);
-           }
+      await reserveActionCottage(reservationId)
+        .then(() => {
+          alert("Successfully reserved");
+        })
+        .catch(() => alert("You already canceled this reservation once"));
+
+      await getActionsCottage(this.action.cottage.cottageId)
+        .then((res) => this.$store.commit("cottages/setActionsRes", res))
+        .catch(() => this.$store.commit("cottages/setActionsRes", null));
+      if (this.beginDate != null) {
+      
+        let b = await isStillFreeCottage(
+          this.action.cottage.cottageId,
+          this.beginDate,
+          this.endDate
+        );
+        this.$store.commit("cottages/setIsReservable", b);
       }
-     
     },
     moment,
   },
-  computed:{
+  computed: {
     beginDate: {
       ...mapGetters("cottages", { get: "getBeginDate" }),
     },
     endDate: {
       ...mapGetters("cottages", { get: "getEndDate" }),
-    }
-  }
+    },
+  },
 };
 </script>
 

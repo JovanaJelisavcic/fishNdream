@@ -335,7 +335,7 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
  insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (1, '2021-08-26', '2022-01-01', 1);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
-(2, '2022-02-26', '2022-08-26', 1);
+(2, '2022-02-01', '2022-08-26', 1);
 
 insert into cottage_pics(cottage_id,cottage_pics) values(1, 'cottage1.jpg');
 insert into cottage_pics(cottage_id,cottage_pics) values(1, 'cottage2.jpg');
@@ -371,7 +371,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(4,6);
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (5, '2021-12-30T12:00:00', false, '2022-01-05T14:00:00', 3, 250, 1, null , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
+values (5, '2022-01-30T12:00:00', false, '2022-02-05T14:00:00', 3, 250, 1, null , true, '2021-11-19T14:00:00','2022-12-20T14:00:00', 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,3);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,5);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(5,1);
@@ -393,7 +393,7 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
  insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (3, '2021-08-26', '2022-01-01', 2);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
-(4, '2022-02-26', '2022-08-26', 2);
+(4, '2022-01-20', '2022-08-26', 2);
 insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage4.jpg');
 insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage5.jpg');
 insert into cottage_pics(cottage_id,cottage_pics) values(2, 'cottage6.jpg');
@@ -429,7 +429,7 @@ insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVAT
 
 
 insert into reservation_cottage (RESERVATION_ID, BEGINNING, CANCELED, ENDING, PARTICIPANTS_NUM, PRICE, 	COTTAGE_ID, EMAIL, action_res, action_start_time, action_end_time, PERCENTAGE_REVENUE)
-values (11, '2021-12-30T12:00:00', false, '2022-01-05T14:00:00', 2, 130, 2, null , true, '2021-11-19T14:00:00','2021-12-20T14:00:00', 10 );
+values (11, '2022-01-30T12:00:00', false, '2022-02-05T14:00:00', 2, 130, 2, null , true, '2021-11-19T14:00:00','2022-12-20T14:00:00', 10 );
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(11,7);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(11,8);
 insert into reservation_cottage_additional_services(RESERVATION_COTTAGE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(11,9);
@@ -454,7 +454,7 @@ insert into cottage (COTTAGE_ID, ADDRESS, BEHAVIOUR_RULES, DESCRIPTION, NAME, RO
  insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
 (5, '2021-08-26', '2022-01-01', 3);
 insert into AVAILABILITY_PERIOD_COTTAGES  (PERIOD_ID, BEGGINING, ENDING,COTTAGE_ID ) values
-(6, '2022-02-26', '2022-08-26', 3);
+(6, '2022-01-20', '2022-08-26', 3);
 
 insert into cottage_pics(cottage_id,cottage_pics) values(3, 'cottage7.jpg');
 insert into cottage_pics(cottage_id,cottage_pics) values(3, 'cottage8.jpg');
@@ -590,6 +590,8 @@ values (1, '2022-12-28T12:00:00', false, '2022-12-30T14:00:00', 10, 500, 1, 'opi
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,1);
 insert into reservation_ADVENTURE_additional_services(RESERVATION_ADVENTURE_RESERVATION_ID,ADDITIONAL_SERVICES_SERVICE_ID  )values(1,2);
 
+insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (4, '2022-08-20T12:00:00', false, '2022-08-22T14:00:00', 10, 400, 1, null, true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 
 insert into adventure (ADVENTURE_ID, ADDRESS, BEHAVIOUR_RULES, CANCEL_POLICY, DESCRIPTION, MAX_PARTICIPANTS, NAME, INSTRUCTOR_EMAIL, price) values
 (2, 'Zaovine', 'Carry bear protection', false, 'Fishing only for catfish', 2, 'BearsInTrap', 'lgorch3@cnn.com', 9.0);
@@ -617,6 +619,9 @@ insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing7.jpg'
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing8.jpg');
 insert into adventure_pics(adventure_id,adventure_pics) values(3, 'fishing9.jpg');
 
+
+insert into reservation_adventure (RESERVATION_ID, BEGINNING, CANCELED, ENDING, participants_num, PRICE, ADVENTURE_ID, EMAIL, action_res, action_start_time, action_end_time,PERCENTAGE_REVENUE )
+values (3, '2022-08-20T12:00:00', false, '2022-08-22T14:00:00', 10, 400, 3, null, true, '2021-11-17T14:00:00', '2022-01-25T14:00:00',10);
 
 
 

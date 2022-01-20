@@ -115,6 +115,7 @@ public class ReservationCottageController {
 		
 		fisherman.get().addReservationCottage(action.get());
 		action.get().getCottage().changeActionRes(action.get().getReservationId(), fisherman.get());
+		action.get().getCottage().removeAction(action.get().getBeginning(),action.get().getEnding());
 		
 		fishermanRepo.save(fisherman.get());
 		cottagesRepo.save(action.get().getCottage());

@@ -122,7 +122,8 @@ public class ReservationBoatController {
 		
 		
 		
-		action.get().getBoat().removeAction(action.get().getBeginning(),action.get().getEnding(), containsCapetain );
+		Boat toSaveBoatAction = action.get().getBoat().removeAction(action.get().getBeginning(),action.get().getEnding(), containsCapetain );
+		if(toSaveBoatAction!=null && toSaveBoatAction.getBoatId()!=action.get().getBoat().getBoatId())  boatRepo.save(toSaveBoatAction);
 		
 		fishermanRepo.save(fisherman.get());
 		boatRepo.save(action.get().getBoat());

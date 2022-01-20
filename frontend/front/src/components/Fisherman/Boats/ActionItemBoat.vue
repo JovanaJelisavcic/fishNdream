@@ -45,34 +45,33 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { isStillFreeBoat, reserveActionBoat } from "../../../api";
+import { reserveActionBoat, getActionsBoat, isStillFreeBoat } from "../../../api";
 import moment from "moment";
 export default {
   name: "ActionItemBoat",
   props: ["action"],
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     async reserveAction(e, reservationId) {
       await reserveActionBoat(reservationId)
         .then(() => {
           alert("Successfully reserved");
-          this.$emit("reserved", this.action.boat.boatId);
-          console.log(this.action.boat.boatId)
         })
-        .catch(() => alert("You already canceled this reservation"));
-  
+        .catch(() => alert("You already canceled this reservation once"));
+
+      await getActionsBoat(this.action.boat.boatId)
+        .then((res) => this.$store.commit("boats/setActionsRes", res))
+        .catch(() => this.$store.commit("boats/setActionsRes", null));
+
       if (this.beginDate != null) {
         let b = await isStillFreeBoat(
           this.action.boat.boatId,
           this.beginDate,
           this.endDate
         );
-        if (!b) {
-          this.$emit("notAvaiableAnymore", this.action.boat.boatId);
-        }
+        this.$store.commit("boats/setIsReservable", b);
       }
     },
     moment,

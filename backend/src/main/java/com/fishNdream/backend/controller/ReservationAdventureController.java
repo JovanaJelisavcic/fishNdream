@@ -115,6 +115,9 @@ public class ReservationAdventureController {
 		fisherman.get().addReservationAdventure(action.get());
 		action.get().getAdventure().changeActionRes(action.get().getReservationId(), fisherman.get());
 		
+		Adventure toSaveAdventureAction = action.get().getAdventure().removeAction(action.get().getBeginning(),action.get().getEnding());
+		if(toSaveAdventureAction!=null && toSaveAdventureAction.getAdventureId()!=action.get().getAdventure().getAdventureId())  adventureRepo.save(toSaveAdventureAction);
+		
 		fishermanRepo.save(fisherman.get());
 		adventureRepo.save(action.get().getAdventure());
 

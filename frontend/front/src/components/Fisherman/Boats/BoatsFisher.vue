@@ -25,7 +25,7 @@ export default {
     };
   },
   methods: {
-    onBoatSelect(boat) {
+    async onBoatSelect(boat) {
       this.selectedBoat = boat;
     },
     onSearchSubmitted() {

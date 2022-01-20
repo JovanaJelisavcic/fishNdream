@@ -73,11 +73,13 @@ export default {
         })
       ) {
 
-        //reroute
+      
         if(localStorage.getItem("role")=="FISHERMAN"){
             this.$router.push("/fisher");
-        }else if(localStorage.getItem("role")=="SYS_ADMIN"){
+        }else if(localStorage.getItem("role")=="SYS_ADMIN" && localStorage.getItem("first")=="false"){
              this.$router.push("/admin");
+        }else if(localStorage.getItem("role")=="SYS_ADMIN" && localStorage.getItem("first")=="true"){
+             this.$router.push("/changePass");
         }else{
              this.$router.push("/owner");
         }

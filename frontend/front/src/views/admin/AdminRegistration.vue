@@ -112,13 +112,13 @@ export default {
   data() {
     return {
       form: {
-        email: null,
-        name: null,
-        surname: null,
-        address: null,
-        city: null,
-        state: null,
-        phoneNum: null,
+        email: "",
+        name: "",
+        surname: "",
+        address: "",
+        city: "",
+        state: "",
+        phoneNum: "",
         regType: "SYS_ADMIN",
         password: null,
         confirmPassword: null,
@@ -127,6 +127,9 @@ export default {
     };
   },
   validators: {
+     "form.email": function (value) {
+      return Validator.value(value).required().email();
+    },
     "form.name": function (value) {
       return Validator.value(value)
         .required()

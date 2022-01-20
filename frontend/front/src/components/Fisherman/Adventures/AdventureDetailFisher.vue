@@ -61,7 +61,6 @@
     <b-row>
       <div class="actions ui middle aligned divided list" v-if="actions">
         <ActionItemAdventure
-          @notAvaiableAnymore="onActionConflicted"
           class="item"
           v-for="(action, reservationId) in actions"
           :key="reservationId"
@@ -72,7 +71,7 @@
         There are no active promotions for this adventure
       </div>
     </b-row>
-    <div class="reservation-part" v-if="showMainReserve">
+    <div class="reservation-part" v-if="reservable">
       <button class="ui positive huge button">Reserve</button> for dates you
       searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
       {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
@@ -96,14 +95,10 @@ export default {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
       currentNumber: 0,
       timer: null,
-      adventureNoShow: [0],
     };
   },
 
   methods: {
-    onActionConflicted(id) {
-      this.adventureNoShow.push(id);
-    },
     next: function () {
       this.currentNumber += 1;
     },
@@ -118,13 +113,6 @@ export default {
   },
 
   computed: {
-    showMainReserve() {
-      let includes = this.adventureNoShow
-        ? this.adventureNoShow.includes(this.adventure.adventureId)
-        : false;
-      if (includes || this.beginDate == null) return false;
-      return true;
-    },
     currentImage: function () {
       return this.computeImgArray[
         Math.abs(this.currentNumber) % this.computeImgArray.length
@@ -157,12 +145,15 @@ export default {
     endDate: {
       ...mapGetters("adventures", { get: "getEndDate" }),
     },
+    reservable: {
+      ...mapGetters("adventures", { get: "getIsReservable" }),
+    },
   },
 };
 </script>
 
 <style scoped>
-.reservation-part{
+.reservation-part {
   margin-top: 20px;
 }
 .actions {
