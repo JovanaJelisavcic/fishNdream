@@ -60,6 +60,12 @@
         >
           location
         </option>
+        <option
+          v-bind:class="[sortBy === 'price' ? sortDirection : '']"
+          value="price"
+        >
+          price
+        </option>
       </select>
     </b-col>
     <b-col>
@@ -163,20 +169,25 @@ export default {
           guestsNum: this.guestsNum,
           dateTime: this.beginning,
           endTime: this.ending,
-        }).then((response) => {
-          this.$store.commit("cottages/setCottages", response);
-          this.$store.commit("cottages/setBeginDate", this.date.start);
-          this.$store.commit("cottages/setEndDate", this.date.end);
-        }).catch( this.$store.commit("cottages/setCottages", null));
+        })
+          .then((response) => {
+            this.$store.commit("cottages/setCottages", response);
+            this.$store.commit("cottages/setBeginDate", this.date.start);
+            this.$store.commit("cottages/setEndDate", this.date.end);
+            this.$store.commit("cottages/setPeopleNum", this.guestsNum);
+          })
+          .catch(this.$store.commit("cottages/setCottages", null));
       } else {
         await searchCottages({
           location: this.location,
           guestsNum: this.guestsNum,
           dateTime: this.beginning,
           endTime: this.ending,
-        }).then((response) => {
-          this.$store.commit("cottages/setCottages", response);
-        }).catch( this.$store.commit("cottages/setCottages", null));
+        })
+          .then((response) => {
+            this.$store.commit("cottages/setCottages", response);
+          })
+          .catch(this.$store.commit("cottages/setCottages", null));
       }
     },
   },

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -63,12 +64,12 @@ public class ReservationBoatController {
 	MailUtil mailUtil;
 
 	@JsonView(Views.AdditionalServices.class)
-	@GetMapping("/services")
+	@GetMapping("/services/{id}/{begin}/{end}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> servicesBoat(@Valid @RequestBody ReservationDTO reservation )  {
-		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
+	public ResponseEntity<?> servicesBoat(@PathVariable int id, @PathVariable LocalDateTime begin, @PathVariable LocalDateTime end )  {
+		Optional<Boat> boat =  boatRepo.findById(id);
 		if(boat.isEmpty()) return ResponseEntity.notFound().build();
-		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());		
+		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(begin,end);		
 		if(services.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(services, HttpStatus.OK);
 	}

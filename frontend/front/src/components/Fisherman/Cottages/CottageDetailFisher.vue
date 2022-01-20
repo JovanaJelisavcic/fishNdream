@@ -55,8 +55,10 @@
       <div v-if="!actions">There are no active promotions for this cottage</div>
     </b-row>
     <div class="reservation-part" v-if="reservable">
-      <button class="ui positive huge button">Reserve</button> for dates you
-      searched {{ moment(beginDate).format("YYYY-MM-DD") }} to
+      <button @click="reserveCottage" class="ui positive huge button">
+        Reserve
+      </button>
+      for dates you searched {{ moment(beginDate).format("YYYY-MM-DD") }} to
       {{ moment(endDate).format("YYYY-MM-DD") }}
     </div>
   </div>
@@ -93,6 +95,25 @@ export default {
       this.$store.commit("cottages/setIsSubscribed", true);
     },
     moment,
+    reserveCottage() {
+      let id = this.cottage.cottageId;
+      let begin = this.beginDate;
+      let end = this.endDate;
+      let people = this.cottage.guestsNum;
+      let regType = "COTTAGE";
+      let name = this.cottage.name;
+      const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      const firstDate = new Date(this.endDate);
+      const secondDate = new Date(this.beginDate);
+
+      const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+      let price = this.cottage.price *(diffDays-1) ;
+
+      this.$router.push({
+        name: "ReservationPage",
+        params: { id, begin, end, people, regType, name, price },
+      });
+    },
   },
 
   computed: {
@@ -130,6 +151,9 @@ export default {
     },
     reservable: {
       ...mapGetters("cottages", { get: "getIsReservable" }),
+    },
+    peopleNum: {
+      ...mapGetters("cottages", { get: "getPeopleNum" }),
     },
   },
 };

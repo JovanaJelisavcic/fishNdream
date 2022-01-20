@@ -9,6 +9,7 @@ export default {
     actionsRes: null,
     beginDate: null,
     endDate: null,
+    peopleNum: null,
     isReservable: null
   },
   mutations: {
@@ -53,6 +54,9 @@ export default {
     },
     setEndDate(state, data) {
       state.endDate = data;
+    },
+    setPeopleNum(state, data) {
+      state.peopleNum = data;
     }
   },
   actions: {
@@ -78,6 +82,8 @@ export default {
       return state.endDate;
     }, getIsReservable(state) {
       return state.isReservable;
+    }, getPeopleNum(state) {
+      return state.peopleNum;
     }
   }
 };

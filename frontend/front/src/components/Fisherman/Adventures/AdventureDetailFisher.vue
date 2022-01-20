@@ -72,7 +72,7 @@
       </div>
     </b-row>
     <div class="reservation-part" v-if="reservable">
-      <button class="ui positive huge button">Reserve</button> for dates you
+      <button @click="reserveAdventure" class="ui positive huge button">Reserve</button> for dates you
       searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
       {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
     </div>
@@ -110,6 +110,25 @@ export default {
       this.$store.commit("adventures/setIsSubscribed", true);
     },
     moment,
+    reserveAdventure() {
+      let id = this.adventure.adventureId;
+      let begin = this.beginDate;
+      let end = this.endDate;
+      let people = this.adventure.maxParticipants;
+      let regType = "ADVENTURE";
+      let name = this.adventure.name;
+      const oneHour =  60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+      const firstDate = new Date(this.endDate);
+      const secondDate = new Date(this.beginDate);
+
+      const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneHour));
+      let price = this.boat.price *(diffDays-1) ;
+
+      this.$router.push({
+        name: "ReservationPage",
+        params: { id, begin, end, people, regType, name, price },
+      });
+    },
   },
 
   computed: {

@@ -67,6 +67,12 @@
         >
           location
         </option>
+        <option
+          v-bind:class="[sortBy === 'price' ? sortDirection : '']"
+          value="price"
+        >
+          price
+        </option>
       </select>
     </b-col>
     <b-col>
@@ -141,9 +147,9 @@ export default {
     },
     async callSearch() {
       var bsa = this.startDate.split("T");
-      this.beginning = bsa[0] + " " + bsa[1]+ ":00";
+      this.beginning = bsa[0] + " " + bsa[1] + ":00";
       bsa = this.endDate.split("T");
-      this.ending = bsa[0] + " " + bsa[1]+ ":00";
+      this.ending = bsa[0] + " " + bsa[1] + ":00";
 
       let role = localStorage.getItem("role");
       if (role == "FISHERMAN") {

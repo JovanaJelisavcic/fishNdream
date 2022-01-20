@@ -152,8 +152,8 @@ export const isStillFreeAdventure = async (id, beginDate, endDate) => {
 };
 
 export const getRegisterRequests = async () => {
-    let { data } = await axios.get("/register/requests");
-    return data;
+  let { data } = await axios.get("/register/requests");
+  return data;
 
 };
 export const acceptRegistration = async (email) => {
@@ -517,4 +517,68 @@ export const cancelActionResAvdenture = async (id) => {
 };
 
 
- 
+export const getAllCottageServices = async (id) => {
+  let { data } = await axios.get(
+    `/reservationCottage/services/${id}`
+  );
+  return data;
+};
+
+
+export const getAllBoatServices = async (params) => {
+  let { data } = await axios.get(
+    `/reservationBoat/services/${params.id}/${params.begin}/${params.end}`
+  );
+  return data;
+};
+
+export const getAllAdventureServices = async (id) => {
+  let { data } = await axios.get(
+    `/reservationAdventure/services/${id}`
+  );
+  return data;
+};
+
+export const searchCottageServices = async (param) => {
+  let { data } = await axios.get(
+    `/reservationCottage/services/${param.id}/${param.criteria}`
+  );
+  return data;
+};
+
+
+export const searchBoatServices = async (param) => {
+  let { data } = await axios.get(
+    `/reservationBoat/services/${param.id}/${param.criteria}`
+  );
+  return data;
+};
+
+export const searchAdventureServices = async (param) => {
+  let { data } = await axios.get(
+    `/reservationAdventure/services/${param.id}/${param.criteria}`
+  );
+  return data;
+};
+
+
+export const reserveCottage = async (params) => {
+  let { data } = await axios.post(
+    `/reservationCottage/confirm`, { ...params }
+  );
+  return data;
+};
+
+export const reserveBoat = async (params) => {
+  let { data } = await axios.post(
+    `/reservationBoat/confirm`, { ...params }
+  );
+  return data;
+};
+
+export const reserveAdventure = async (params) => {
+  let { data } = await axios.post(
+    `/reservationAdventure/confirm`, { ...params }
+  );
+  return data;
+};

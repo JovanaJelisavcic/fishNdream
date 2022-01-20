@@ -24,6 +24,7 @@ import AdminEntityOverview from "../views/admin/AdminEntityOverview.vue";
 import AdminReports from "../views/admin/AdminReports.vue";
 import AdminComplaints from "../views/admin/AdminComplaints.vue";
 import ChangePassword from "../components/Admin/ChangePassword.vue";
+import ReservationPage from "../components/Fisherman/ReservationPage.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -94,7 +95,7 @@ const routes = [
             component: CottagesFisher
           }, {
             path: "boats",
-            name:"BoatsFisher",
+            name: "BoatsFisher",
             component: BoatsFisher
           }, {
             path: "instructors",
@@ -226,6 +227,17 @@ const routes = [
       userAuth: false,
     },
   },
+  {
+    path: "/reservation/:id/:begin/:end/:people/:regType/:name/:price",
+    name: "ReservationPage",
+    component: ReservationPage,
+    props: true,
+    meta: {
+      requiresAuth: true,
+      adminAuth: false,
+      userAuth: true,
+    },
+  },
 ];
 
 store.commit("login/fillState");
@@ -241,13 +253,13 @@ router.beforeEach((to, from, next) => {
   let role = localStorage.getItem('role');
   let accessToken = localStorage.getItem('token');
   let first = localStorage.getItem('first');
-  if(to.path=="/" && role=="FISHERMAN"){
-    router.push({path: '/fisher/explore'});
+  if (to.path == "/" && role == "FISHERMAN") {
+    router.push({ path: '/fisher/explore' });
   }
-  if(to.path=="/" && role=="SYS_ADMIN" && first=="false"){
-    router.push({path: '/admin'});
-  }else if((to.path=="/" || to.path=="/admin" )&& role=="SYS_ADMIN" && first=="true"){
-    router.push({path: '/changePass'});
+  if (to.path == "/" && role == "SYS_ADMIN" && first == "false") {
+    router.push({ path: '/admin' });
+  } else if ((to.path == "/" || to.path == "/admin") && role == "SYS_ADMIN" && first == "true") {
+    router.push({ path: '/changePass' });
   }
   if (to.meta.requiresAuth) {
     if (!role || !accessToken) {
