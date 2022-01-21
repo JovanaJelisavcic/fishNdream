@@ -12,6 +12,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -60,6 +62,22 @@ public class ReservationAdventureController {
 	@Autowired
 	MailUtil mailUtil;
 
+	@JsonView(Views.AdditionalServices.class)
+	@GetMapping("/price/{id}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> searchServices(@RequestParam("begin") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime begin,@RequestParam("end") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime end, @PathVariable int id)  {	
+		Optional<Adventure> adv =  adventureRepo.findById(id);
+		if(adv.isEmpty()) return ResponseEntity.notFound().build();
+		long duration = ChronoUnit.MINUTES.between(begin, end);
+		int addition = (duration%60==0)?0:1;
+		float original=adv.get().getPrice()*(Math.round(duration/60)+ addition);
+		 return new ResponseEntity<>(original, HttpStatus.OK);
+	}
+	
 	@JsonView(Views.AdditionalServices.class)
 	@GetMapping("/services/{adventureId}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")

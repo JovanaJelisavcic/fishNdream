@@ -228,7 +228,7 @@ const routes = [
     },
   },
   {
-    path: "/reservation/:id/:begin/:end/:people/:regType/:name/:price",
+    path: "/reservation/:id/:begin/:end/:people/:regType/:name/:price/:guests",
     name: "ReservationPage",
     component: ReservationPage,
     props: true,

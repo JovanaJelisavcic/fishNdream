@@ -17,6 +17,7 @@
           type="number"
           class="mb-3"
           :max="people"
+          :min="0"
         />
       </b-form-group>
       <b-form-group
@@ -70,7 +71,7 @@ import {
 } from "../../api";
 export default {
   name: "ReservationPage",
-  props: ["id", "name", "begin", "end", "regType", "people", "price"],
+  props: ["id", "name", "begin", "end", "regType", "people", "price", "guests"],
   data() {
     return {
       fields: ["selected", "serviceId", "name", "price"],
@@ -78,7 +79,7 @@ export default {
       options: [],
       services: null,
       criteria: "",
-      chosenPeople: 0,
+      chosenPeople: this.guests,
       totalPrice: 0,
     };
   },
@@ -89,7 +90,7 @@ export default {
       } else if (this.regType == "BOAT") {
         this.$router.push("/fisher/explore/boats");
       } else if (this.regType == "ADVENTURE") {
-        this.$router.push("/fisher/explore/adventures");
+        this.$router.push("/fisher/explore/instructors");
       }
     },
     confirmRes() {
@@ -106,9 +107,13 @@ export default {
       }
     },
     async callAdventure(chosenServices) {
+      var bsa = this.begin.split("T");
+      var beginning = bsa[0] + " " + bsa[1] + ":00";
+      bsa = this.end.split("T");
+      var ending = bsa[0] + " " + bsa[1] + ":00";
       await reserveAdventure({
-        beginning: this.begin,
-        ending: this.end,
+        beginning: beginning,
+        ending: ending,
         participantsNum: this.chosenPeople,
         entityId: this.id,
         servicesIds: chosenServices,
@@ -124,9 +129,13 @@ export default {
         );
     },
     async callBoat(chosenServices) {
+      var bsa = this.begin.split("T");
+      var beginning = bsa[0] + " " + bsa[1] + ":00";
+      bsa = this.end.split("T");
+      var ending = bsa[0] + " " + bsa[1] + ":00";
       await reserveBoat({
-        beginning: this.begin,
-        ending: this.end,
+        beginning: beginning,
+        ending: ending,
         participantsNum: this.chosenPeople,
         entityId: this.id,
         servicesIds: chosenServices,
@@ -142,9 +151,13 @@ export default {
         );
     },
     async callCottage(chosenServices) {
+      var bsa = this.begin.split("T");
+      var beginning = bsa[0] + " " + bsa[1] + ":00";
+      bsa = this.end.split("T");
+      var ending = bsa[0] + " " + bsa[1] + ":00";
       await reserveCottage({
-        beginning: this.begin,
-        ending: this.end,
+        beginning: beginning,
+        ending: ending,
         participantsNum: this.chosenPeople,
         entityId: this.id,
         servicesIds: chosenServices,
@@ -168,25 +181,31 @@ export default {
         this.searchAdventure();
       }
     },
-    async searchAvdenture() {
+    async searchAdventure() {
       await searchAdventureServices({
         id: this.id,
         criteria: this.criteria,
       })
         .then((res) => (this.services = res))
-        .catch(() => (this.services = null));
+        .catch(() => {this.services = null});
       this.setServices();
     },
     async searchBoat() {
+      var bsa = this.begin.split("T");
+      var beginning = bsa[0] + " " + bsa[1] + ":00";
+      bsa = this.end.split("T");
+      var ending = bsa[0] + " " + bsa[1] + ":00";
       await searchBoatServices({
         id: this.id,
         criteria: this.criteria,
+        begin: beginning,
+        end: ending,
       })
         .then((res) => (this.services = res))
         .catch(() => (this.services = null));
       this.setServices();
     },
-    async searchCottages() {
+    async serachCottage() {
       await searchCottageServices({
         id: this.id,
         criteria: this.criteria,
@@ -198,7 +217,7 @@ export default {
     onRowSelected(items) {
       this.selected = items;
       for (var i = 0; i < items.length; i++) {
-        this.totalPrice += items[i].price;
+        this.totalPrice = parseInt(this.totalPrice) + parseInt(items[i].price);
       }
     },
     setServices() {
@@ -211,36 +230,34 @@ export default {
             price: this.services[i].price,
           });
         }
-      }
+      }else this.options=[];
+      this.totalPrice= this.price;
     },
     async fetchAllServicesAdventure() {
       await getAllAdventureServices(this.id)
         .then((res) => (this.services = res))
         .catch(() => (this.services = null));
       this.setServices();
-      this.totalPrice = this.price;
     },
     async fetchAllServicesBoat() {
-       var bsa = this.begin.split("T");
-      var beginDate = bsa[0] + " " + bsa[1] + ":00";
+      var bsa = this.begin.split("T");
+      var beginning = bsa[0] + " " + bsa[1] + ":00";
       bsa = this.end.split("T");
-      var endDate = bsa[0] + " " + bsa[1] + ":00";
+      var ending = bsa[0] + " " + bsa[1] + ":00";
       await getAllBoatServices({
-        begin: beginDate,
-        end: endDate,
-        id: this.id
+        begin: beginning,
+        end: ending,
+        id: this.id,
       })
         .then((res) => (this.services = res))
         .catch(() => (this.services = null));
       this.setServices();
-      this.totalPrice = this.price;
     },
     async fetchAllServicesCottage() {
       await getAllCottageServices(this.id)
         .then((res) => (this.services = res))
         .catch(() => (this.services = null));
       this.setServices();
-      this.totalPrice = this.price;
     },
   },
   async mounted() {
@@ -251,6 +268,7 @@ export default {
     } else if (this.regType == "ADVENTURE") {
       this.fetchAllServicesAdventure();
     }
+    this.totalPrice=this.price;
   },
 };
 </script>

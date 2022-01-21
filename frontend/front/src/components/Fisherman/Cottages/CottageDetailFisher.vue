@@ -108,10 +108,11 @@ export default {
 
       const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
       let price = this.cottage.price *(diffDays-1) ;
+      let guests = this.peopleNum;
 
       this.$router.push({
         name: "ReservationPage",
-        params: { id, begin, end, people, regType, name, price },
+        params: { id, begin, end, people, regType, name, price, guests },
       });
     },
   },

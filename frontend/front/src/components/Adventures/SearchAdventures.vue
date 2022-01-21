@@ -166,6 +166,7 @@ export default {
             this.$store.commit("adventures/setAdventures", response);
             this.$store.commit("adventures/setBeginDate", this.startDate);
             this.$store.commit("adventures/setEndDate", this.endDate);
+             this.$store.commit("adventures/setPeopleNum", this.guestsNum);
           })
           .catch(this.$store.commit("adventures/setAdventures", null));
       } else {

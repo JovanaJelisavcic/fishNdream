@@ -163,7 +163,8 @@ export default {
             this.$store.commit("boats/setBoats", response);
             this.$store.commit("boats/setBeginDate", this.startDate);
             this.$store.commit("boats/setEndDate", this.endDate);
-          })
+            this.$store.commit("boats/setPeopleNum", this.guestsNum);
+         })
           .catch(this.$store.commit("boats/setBoats", null));
       } else {
         await searchBoats({

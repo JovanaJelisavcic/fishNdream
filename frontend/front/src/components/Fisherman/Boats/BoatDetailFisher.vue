@@ -70,9 +70,12 @@
       <div v-if="!actions">There are no active promotions for this boat</div>
     </b-row>
     <div class="reservation-part" v-if="reservable">
-      <button @click="reserveBoat" class="ui positive huge button">Reserve</button> for dates you
-      searched {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
-      {{ moment(endDate).format("YYYY-MM-DD HH:mm") }}
+      <button @click="reserveBoat" class="ui positive huge button">
+        Reserve
+      </button>
+      from
+      {{ moment(beginDate).format("YYYY-MM-DD HH:mm") }} to
+      {{ moment(endDate).format("YYYY-MM-DD HH:mm") }} for {{ reservePrice }}$
     </div>
     <b-row>
       <vue-cal
@@ -112,7 +115,6 @@ export default {
   },
 
   methods: {
-
     next: function () {
       this.currentNumber += 1;
     },
@@ -131,16 +133,12 @@ export default {
       let people = this.boat.capacity;
       let regType = "BOAT";
       let name = this.boat.name;
-      const oneHour =  60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-      const firstDate = new Date(this.endDate);
-      const secondDate = new Date(this.beginDate);
-
-      const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneHour));
-      let price = this.boat.price *(diffDays-1) ;
+      let price = this.reservePrice;
+      let guests = this.peopleNum;
 
       this.$router.push({
         name: "ReservationPage",
-        params: { id, begin, end, people, regType, name, price },
+        params: { id, begin, end, people, regType, name, price, guests },
       });
     },
   },
@@ -191,6 +189,12 @@ export default {
     },
     reservable: {
       ...mapGetters("boats", { get: "getIsReservable" }),
+    },
+    reservePrice: {
+      ...mapGetters("boats", { get: "getReservePrice" }),
+    },
+    peopleNum: {
+      ...mapGetters("boats", { get: "getPeopleNum" }),
     },
   },
 };

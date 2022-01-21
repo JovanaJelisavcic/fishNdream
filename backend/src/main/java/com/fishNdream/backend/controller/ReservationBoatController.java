@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,11 +63,30 @@ public class ReservationBoatController {
 	
 	@Autowired
 	MailUtil mailUtil;
+	@JsonView(Views.AdditionalServices.class)
+	@GetMapping("/price/{id}")
+	@PreAuthorize("hasAuthority('FISHERMAN')")
+	public ResponseEntity<?> searchServicess(@RequestParam("begin") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime begin,@RequestParam("end") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime end, @PathVariable int id)  {	
+		Optional<Boat> boat =  boatRepo.findById(id);
+		if(boat.isEmpty()) return ResponseEntity.notFound().build();
+		long duration = ChronoUnit.MINUTES.between(begin, end);
+		int addition = (duration%60==0)?0:1;
+		float original=boat.get().getPrice()*(Math.round(duration/60)+ addition);
+		 return new ResponseEntity<>(original, HttpStatus.OK);
+	}
 
 	@JsonView(Views.AdditionalServices.class)
-	@GetMapping("/services/{id}/{begin}/{end}")
+	@GetMapping("/services/{id}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> servicesBoat(@PathVariable int id, @PathVariable LocalDateTime begin, @PathVariable LocalDateTime end )  {
+	public ResponseEntity<?> servicesBoat(@PathVariable int id, @RequestParam("begin") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime begin,@RequestParam("end") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime end )  {
 		Optional<Boat> boat =  boatRepo.findById(id);
 		if(boat.isEmpty()) return ResponseEntity.notFound().build();
 		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(begin,end);		
@@ -75,12 +95,16 @@ public class ReservationBoatController {
 	}
 	
 	@JsonView(Views.AdditionalServices.class)
-	@GetMapping("/services/{criteria}")
+	@GetMapping("/services/{id}/{criteria}")
 	@PreAuthorize("hasAuthority('FISHERMAN')")
-	public ResponseEntity<?> searchServices(@Valid @RequestBody ReservationDTO reservation, @PathVariable String criteria )  {	
-		Optional<Boat> boat =  boatRepo.findById(reservation.getEntityId());
+	public ResponseEntity<?> searchServices(@RequestParam("begin") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime begin,@RequestParam("end") 
+	 @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime end, @PathVariable String criteria, @PathVariable int id)  {	
+		Optional<Boat> boat =  boatRepo.findById(id);
 		if(boat.isEmpty()) return ResponseEntity.notFound().build();
-		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(reservation.getBeginning(),reservation.getEnding());
+		List<AdditionalServicesBoat> services = boat.get().getAdditionalServicesForTime(begin,end);
 		services.removeIf(p -> !p.getName().toUpperCase().contains(criteria.toUpperCase()));
 		if(services.isEmpty() ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		 return new ResponseEntity<>(services, HttpStatus.OK);

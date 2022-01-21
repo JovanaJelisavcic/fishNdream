@@ -40,14 +40,13 @@ export default {
         this.$store.commit("cottages/setIsSubscribed", isit);
 
         if (this.beginDate != null) {
-          
           let b = await isStillFreeCottage(
             cottage.cottageId,
             this.beginDate,
             this.endDate
           );
           this.$store.commit("cottages/setIsReservable", b);
-        }
+        } else this.$store.commit("cottages/setIsReservable", false);
 
         let actions = null;
         try {

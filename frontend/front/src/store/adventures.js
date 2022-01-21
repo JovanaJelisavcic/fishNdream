@@ -8,7 +8,9 @@ export default {
     actionsRes: null,
     beginDate: null,
     endDate: null,
-    isReservable: null
+    isReservable: null,
+    reservePrice: 0,
+    peopleNum: null,
   },
   mutations: {
     sort(state, by, dir) {
@@ -48,7 +50,12 @@ export default {
       state.endDate = data;
     }, setIsReservable(state, data) {
       state.isReservable = data;
+    }, setReservePrice(state, data) {
+      state.reservePrice = data;
     },
+    setPeopleNum(state, data) {
+      state.peopleNum = data;
+    }
   },
   actions: {
 
@@ -69,6 +76,10 @@ export default {
       return state.endDate;
     }, getIsReservable(state) {
       return state.isReservable;
+    }, getReservePrice(state) {
+      return state.reservePrice;
+    }, getPeopleNum(state) {
+      return state.peopleNum;
     }
   }
 };

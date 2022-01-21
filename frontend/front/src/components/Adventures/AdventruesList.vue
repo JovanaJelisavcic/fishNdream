@@ -16,6 +16,7 @@ import {
   isSubscribedInstructor,
   getActionsAdventure,
   isStillFreeAdventure,
+  getAdventurePrice,
 } from "../../api";
 export default {
   name: "AdventuresList",
@@ -46,7 +47,18 @@ export default {
             this.endDate
           );
           this.$store.commit("adventures/setIsReservable", b);
-        }
+
+          var bsa = this.beginDate.split("T");
+          var beginning = bsa[0] + " " + bsa[1] + ":00";
+          bsa = this.endDate.split("T");
+          var ending = bsa[0] + " " + bsa[1] + ":00";
+          let pr = await getAdventurePrice({
+            id: adventure.adventureId,
+            begin: beginning,
+            end: ending,
+          });
+          this.$store.commit("adventures/setReservePrice", pr);
+        } else this.$store.commit("adventures/setIsReservable", false);
 
         let actions = null;
         try {

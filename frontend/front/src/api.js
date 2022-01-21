@@ -525,9 +525,9 @@ export const getAllCottageServices = async (id) => {
 };
 
 
-export const getAllBoatServices = async (params) => {
+export const getAllBoatServices = async (p) => {
   let { data } = await axios.get(
-    `/reservationBoat/services/${params.id}/${params.begin}/${params.end}`
+    `/reservationBoat/services/${p.id}`, { params: { begin: p.begin, end: p.end } }
   );
   return data;
 };
@@ -549,7 +549,7 @@ export const searchCottageServices = async (param) => {
 
 export const searchBoatServices = async (param) => {
   let { data } = await axios.get(
-    `/reservationBoat/services/${param.id}/${param.criteria}`
+    `/reservationBoat/services/${param.id}/${param.criteria}`, { params: { begin: param.begin, end: param.end }}
   );
   return data;
 };
@@ -579,6 +579,21 @@ export const reserveBoat = async (params) => {
 export const reserveAdventure = async (params) => {
   let { data } = await axios.post(
     `/reservationAdventure/confirm`, { ...params }
+  );
+  return data;
+};
+
+export const getAdventurePrice = async (param) => {
+  let { data } = await axios.get(
+    `/reservationAdventure/price/${param.id}`, { params: { begin: param.begin, end: param.end }}
+  );
+  return data;
+};
+
+
+export const getBoatPrice = async (param) => {
+  let { data } = await axios.get(
+    `/reservationBoat/price/${param.id}`, { params: { begin: param.begin, end: param.end }}
   );
   return data;
 };
