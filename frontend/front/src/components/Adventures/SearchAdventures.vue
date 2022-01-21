@@ -62,7 +62,7 @@
           value="rating"
           v-bind:class="[sortBy === 'rating' ? sortDirection : '']"
         >
-          rating
+          instructor rating
         </option>
         <option
           v-bind:class="[sortBy === 'city' ? sortDirection : '']"

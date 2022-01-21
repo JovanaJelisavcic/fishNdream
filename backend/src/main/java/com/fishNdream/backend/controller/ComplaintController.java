@@ -233,8 +233,7 @@ public class ComplaintController {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		List<Cottage> filtered =filterUtil.onlyPossibleCottageComplaints(cottages, username);
 		if(filtered.isEmpty())
-			return (ResponseEntity<?>) ResponseEntity
-            .status(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		 return new ResponseEntity<>(filtered, HttpStatus.OK);
 	}
@@ -248,8 +247,7 @@ public class ComplaintController {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		List<Boat> filtered =filterUtil.onlyPossibleBoatComplaints(boats, username);
 		if(filtered.isEmpty())
-			return (ResponseEntity<?>) ResponseEntity
-            .status(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		 return new ResponseEntity<>(filtered, HttpStatus.OK);
 	}
@@ -262,8 +260,7 @@ public class ComplaintController {
 		String username =jwtUtils.getUserNameFromJwtToken(token.substring(6, token.length()).strip());
 		List<Instructor> filtered =filterUtil.onlyPossibleInstructorComplaints(instrs, username);
 		if(filtered.isEmpty())
-			return (ResponseEntity<?>) ResponseEntity
-            .status(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		 return new ResponseEntity<>(filtered, HttpStatus.OK);
 	}

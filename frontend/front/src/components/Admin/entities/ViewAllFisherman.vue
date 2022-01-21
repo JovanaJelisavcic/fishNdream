@@ -1,6 +1,14 @@
 <template>
   <div>
-    <b-table bordered striped hover :items="fisherman" :fields="fields">
+    <b-table
+      show-empty
+      :empty-text="'There are no fishermen'"
+      bordered
+      striped
+      hover
+      :items="fisherman"
+      :fields="fields"
+    >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteFisherman(item.email)" variant="danger"
@@ -65,7 +73,9 @@ export default {
         .then((response) => {
           this.fisherman = response;
         })
-        .catch(() => {this.fisherman=null});
+        .catch(() => {
+          this.fisherman = null;
+        });
     },
     async deleteFisherman(email) {
       await deleteFishermanByEmail(email)

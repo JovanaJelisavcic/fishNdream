@@ -1,6 +1,14 @@
 <template>
   <div>
-    <b-table bordered striped hover :items="boats" :fields="fields">
+    <b-table
+      show-empty
+      :empty-text="'There are no boats'"
+      bordered
+      striped
+      hover
+      :items="boats"
+      :fields="fields"
+    >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteBoat(item.boatId)" variant="danger"
@@ -84,12 +92,18 @@ export default {
         .then((response) => {
           this.boats = response;
         })
-        .catch(() => {this.boats=null});
+        .catch(() => {
+          this.boats = null;
+        });
     },
     async deleteBoat(boatId) {
-      await deleteBoatByID(boatId).then(() => {
-        this.fetchAllBoats();
-      }).catch(()=> {alert("You can't delete entity with future reservations")});
+      await deleteBoatByID(boatId)
+        .then(() => {
+          this.fetchAllBoats();
+        })
+        .catch(() => {
+          alert("You can't delete entity with future reservations");
+        });
     },
   },
 };

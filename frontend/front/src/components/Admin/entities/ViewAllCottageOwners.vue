@@ -1,6 +1,14 @@
 <template>
   <div>
-    <b-table bordered striped hover :items="cottageOwners" :fields="fields">
+    <b-table
+      show-empty
+      :empty-text="'There are no cottage owners'"
+      bordered
+      striped
+      hover
+      :items="cottageOwners"
+      :fields="fields"
+    >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteCottageOwner(item.email)" variant="danger"
@@ -76,12 +84,18 @@ export default {
         .then((response) => {
           this.cottageOwners = response;
         })
-        .catch(() => {this.cottageOwners=null});
+        .catch(() => {
+          this.cottageOwners = null;
+        });
     },
     async deleteCottageOwner(email) {
-      await deleteCottageOwnerByEmail(email).then(() => {
-        this.fetchAllCottageOwners();
-      }).catch(()=> {alert("You can't delete entity with future reservations")});
+      await deleteCottageOwnerByEmail(email)
+        .then(() => {
+          this.fetchAllCottageOwners();
+        })
+        .catch(() => {
+          alert("You can't delete entity with future reservations");
+        });
     },
   },
 };

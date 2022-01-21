@@ -1,6 +1,14 @@
 <template>
   <div>
-    <b-table bordered striped hover :items="cottages" :fields="fields">
+    <b-table
+      show-empty
+      :empty-text="'There are no cottages'"
+      bordered
+      striped
+      hover
+      :items="cottages"
+      :fields="fields"
+    >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
           <b-button @click="deleteCottage(item.cottageId)" variant="danger"
@@ -14,7 +22,7 @@
       <template v-slot:cell(rating)="{ item }">
         <b-row class="m-0 p-2"> {{ item.rating }} ⭐ </b-row>
       </template>
-            <template v-slot:cell(cottagePics)="{ item }">
+      <template v-slot:cell(cottagePics)="{ item }">
         <img
           class="m3-3"
           style="height: 60px; width: 60px"
@@ -85,12 +93,18 @@ export default {
         .then((response) => {
           this.cottages = response;
         })
-        .catch(() => {this.cottages=null});
+        .catch(() => {
+          this.cottages = null;
+        });
     },
     async deleteCottage(cottageId) {
-      await deleteCottageByID(cottageId).then(() => {
-        this.fetchAllCottages();
-      }).catch(()=> {alert("You can't delete entity with future reservations")});
+      await deleteCottageByID(cottageId)
+        .then(() => {
+          this.fetchAllCottages();
+        })
+        .catch(() => {
+          alert("You can't delete entity with future reservations");
+        });
     },
   },
 };

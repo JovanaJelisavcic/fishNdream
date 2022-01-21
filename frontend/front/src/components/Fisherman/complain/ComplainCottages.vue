@@ -9,14 +9,14 @@
     >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
-          <b-button @click="showComplainModal(item.cottageId)" variant="success"
+          <b-button @click="showComplainModalCottage(item.cottageId)" variant="success"
             >Complain</b-button
           >
         </b-row>
       </template>
     </b-table>
-      <b-modal
-      id="complainModalUser"
+    <b-modal
+      id="complainModalCottage"
       title="Complain"
       @ok.prevent="complainCottage()"
     >
@@ -27,16 +27,17 @@
 </template>
 
 <script>
-import {
-  getPossibleCottagesComplain,
-  complainCottage
-} from "../../../api";
+import { getPossibleCottagesComplain, complainCottage } from "../../../api";
 export default {
   data() {
     return {
       complaintText: null,
       cottageId: null,
       fields: [
+        {
+          key: "cottageId",
+          label: "Cottage ID",
+        },
         {
           key: "name",
           label: "Name",
@@ -70,10 +71,10 @@ export default {
     await this.fetchPossible();
   },
   methods: {
-    showComplainModal(requestId) {
+    showComplainModalCottage(requestId) {
       this.complaintText = null;
       this.cottageId = requestId;
-      this.$bvModal.show("complainModalUser");
+      this.$bvModal.show("complainModalCottage");
     },
     async complainCottage() {
       await complainCottage({
@@ -83,7 +84,7 @@ export default {
         this.cottageId = null;
         this.complaintText = null;
         this.fetchPossible();
-        this.$bvModal.hide("complainModalUser");
+        this.$bvModal.hide("complainModalCottage");
       });
     },
     async fetchPossible() {
@@ -92,7 +93,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
-            this.items = null;
+          this.items = null;
         });
     },
   },

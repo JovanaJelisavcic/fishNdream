@@ -17,8 +17,14 @@ export default {
       state.adventures = state.adventures.sort((p1, p2) => {
         let modifier = 1;
         if (dir === "desc") modifier = -1;
-        if (p1["instructor"][by] < p2["instructor"][by]) return -1 * modifier;
-        if (p1["instructor"][by] > p2["instructor"][by]) return 1 * modifier;
+        if(by=="rating"){
+          if (p1["instructor"][by] < p2["instructor"][by]) return -1 * modifier;
+          if (p1["instructor"][by] > p2["instructor"][by]) return 1 * modifier;
+        }else{
+          if (p1[by] < p2[by]) return -1 * modifier;
+          if (p1[by] > p2[by]) return 1 * modifier;
+        }
+       
         return 0;
       });
     },

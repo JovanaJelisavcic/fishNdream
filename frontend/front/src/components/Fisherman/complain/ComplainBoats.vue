@@ -9,16 +9,16 @@
     >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
-          <b-button @click="showComplainModal(item.boatId)" variant="success"
+          <b-button @click="showComplainModalBoat(item.boatId)" variant="success"
             >Complain</b-button
           >
         </b-row>
       </template>
     </b-table>
-      <b-modal
-      id="complainModalUser"
+    <b-modal
+      id="complainModalBoat"
       title="Complain"
-      @ok.prevent="complainBoat(boatId)"
+      @ok="complainBoat()"
     >
       <span>Write your complaint</span>
       <textarea class="w-100" v-model="complaintText"> </textarea>
@@ -27,16 +27,17 @@
 </template>
 
 <script>
-import {
-  getPossibleBoatsComplain,
-  complainBoat
-} from "../../../api";
+import { getPossibleBoatsComplain, complainBoat } from "../../../api";
 export default {
   data() {
     return {
       complaintText: null,
       boatId: null,
       fields: [
+        {
+          key: "boatId",
+          label: "Boat ID",
+        },
         {
           key: "name",
           label: "Name",
@@ -55,12 +56,12 @@ export default {
         {
           key: "rating",
           label: "Rating",
-           class: "text-center",
+          class: "text-center",
         },
         {
           key: "options",
           label: "Options",
-           class: "text-center",
+          class: "text-center",
         },
       ],
       items: [],
@@ -70,20 +71,20 @@ export default {
     await this.fetchPossible();
   },
   methods: {
-    showComplainModal(requestId) {
+    showComplainModalBoat(boatId) {
       this.complaintText = null;
-      this.boatId = requestId;
-      this.$bvModal.show("complainModalUser");
+      this.boatId = boatId;
+      this.$bvModal.show("complainModalBoat");
     },
-    async complainBoat(boatId) {
+    async complainBoat() {
       await complainBoat({
-        id: boatId,
+        id: this.boatId,
         reason: this.complaintText,
       }).then(() => {
         this.boatId = null;
         this.complaintText = null;
         this.fetchPossible();
-        this.$bvModal.hide("complainModalUser");
+        this.$bvModal.hide("complainModalBoat");
       });
     },
     async fetchPossible() {
@@ -92,7 +93,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
-            this.items = null;
+          this.items = null;
         });
     },
   },

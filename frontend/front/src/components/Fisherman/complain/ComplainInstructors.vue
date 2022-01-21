@@ -9,14 +9,14 @@
     >
       <template v-slot:cell(options)="{ item }">
         <b-row class="m-0 p-2">
-          <b-button @click="showComplainModal(item.email)" variant="success"
+          <b-button @click="showComplainModalInstructor(item.email)" variant="success"
             >Complain</b-button
           >
         </b-row>
       </template>
     </b-table>
-      <b-modal
-      id="complainModalUser"
+    <b-modal
+      id="complainModalInstructor"
       title="Complain"
       @ok.prevent="complainInstructor()"
     >
@@ -29,7 +29,7 @@
 <script>
 import {
   getPossibleInstructorsComplain,
-  complainInstructor
+  complainInstructor,
 } from "../../../api";
 export default {
   data() {
@@ -37,6 +37,10 @@ export default {
       complaintText: null,
       email: null,
       fields: [
+        {
+          key: "email",
+          label: "Email",
+        },
         {
           key: "name",
           label: "Name",
@@ -70,10 +74,10 @@ export default {
     await this.fetchPossible();
   },
   methods: {
-    showComplainModal(email) {
+    showComplainModalInstructor(email) {
       this.complaintText = null;
       this.email = email;
-      this.$bvModal.show("complainModalUser");
+      this.$bvModal.show("complainModalInstructor");
     },
     async complainInstructor() {
       await complainInstructor({
@@ -83,7 +87,7 @@ export default {
         this.email = null;
         this.complaintText = null;
         this.fetchPossible();
-        this.$bvModal.hide("complainModalUser");
+        this.$bvModal.hide("complainModalInstructor");
       });
     },
     async fetchPossible() {
@@ -92,7 +96,7 @@ export default {
           this.items = response;
         })
         .catch(() => {
-            this.items = null;
+          this.items = null;
         });
     },
   },

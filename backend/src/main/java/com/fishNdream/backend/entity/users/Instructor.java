@@ -101,8 +101,10 @@ public class Instructor extends UserInfo {
 	public boolean atLeastOnceReserved(String email) {
 		for(Adventure a : adventures) {
 			for(ReservationAdventure r : a.getReservations()) {
-				if(!r.isCanceled() && r.getFisherman().getEmail().equals(email) && r.getEnding().isBefore(LocalDateTime.now()) )
-						return true;
+				if(r.getFisherman()!=null) {
+						if(!r.isCanceled() && r.getFisherman().getEmail().equals(email) && r.getEnding().isBefore(LocalDateTime.now()) )
+						{return true;}
+				}
 			}
 		}
 		return false;

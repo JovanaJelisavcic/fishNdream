@@ -1,59 +1,73 @@
 <template>
-  <div>
+  <div class="content">
     <h1>Reservation Details</h1>
-    id: {{ this.id }} name: {{ this.name }} begin : {{ this.begin }} endtime :
-    {{ this.end }} numofpeople : {{ this.people }} regType :
-    {{ this.regType }} total price; {{ this.totalPrice }}
-    <div>
-      <b-form-group
-        label="Number of guests:"
-        label-for="guests-number"
-        label-cols-md="4"
-        description=" 0 will be considered as maximum capacity"
-      >
-        <input
-          id="guests-number"
-          v-model="chosenPeople"
-          type="number"
-          class="mb-3"
-          :max="people"
-          :min="0"
-        />
-      </b-form-group>
-      <b-form-group
-        label="Search Additional Services:"
-        label-for="services-search"
-        label-cols-md="4"
-      >
-        <b-form-input
-          id="services-search"
-          v-model="criteria"
-          class="mb-3"
-          @input="searchServices"
-        ></b-form-input>
-      </b-form-group>
-      <b-table
-        :items="options"
-        :fields="fields"
-        responsive="sm"
-        ref="selectableTable"
-        selectable
-        @row-selected="onRowSelected"
-      >
-        <template #cell(selected)="{ rowSelected }">
-          <template v-if="rowSelected">
-            <span aria-hidden="true">&check;</span>
-            <span class="sr-only">Selected</span>
-          </template>
-          <template v-else>
-            <span aria-hidden="true">&nbsp;</span>
-            <span class="sr-only">Not selected</span>
-          </template>
-        </template>
-      </b-table>
+    <br />
+    <div v-if="this.regType == 'COTTAGE'">🏠 name: {{ this.name }}</div>
+    <div v-if="this.regType == 'BOAT'">🛥️ name: {{ this.name }}</div>
+    <div v-if="this.regType == 'ADVENTURE'">🎣 name: {{ this.name }}</div>
+    <div v-if="this.regType == 'COTTAGE'">
+      📅 {{ moment(this.begin).format("YYYY-MM-DD") }} to
+      {{ moment(this.end).format("YYYY-MM-DD") }}
     </div>
-    <b-button @click="confirmRes">Confirm Reservation</b-button>
-    <b-button @click="giveUp">Give up</b-button>
+    <div v-if="this.regType == 'BOAT' || this.regType == 'ADVENTURE'">
+      📅 {{ moment(this.begin).format("YYYY-MM-DD HH:mm") }} to
+      {{ moment(this.end).format("YYYY-MM-DD HH:mm") }}
+    </div>
+    TOTAL PRICE:
+    {{ this.totalPrice }}$
+    <b-form inline>
+      <label class="sr-only">👤 </label>
+      <input
+        id="guests-number"
+        v-model="chosenPeople"
+        type="number"
+        class="mb-3"
+        :max="people"
+        :min="0"
+      />
+    </b-form>
+    <br />
+
+    <input
+      placeholder="Search services..."
+      id="services-search"
+      v-model="criteria"
+      class="mb-3 w-30"
+      @input="searchServices"
+    />
+    <b-row>
+      <b-col></b-col>
+      <b-col
+        ><b-table
+          show-empty
+          :empty-text="'No such services'"
+          :items="options"
+          :fields="fields"
+          responsive="sm"
+          ref="selectableTable"
+          selectable
+          @row-selected="onRowSelected"
+        >
+          <template #cell(selected)="{ rowSelected }">
+            <template v-if="rowSelected">
+              <span aria-hidden="true">&check;</span>
+              <span class="sr-only">Selected</span>
+            </template>
+            <template v-else>
+              <span aria-hidden="true">&nbsp;</span>
+              <span class="sr-only">Not selected</span>
+            </template>
+          </template>
+          <template v-slot:cell(price)="{ item }"> {{ item.price }}$ </template>
+        </b-table></b-col
+      >
+      <b-col></b-col>
+    </b-row>
+
+    <b-button class="button" variant="success" @click="confirmRes"
+      >Confirm Reservation</b-button
+    >
+    <b-button class="button" @click="giveUp">Give up</b-button>
   </div>
 </template>
 
@@ -69,21 +83,22 @@ import {
   searchAdventureServices,
   reserveAdventure,
 } from "../../api";
+import moment from "moment";
 export default {
   name: "ReservationPage",
   props: ["id", "name", "begin", "end", "regType", "people", "price", "guests"],
   data() {
     return {
-      fields: ["selected", "serviceId", "name", "price"],
+      fields: ["selected", "name", "price"],
       selected: [],
       options: [],
       services: null,
       criteria: "",
       chosenPeople: this.guests,
-      totalPrice: 0,
     };
   },
   methods: {
+    moment,
     giveUp() {
       if (this.regType == "COTTAGE") {
         this.$router.push("/fisher/explore/cottages");
@@ -187,7 +202,9 @@ export default {
         criteria: this.criteria,
       })
         .then((res) => (this.services = res))
-        .catch(() => {this.services = null});
+        .catch(() => {
+          this.services = null;
+        });
       this.setServices();
     },
     async searchBoat() {
@@ -216,9 +233,6 @@ export default {
     },
     onRowSelected(items) {
       this.selected = items;
-      for (var i = 0; i < items.length; i++) {
-        this.totalPrice = parseInt(this.totalPrice) + parseInt(items[i].price);
-      }
     },
     setServices() {
       if (this.services != null) {
@@ -230,8 +244,7 @@ export default {
             price: this.services[i].price,
           });
         }
-      }else this.options=[];
-      this.totalPrice= this.price;
+      } else this.options = [];
     },
     async fetchAllServicesAdventure() {
       await getAllAdventureServices(this.id)
@@ -260,6 +273,17 @@ export default {
       this.setServices();
     },
   },
+  computed: {
+    totalPrice() {
+      let res = parseInt(this.price);
+      if (this.selected != null) {
+        for (var i = 0; i < this.selected.length; i++) {
+          res += parseInt(this.selected[i].price);
+        }
+      }
+      return res;
+    },
+  },
   async mounted() {
     if (this.regType == "COTTAGE") {
       this.fetchAllServicesCottage();
@@ -268,8 +292,22 @@ export default {
     } else if (this.regType == "ADVENTURE") {
       this.fetchAllServicesAdventure();
     }
-    this.totalPrice=this.price;
   },
 };
 </script>
+
+<style scoped>
+.button {
+  margin: 20px;
+}
+label {
+  margin-right: 20px;
+}
+.content {
+  text-align: center;
+  border: 3px solid rgb(140, 85, 170);
+  background-color: rgb(233, 215, 243);
+  font-size: 20px;
+}
+</style>
 

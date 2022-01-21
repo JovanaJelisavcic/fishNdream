@@ -17,7 +17,6 @@ import 'vue-cal/dist/vuecal.css'
 
 
 
-
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
@@ -27,6 +26,7 @@ Vue.use(IconsPlugin);
 Vue.use(SimpleVueValidation);
 Vue.component('vue-cal',VueCal);
 Vue.component('vue-date-picker',VueCtkDateTimePicker);
+
 new Vue({
     store,
     router,
