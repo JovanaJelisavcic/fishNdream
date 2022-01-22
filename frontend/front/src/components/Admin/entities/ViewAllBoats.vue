@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import { allBoatsAdmin, deleteBoatByID } from "../../../api";
+import { deleteBoatByID } from "../../../api";
 export default {
+  props: ["boats"],
   data() {
     return {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
-      boats: [],
       boatId: null,
       fields: [
         {
@@ -87,23 +87,12 @@ export default {
     };
   },
   computed: {},
-  async mounted() {
-    await this.fetchAllBoats();
-  },
   methods: {
-    async fetchAllBoats() {
-      await allBoatsAdmin()
-        .then((response) => {
-          this.boats = response;
-        })
-        .catch(() => {
-          this.boats = null;
-        });
-    },
     async deleteBoat(boatId) {
       await deleteBoatByID(boatId)
         .then(() => {
-          this.fetchAllBoats();
+          alert("Successfull deletion");
+          this.$emit("boatDeleted");
         })
         .catch(() => {
           alert("You can't delete entity with future reservations");

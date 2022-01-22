@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import { getAllFisherman, deleteFishermanByEmail } from "../../../api";
+import { deleteFishermanByEmail } from "../../../api";
 export default {
+  props: ["fisherman"],
   data() {
     return {
-      fisherman: [],
       email: null,
       fields: [
         {
@@ -64,23 +64,12 @@ export default {
     };
   },
   computed: {},
-  async mounted() {
-    await this.fetchAllFisherman();
-  },
   methods: {
-    async fetchAllFisherman() {
-      await getAllFisherman()
-        .then((response) => {
-          this.fisherman = response;
-        })
-        .catch(() => {
-          this.fisherman = null;
-        });
-    },
     async deleteFisherman(email) {
       await deleteFishermanByEmail(email)
         .then(() => {
-          this.fetchAllFisherman();
+          alert("Successfull deletion");
+          this.$emit("fishermanDeleted");
         })
         .catch(() => {
           alert("You can't delete entity with future reservations");

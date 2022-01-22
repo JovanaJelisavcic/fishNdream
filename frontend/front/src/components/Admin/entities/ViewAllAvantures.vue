@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import { getAllAdvantures, deleteAdventureByID } from "../../../api";
+import { deleteAdventureByID } from "../../../api";
 export default {
+  props: ["adventures"],
   data() {
     return {
       image_prefix: process.env.VUE_APP_BAKEND_SLIKE_PUTANJA,
-      adventures: [],
       fields: [
         {
           key: "adventureId",
@@ -49,10 +49,6 @@ export default {
         {
           key: "behaviourRules",
           label: "Behaviour Rules",
-        },
-        {
-          key: "cancelPolicy",
-          label: "Cancel Policy",
         },
         {
           key: "description",
@@ -83,23 +79,12 @@ export default {
     };
   },
   computed: {},
-  async mounted() {
-    await this.fetchAllAdventures();
-  },
   methods: {
-    async fetchAllAdventures() {
-      await getAllAdvantures()
-        .then((response) => {
-          this.adventures = response;
-        })
-        .catch(() => {
-          this.adventures = null;
-        });
-    },
     async deleteAdventure(adventureId) {
       await deleteAdventureByID(adventureId)
         .then(() => {
-          this.fetchAllAdventures();
+          alert("Successfull deletion");
+          this.$emit("adventureDeleted");
         })
         .catch(() => {
           alert("You can't delete entity with future reservations");

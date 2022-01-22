@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import { getAllCottageOwners, deleteCottageOwnerByEmail } from "../../../api";
+import { deleteCottageOwnerByEmail } from "../../../api";
 export default {
+  props: ["cottageOwners"],
   data() {
     return {
-      cottageOwners: [],
       email: null,
       fields: [
         {
@@ -71,23 +71,13 @@ export default {
     };
   },
   computed: {},
-  async mounted() {
-    await this.fetchAllCottageOwners();
-  },
+
   methods: {
-    async fetchAllCottageOwners() {
-      await getAllCottageOwners()
-        .then((response) => {
-          this.cottageOwners = response;
-        })
-        .catch(() => {
-          this.cottageOwners = null;
-        });
-    },
     async deleteCottageOwner(email) {
       await deleteCottageOwnerByEmail(email)
         .then(() => {
-          this.fetchAllCottageOwners();
+          alert("Successfull deletion");
+          this.$emit("cottageOwnerDeleted");
         })
         .catch(() => {
           alert("You can't delete entity with future reservations");

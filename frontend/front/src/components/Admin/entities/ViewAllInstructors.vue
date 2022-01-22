@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import { getAllInstructors, deleteInstructorByID } from "../../../api";
+import { deleteInstructorByID } from "../../../api";
 export default {
+  props: ["instructors"],
   data() {
     return {
-      instructors: [],
       email: null,
       fields: [
         {
@@ -75,21 +75,12 @@ export default {
     };
   },
   computed: {},
-  async mounted() {
-    await this.fetchAllInstructors();
-  },
   methods: {
-    async fetchAllInstructors() {
-      await getAllInstructors()
-        .then((response) => {
-          this.instructors = response;
-        })
-        .catch(() => {});
-    },
     async deleteInstructor(email) {
       await deleteInstructorByID(email)
         .then(() => {
-          this.fetchAllInstructors();
+          alert("Successfull deletion");
+          this.$emit("instructorDeleted");
         })
         .catch(() => {
           alert("You can't delete entity with future reservations");
