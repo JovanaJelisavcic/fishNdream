@@ -43,6 +43,8 @@ public class Adventure {
 	@JsonView(Views.AdventureInfo.class)
 	private String behaviourRules;
 	@JsonView(Views.AdventureInfo.class)
+	private String equipment;
+	@JsonView(Views.AdventureInfo.class)
 	private boolean cancelPolicy; // 0-free
 	@ManyToOne
 	@JsonView(Views.UnauthoInstuctors.class)
@@ -147,6 +149,14 @@ public class Adventure {
 	}
 	public void setMaxParticipants(int maxParticipants) {
 		this.maxParticipants = maxParticipants;
+	}
+	public String getEquipment() {
+		return equipment;
+	}
+
+
+	public void setEquipment(String equipment) {
+		this.equipment = equipment;
 	}
 	public String getBehaviourRules() {
 		return behaviourRules;

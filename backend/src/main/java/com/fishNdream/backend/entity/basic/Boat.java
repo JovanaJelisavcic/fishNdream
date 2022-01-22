@@ -13,6 +13,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +28,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fishNdream.backend.entity.helper.AdditionalServicesBoat;
 import com.fishNdream.backend.entity.helper.AvailabilityPeriodBoats;
+import com.fishNdream.backend.entity.helper.NavigationTool;
 import com.fishNdream.backend.entity.intercations.ComplaintBoat;
 import com.fishNdream.backend.entity.intercations.ReservationBoat;
 import com.fishNdream.backend.entity.intercations.SubscriptionBoat;
@@ -64,6 +67,11 @@ public class Boat {
 	private int capacity;
 	@JsonView(Views.BoatProfile.class)
 	private String behaviourRules;
+	@JsonView(Views.BoatProfile.class)
+	@Enumerated(EnumType.STRING)
+	private NavigationTool navigationTool;
+	@JsonView(Views.BoatProfile.class)
+	private String equipment;
 	@ElementCollection
 	@CollectionTable(name = "boat_pics", joinColumns = @JoinColumn(name = "boat_id"))
 	@JsonView(Views.UnauthoBoats.class)
@@ -291,6 +299,14 @@ public class Boat {
 	public void setLength(float length) {
 		this.length = length;
 	}
+	public NavigationTool getNavigationTool() {
+		return navigationTool;
+	}
+
+
+	public void setNavigationTool(NavigationTool navigationTool) {
+		this.navigationTool = navigationTool;
+	}
 	public int getEngineNum() {
 		return engineNum;
 	}
@@ -339,6 +355,16 @@ public class Boat {
 	public void setBoatPics(Set<String> boatPics) {
 		this.boatPics = boatPics;
 	}
+
+	public String getEquipment() {
+		return equipment;
+	}
+
+
+	public void setEquipment(String equipment) {
+		this.equipment = equipment;
+	}
+
 	public boolean isCancelPolicy() {
 		return cancelPolicy;
 	}

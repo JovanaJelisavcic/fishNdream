@@ -209,9 +209,10 @@ public class RegisterController {
 		public ResponseEntity<String> allow(@PathVariable String email) {
 			SignUpRequest otherCheck =  requestRepository.getById(email);
 			if (otherCheck==null) return ResponseEntity.notFound().build();
-			if(service.allowOwner(otherCheck))
-			return ResponseEntity.ok().build();
-			else return ResponseEntity.badRequest().build();
+			if(service.allowOwner(otherCheck)) {
+				return ResponseEntity.ok().build();
+			}
+			return ResponseEntity.badRequest().build();
 				
 		}
 	 

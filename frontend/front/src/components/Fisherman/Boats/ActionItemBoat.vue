@@ -20,7 +20,7 @@
           <br />
           <h6>
             {{ action.price }}$ for {{ action.participantsNum }}👤 for
-            {{ action.duration }} hours
+            {{ action.duration }} minutes
           </h6>
           <small
             >{{ action.discount.toFixed(2) }}% discount from
