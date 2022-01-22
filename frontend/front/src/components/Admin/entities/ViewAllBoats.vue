@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { getAllBoats, deleteBoatByID } from "../../../api";
+import { allBoatsAdmin, deleteBoatByID } from "../../../api";
 export default {
   data() {
     return {
@@ -71,6 +71,10 @@ export default {
           label: "Description",
         },
         {
+          key: "owner.email",
+          label: "Owner",
+        },
+        {
           key: "rating",
           label: "Rating",
         },
@@ -88,7 +92,7 @@ export default {
   },
   methods: {
     async fetchAllBoats() {
-      await getAllBoats()
+      await allBoatsAdmin()
         .then((response) => {
           this.boats = response;
         })

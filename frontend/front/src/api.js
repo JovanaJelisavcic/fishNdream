@@ -597,3 +597,14 @@ export const getBoatPrice = async (param) => {
   );
   return data;
 };
+
+
+export const allCottagesAdmin = async () => {
+  let { data } = await axios.get("/admin/cottages");
+  return data;
+};
+
+export const allBoatsAdmin = async () => {
+  let { data } = await axios.get("/admin/boats");
+  return data;
+};

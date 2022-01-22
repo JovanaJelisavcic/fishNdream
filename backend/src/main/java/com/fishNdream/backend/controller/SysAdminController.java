@@ -111,6 +111,21 @@ public class SysAdminController {
 		
 	}
 	
+	
+	@JsonView(Views.CottageProfile.class)
+	@GetMapping("/cottages")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public List<Cottage> getCottages() {
+		return  cottagesRepo.findAll();
+	}
+	
+	@JsonView(Views.BoatProfile.class)
+	@GetMapping("/boats")
+	@PreAuthorize("hasAuthority('SYS_ADMIN')")
+	public List<Boat> getBoats() {
+		return boatRepo.findAll();
+	}
+	
 	@JsonView(Views.CottageOwner.class)
 	@GetMapping("/cottageOwners")
 	@PreAuthorize("hasAuthority('SYS_ADMIN')")

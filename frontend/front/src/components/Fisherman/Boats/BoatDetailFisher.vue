@@ -38,6 +38,12 @@
           {{ boat.price }}$ per hour<br />
           {{ boat.capacity }} 👤 on {{ boat.length }}m long boat <br />
           {{ boat.rating }}⭐<br />
+          Navigation tool is {{ boat.navigationTool }}<br />
+        </p>
+        <div v-if="boat.equipment">
+          Equipment for fishing includes {{ boat.equipment }}
+        </div>
+        <p>
           <br />
           The owner is {{ boat.owner.name }} {{ boat.owner.surname }}<br />
           And you'll have to respect his/her rules:<br />

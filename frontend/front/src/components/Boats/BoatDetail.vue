@@ -1,5 +1,5 @@
 <template>
-  <div v-if="boat" class=" sticky col-md-8">
+  <div v-if="boat" class="sticky col-md-8">
     <b-row>
       <b-col>
         <button @click="prev" id="prev">Previous</button>
@@ -99,8 +99,10 @@ export default {
 </script>
 
 <style scoped>
-.sticky{
+.sticky {
+
   font-size: 18px;
+
 }
 .details {
   margin-top: 40px;

@@ -35,6 +35,7 @@
             {{ cottage.price }}$ per night<br />
             {{ cottage.guestsNum }} 👤 in {{ cottage.roomNum }} rooms <br />
             {{ cottage.rating }}⭐<br />
+            Owner is {{cottage.owner.name}} {{cottage.owner.surname}} <br/>
             You'll have to respect the rules of the owner:<br />
             {{ cottage.behaviourRules }}<br />
           </p>
@@ -172,7 +173,12 @@ export default {
   margin-left: 40px;
 }
 .sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
   font-size: 18px;
+  align-self: flex-start;
+  height: auto;
 }
 .details {
   margin-top: 40px;

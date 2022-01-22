@@ -27,6 +27,10 @@
         <p v-if="!adventure.cancelPolicy">
           You can cancel your reservation for free!
         </p>
+        <div v-if="adventure.equipment">
+          Equipment for fishing includes {{ adventure.equipment }}
+        </div>
+        <br />
         <b-row>
           <b-col
             ><h3>
@@ -187,7 +191,12 @@ export default {
   margin-left: 40px;
 }
 .sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
   font-size: 18px;
+  align-self: flex-start;
+  height: auto;
 }
 .details {
   margin-top: 40px;

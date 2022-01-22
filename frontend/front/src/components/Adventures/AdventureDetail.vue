@@ -68,8 +68,13 @@ export default {
 </script>
 
 <style scoped>
-.sticky{
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20%;
   font-size: 18px;
+  align-self: flex-start;
+  height: auto;
 }
 .details {
   margin-top: 40px;

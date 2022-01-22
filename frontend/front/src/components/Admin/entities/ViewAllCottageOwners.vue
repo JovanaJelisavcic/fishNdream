@@ -56,10 +56,6 @@ export default {
           label: "State",
         },
         {
-          key: "cottages",
-          label: "Cottages",
-        },
-        {
           key: "rating",
           label: "Rating",
         },
